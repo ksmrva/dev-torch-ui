@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs/>
+  <rect x="204.762" y="134.81" width="62.857" height="1.741" style="stroke-width: 0px; stroke: rgb(0, 0, 0);"/>
+  <ellipse style="stroke: rgb(0, 0, 0); fill-rule: nonzero; fill: none;" cx="249.582" cy="174.131" rx="6.986" ry="6.675"/>
+  <rect x="186.725" y="84.759" width="1.979" height="12.1" style="stroke: rgb(0, 0, 0); stroke-width: 0px; transform-origin: 187.715px 90.809px;" transform="matrix(0, -1, 1, 0, 20.149918, 79.698479)"/>
+  <rect x="186.725" y="84.759" width="1.979" height="12.1" style="stroke: rgb(0, 0, 0); stroke-width: 0px; transform-origin: 187.715px 90.809px;" transform="matrix(0.707107, -0.707107, 0.707107, 0.707107, 21.215122, 75.133607)"/>
+  <rect x="186.725" y="84.759" width="1.979" height="12.1" style="stroke: rgb(0, 0, 0); stroke-width: 0px; transform-origin: 187.715px 90.809px;" transform="matrix(0.707107, 0.707107, -0.707107, 0.707107, 21.223955, 84.272596)"/>
+  <rect x="225.572" y="163.568" width="1.979" height="12.1" style="stroke: rgb(0, 0, 0); stroke-width: 0px; transform-origin: 226.562px 169.618px;"/>
+  <rect x="231.185" y="158.294" width="2.029" height="20.191" style="stroke: rgb(0, 0, 0); stroke-width: 0px; transform-origin: 232.2px 168.389px;"/>
+  <rect x="215.614" y="141.96" width="35" height="1.741" style="stroke-width: 0px; stroke: rgb(0, 0, 0);"/>
+  <rect x="182.74" y="170.758" width="11" height="1.741" style="stroke-width: 0px; stroke: rgb(0, 0, 0);"/>
+  <rect x="195.786" y="137.224" width="11" height="1.741" style="stroke-width: 0px; stroke: rgb(0, 0, 0); transform-origin: 201.286px 138.095px;" transform="matrix(0.707107, 0.707107, -0.707107, 0.707107, -12.072439, 29.39079)"/>
+  <rect x="195.786" y="137.224" width="11" height="1.741" style="stroke-width: 0px; stroke: rgb(0, 0, 0); transform-origin: 201.286px 138.095px;" transform="matrix(0.707107, -0.707107, 0.707107, 0.707107, -12.081767, 37.678675)"/>
+  <rect x="221.871" y="147.869" width="10" height="1.741" style="stroke-width: 0px; stroke: rgb(0, 0, 0);"/>
+</svg>

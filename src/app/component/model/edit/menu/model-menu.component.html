@@ -1,0 +1,6 @@
+<collapsible-menu id="{{ this.collapsibleMenuBaseHtmlId }}"
+                  [menuContentIsClosed]="menuContentIsClosed" [showBottomPadding]="showBottomPadding"
+                  [baseHtmlId]="collapsibleMenuBaseHtmlId" [menuTitle]="menuTitle"
+                  (menuToggleEvent)="menuToggleClicked()" >
+  <db-model-menu [dbMenuContentIsClosed]="databaseMenuIsClosed" (dbMenuToggleEvent)="databaseMenuToggleClicked()" ></db-model-menu>
+</collapsible-menu>

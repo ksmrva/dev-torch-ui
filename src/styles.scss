@@ -1,0 +1,255 @@
+[data-bs-theme="dark"] {
+  // --app-title-name-start-color: #75705c;
+
+  // --app-main-color: #f7fa99;
+  --app-main-color: #f7fa99;
+  --app-secondary-color: #75705c;
+  --app-tertiary-color: #f9fadd;
+  // --app-tertiary-color: #fbfdbd;
+  --app-extra-light-color: #f1ebdb;
+
+  --app-title-name-start-color: var(--app-secondary-color);
+  --app-title-name-separator-color: var(--app-extra-light-color);
+  // --app-title-name-separator-color: #9a957a;
+  // --app-title-name-end-color: #fae39f;
+  --app-title-name-end-color: var(--app-main-color);
+
+  --app-title-nav-toggle-color: var(--app-tertiary-color);
+
+  --header-primary-bg-color: var(--bs-tertiary-bg);
+  --header-border-color: var(--bs-tertiary-color);
+  --header-font-color: var(--bs-light-text-emphasis);
+
+  // --sidebar-menu-title-primary-color: #f1ebdb;
+  --sidebar-menu-title-primary-color: var(--app-tertiary-color);
+  --sidebar-menu-title-secondary-color: #728695;
+  --sidebar-menu-title-tertiary-color: #4a5257;
+
+  --sidebar-menu-label-primary-color: #728695;
+  --sidebar-menu-label-secondary-color: #d4f5f9;
+
+  --main-action-button-color: #728695;
+  --main-action-button-border-color: #728695;
+
+  // --main-action-button-hover-color: #f1ebdb;
+  --main-action-button-hover-color: var(--app-tertiary-color);
+
+  --main-action-button-hover-bg-color: #728695;
+
+  --main-add-new-button: #5f9261;
+  --main-add-new-button-border-color: #5f9261;
+
+  // --main-add-new-button-hover-color: #f1ebdb;
+  --main-add-new-button-hover-color: var(--app-tertiary-color);
+
+  --main-add-new-button-hover-bg-color: #5f9261;
+
+  --main-cancel-button-color: #884b42;
+  --main-cancel-button-border-color: #884b42;
+
+  // --main-cancel-button-hover-color: #f1ebdb;
+  --main-cancel-button-hover-color: var(--app-tertiary-color);
+
+  --main-cancel-button-hover-bg-color: #884b42;
+
+  // --canvas-viewer-control-label-color: #f1ebdb;
+  --canvas-viewer-control-label-color: var(--app-tertiary-color);
+
+  --canvas-viewer-control-item-label-color: #8ca5b8;
+}
+
+[data-bs-theme="light"] {
+  --header-primary-bg-color: #7fa1c3;
+  --header-border-color: #325155;
+  --header-font-color: var(--bs-light-text-emphasis);
+
+  --sidebar-menu-title-primary-color: #325155;
+  --sidebar-menu-title-secondary-color: #325155;
+  --sidebar-menu-label-primary-color: #325155;
+  --sidebar-menu-label-secondary-color: #325155;
+
+  --main-action-button-color: #325155;
+  --main-action-button-border-color: #325155;
+  --main-action-button-hover-color: #325155;
+  --main-action-button-hover-bg-color: #325155;
+
+  --main-add-new-button: #728695;
+  --main-add-new-button-border-color: #728695;
+  --main-add-new-button-hover-color: #f1ebdb;
+  --main-add-new-button-hover-bg-color: #728695;
+
+  --canvas-viewer-control-label-color: #8ca5b8;
+  --canvas-viewer-control-item-label-color: #8ca5b8;
+}
+
+header {
+  top: 0;
+  z-index: 99;
+  position: sticky;
+  background-color: var(--header-primary-bg-color) !important;
+  border-bottom: 1px solid var(--header-border-color) !important;
+}
+
+footer {
+  z-index: 99;
+  position: sticky;
+  text-align: center;
+  color: var(--app-tertiary-color) !important;
+  background-color: var(--bs-tertiary-bg) !important;
+}
+
+.modal-open {
+  /* Hide the main scrollbar when a Modal is open */
+  overflow: hidden;
+}
+
+.main-action-button {
+  font-weight: bold;
+  color: var(--main-action-button-color) !important;
+  border: var(--bs-btn-border-width) solid
+    var(--main-action-button-border-color) !important;
+}
+
+.main-action-button:hover {
+  font-weight: bolder;
+  color: var(--main-action-button-hover-color) !important;
+  background-color: var(--main-action-button-hover-bg-color) !important;
+}
+
+.main-add-new-button {
+  font-weight: bold;
+  color: var(--main-add-new-button-color) !important;
+  border: var(--bs-btn-border-width) solid
+    var(--main-add-new-button-border-color) !important;
+}
+
+.main-add-new-button:hover {
+  font-weight: bolder;
+  color: var(--main-add-new-button-hover-color) !important;
+  background-color: var(--main-add-new-button-hover-bg-color) !important;
+}
+
+.main-cancel-button {
+  font-weight: bold;
+  color: var(--main-cancel-button-color) !important;
+  border: var(--bs-btn-border-width) solid
+    var(--main-cancel-button-border-color) !important;
+}
+
+.main-cancel-button:hover {
+  font-weight: bolder;
+  color: var(--main-cancel-button-hover-color) !important;
+  background-color: var(--main-cancel-button-hover-bg-color) !important;
+}
+
+.menu-title {
+  z-index: 65;
+  position: relative;
+}
+
+.menu-title-shadow {
+ box-shadow: 0 7px 10px -3px black;
+}
+
+.menu-tab {
+  border-top-left-radius: unset !important;
+  border-top-right-radius: unset !important;
+  border-top: none !important;
+  border-left: none !important;
+  color: var(--sidebar-menu-label-primary-color) !important;
+}
+
+.menu-tab.active {
+  color: var(--app-main-color) !important;
+  box-shadow: inset 0 -8px 10px -10px black;
+  border-bottom: thin double var(--app-main-color) !important;
+  background-color: var(--sidebar-menu-title-tertiary-color) !important;
+}
+
+.menu-tab-end {
+  border-right: none !important;
+}
+
+.menu-tab-group-shadow {
+  box-shadow: inset 0 -8px 10px -8px black;
+  // background-color: #212529 !important;
+}
+
+.sidebar-menu-input-group-addon {
+  color: var(--sidebar-menu-label-primary-color) !important;
+}
+
+.sidebar-menu-form-title {
+  color: var(--sidebar-menu-title-secondary-color) !important;
+}
+
+.sidebar-menu-form {
+  background-color: var(--sidebar-menu-title-tertiary-color) !important;
+}
+
+.sidebar-menu-content {
+  background-color: var(--bs-light-bg-subtle) !important;
+}
+
+.sidebar-menu-title-primary {
+  font-weight: bold;
+  color: var(--sidebar-menu-title-primary-color) !important;
+}
+
+.sidebar-menu-title-secondary {
+  font-size: large;
+  font-weight: bold;
+  color: var(--sidebar-menu-title-secondary-color) !important;
+}
+
+.sidebar-menu-label-primary {
+  color: var(--sidebar-menu-label-primary-color) !important;
+}
+
+.sidebar-menu-label-activated-primary {
+  color: var(--app-main-color) !important;
+}
+
+/***************************************************************************************************************************************/
+/* Defining these here because for some reason the scss for the component containing these is not honored within the JointJS framework */
+/* TODO: Figure out how to get the scss file to be recognized                                                                          */
+/***************************************************************************************************************************************/
+.table-jointjs-cell {
+  margin: 0px;
+}
+
+.table-header-row-jointjs-cell {
+  border-width: 0px 0px 4px 0px;
+}
+
+.table-header-jointjs-cell {
+  font-size: 14px;
+  text-align: center;
+  background-color: #3c4650 !important;
+  border-bottom: 10px;
+  color: #ecf1ff !important;
+}
+
+.table-data-column-name-jointjs-cell {
+  font-weight: bold;
+  font-size: 12px;
+  color: #e6e5e9 !important;
+}
+
+.table-data-column-data-type-jointjs-cell {
+  font-size: 9px;
+  color: #ffd817 !important;
+}
+
+.table-data-column-icon-span-jointjs-cell {
+  float: right;
+}
+
+.table-data-column-icon-jointjs-cell {
+  width: 20px;
+  height: 10px;
+}
+
+.table-header-audit-field {
+  background-color: #50463c !important;
+}

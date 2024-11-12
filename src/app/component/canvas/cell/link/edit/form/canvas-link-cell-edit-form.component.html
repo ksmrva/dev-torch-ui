@@ -1,0 +1,57 @@
+<div class="ps-1 pe-1 pt-3 pb-2" id="linkCellEditForm_Title">
+  <h5 class="sidebar-menu-form-title h5" id="tableModelEditForm_Title_Name" >
+    {{ isLinkCellNew(linkCellToEdit) ? "add new" : "edit" }}
+  </h5>
+</div>
+<form class="m-2" [formGroup]="linkCellEditForm" (ngSubmit)="saveLinkCell()" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm" >
+  <div class="mb-3" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_NameSection" >
+    <label class="form-label sidebar-menu-label-primary" for="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_NameSection_Input" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_NameSection_Label" >name</label >
+    <input class="form-control form-control-sm" formControlName="name" type="text" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_NameSection_Input" />
+  </div>
+  <div class="mb-3" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceCellNameSection" >
+    <label class="form-label sidebar-menu-label-primary" for="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceCellNameSection_Select" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceCellNameSection_Label" >source cell</label >
+    <select class="form-select" formControlName="sourceCellName" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceCellNameSection_Select" >
+      <option *ngFor="let customCell of allCustomCells" [value]="customCell.localName" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceCellNameSection_Select_Option_{{ customCell.localName }}" >
+        {{ customCell.localName }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection" >
+    <label class="form-label sidebar-menu-label-primary col-sm-7" for="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dx_Input" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dx_Label" >dx</label >
+    <label class="form-label sidebar-menu-label-primary col-sm-5" for="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dy_Input" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dy_Label" >dy</label >
+    <div class="input-group input-group-sm" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Offset_InputGroup" >
+      <input class="form-control" formControlName="linkSourceDx" type="number" placeholder="0" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dx_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dx_InputGroupAddon" >px</span >
+      <span class="input-group-text sidebar-menu-input-group-addon m-1 ms-2 me-2" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_InputGroupAddon" >x</span >
+      <input class="form-control" formControlName="linkSourceDy" type="number" placeholder="0" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dy_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_SourceOffsetSection_Dy_InputGroupAddon" >px</span >
+    </div>
+  </div>
+  <div class="mb-3" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetCellNameSection" >
+    <label class="form-label sidebar-menu-label-primary" for="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetCellNameSection_Select" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetCellNameSection_Label" >target cell</label >
+    <select class="form-select" formControlName="targetCellName" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetCellNameSection_Select" >
+      <option *ngFor="let customCell of allCustomCells" [value]="customCell.localName" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetCellNameSection_Select_Option_{{ customCell.localName }}" >
+        {{ customCell.localName }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection" >
+    <label class="form-label sidebar-menu-label-primary col-sm-7" for="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dx_Input" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dx_Label" >dx</label >
+    <label class="form-label sidebar-menu-label-primary col-sm-5" for="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dy_Input" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dy_Label" >dy</label >
+    <div class="input-group input-group-sm" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_InputGroup" >
+      <input class="form-control" formControlName="linkTargetDx" type="number" placeholder="0" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dx_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dx_InputGroupAddon" >px</span >
+      <span class="input-group-text sidebar-menu-input-group-addon m-1 ms-2 me-2" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_InputGroupAddon" >x</span >
+      <input class="form-control" formControlName="linkTargetDy" type="number" placeholder="0" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dy_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_TargetOffsetSection_Dy_InputGroupAddon" >px</span >
+    </div>
+  </div>
+  <div class="d-flex justify-content-end ps-1 pe-1 pt-3 pb-1" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_Controls" >
+    <button class="btn btn-sm main-action-button m-2" type="submit" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_Controls_SaveButton" >
+      save
+    </button>
+    <button class="btn btn-sm main-cancel-button m-2" type="button" (click)="resetLinkCellEdit()" id="linkCellEditForm_Form_CellsSection_LinkCell_EditForm_Controls_CancelButton" >
+      cancel
+    </button>
+  </div>
+</form>

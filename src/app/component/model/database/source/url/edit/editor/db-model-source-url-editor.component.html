@@ -1,0 +1,8 @@
+<div class="sidebar-menu-form ps-2 pe-2 pb-4" id="{{ this.baseHtmlId }}_Container">
+  <menu-select *ngIf="showSelect" [baseHtmlId]="menuSelectBaseHtmlId" [availableKeys]="getAvailableSourceUrlKeys()" id="{{ baseHtmlId }}_MenuSelect"
+            (keyWasSelected)="loadSourceUrlForEdit($event)" (addNewButtonClicked)="loadNewSourceUrlForEdit()">
+  </menu-select>
+  <db-model-source-url-edit-form *ngIf="!showSelect" [sourceUrlForEditObservable]="sourceUrlForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
+                            (sourceUrlWasUpdated)="resetSourceUrlEdit()" (resetSourceUrlEditButtonClicked)="resetSourceUrlEdit()" >
+  </db-model-source-url-edit-form>
+</div>

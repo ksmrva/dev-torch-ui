@@ -1,0 +1,46 @@
+<div class="ps-1 pe-1 pt-3 pb-2" id="customCellEditForm_Title">
+  <h5 class="sidebar-menu-form-title h5" id="customCellEditForm_Title_Name" >
+    {{ isCustomCellNew(customCellToEdit) ? "add new" : "edit" }}
+  </h5>
+</div>
+<form class="m-2" [formGroup]="customCellEditForm" (ngSubmit)="saveCustomCell()" id="customCellEditForm_Form" >
+  <div class="mb-3" id="customCellEditForm_Form_NameSection" >
+    <label class="form-label sidebar-menu-label-primary" for="customCellEditForm_Form_NameSection_Input" id="customCellEditForm_Form_NameSection_Label" >name</label >
+    <input class="form-control form-control-sm" formControlName="name" type="text" id="customCellEditForm_Form_NameSection_Input" />
+  </div>
+  <div class="mb-3" id="customCellEditForm_Form_HtmlSection" >
+    <label class="form-label sidebar-menu-label-primary" for="customCellEditForm_Form_HtmlSection_Input" id="customCellEditForm_Form_HtmlSection_Label" >html</label >
+    <input class="form-control form-control-sm" formControlName="html" type="text" id="customCellEditForm_Form_HtmlSection_Input" />
+    <div [innerHTML]="extractHtmlFromCanvasCellToEdit()" class="card m-3" style="transform: scale(0.8)" id="customCellEditForm_Form_HtmlSection_Preview" ></div>
+  </div>
+  <div class="mb-3" id="customCellEditForm_Form_PositionSection" >
+    <label class="form-label sidebar-menu-label-primary col-sm-7" for="customCellEditForm_Form_PositionSection_X_Input" id="customCellEditForm_Form_PositionSection_X_Label" >x</label >
+    <label class="form-label sidebar-menu-label-primary col-sm-5" for="customCellEditForm_Form_PositionSection_Y_Input" id="customCellEditForm_Form_PositionSection_Y_Label" >y</label >
+    <div class="input-group input-group-sm" id="customCellEditForm_Form_PositionSection_InputGroup" >
+      <input class="form-control" formControlName="canvasPositionX" type="number" placeholder="0" id="customCellEditForm_Form_PositionSection_X_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="customCellEditForm_Form_PositionSection_X_InputGroupAddon" >px</span >
+      <span class="input-group-text sidebar-menu-input-group-addon m-1 ms-2 me-2" id="customCellEditForm_Form_PositionSection_InputGroupAddon" >x</span >
+      <input class="form-control" formControlName="canvasPositionY" type="number" placeholder="0" id="customCellEditForm_Form_PositionSection_Y_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="customCellEditForm_Form_PositionSection_Y_InputGroupAddon" >px</span >
+    </div>
+  </div>
+  <div class="mb-3" id="customCellEditForm_Form_SizeSection" >
+    <label class="form-label sidebar-menu-label-primary col-sm-7" for="customCellEditForm_Form_SizeSection_Height_Input" id="customCellEditForm_Form_SizeSection_Height_Label" >height</label >
+    <label class="form-label sidebar-menu-label-primary col-sm-5" for="customCellEditForm_Form_SizeSection_Width_Input" id="customCellEditForm_Form_SizeSection_Width_Label" >width</label >
+    <div class="input-group input-group-sm" id="customCellEditForm_Form_SizeSection_InputGroup" >
+      <input class="form-control" formControlName="height" type="number" placeholder="0" id="customCellEditForm_Form_SizeSection_Height_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="customCellEditForm_Form_SizeSection_Height_InputGroupAddon" >px</span >
+      <span class="input-group-text dsidebar-menu-input-group-addon m-1 ms-2 me-2" id="customCellEditForm_Form_SizeSection_InputGroupAddon" >x</span >
+      <input class="form-control" formControlName="width" type="number" placeholder="0" id="customCellEditForm_Form_SizeSection_Width_Input" />
+      <span class="input-group-text sidebar-menu-input-group-addon" id="customCellEditForm_Form_SizeSection_Width_InputGroupAddon" >px</span >
+    </div>
+  </div>
+  <div class="d-flex justify-content-end ps-1 pe-1 pt-3 pb-1" id="customCellEditForm_Form_Controls" >
+    <button class="btn btn-sm main-action-button m-2" type="submit" id="customCellEditForm_Form_Controls_SaveButton" >
+      save
+    </button>
+    <button class="btn btn-sm main-cancel-button m-2" type="button" (click)="resetCustomCellEdit()" id="customCellEditForm_Form_Controls_CancelButton" >
+      cancel
+    </button>
+  </div>
+</form>

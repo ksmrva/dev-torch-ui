@@ -1,0 +1,63 @@
+<div class="ps-1 pe-1 pt-3 pb-2" id="dbModelSourceUrlEditForm_Title">
+  <h5 class="sidebar-menu-form-title h5" id="dbModelSourceUrlEditForm_Title_Name" >
+    {{ isSourceUrlNew(sourceUrlForEdit) ? "add new" : "edit" }}
+  </h5>
+</div>
+<form class="m-2" [formGroup]="sourceUrlEditForm" (ngSubmit)="saveSourceUrl()" id="dbModelSourceUrlEditForm_Form" >
+  <div class="mb-3" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix">
+    <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label" >
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label_Scheme">scheme</span>
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label_Separator"></span>
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label_Provider">provider</span>
+    </div>
+    <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input" >
+      <select class="form-control form-control-sm form-select form-select-sm" formControlName="scheme" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Scheme_Select" >
+        <option *ngFor="let availableSourceUrlSupportedScheme of availableSourceUrlSupportedSchemes" [value]="availableSourceUrlSupportedScheme.scheme" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Scheme_Select_Option_{{ availableSourceUrlSupportedScheme.scheme }}" >
+          {{ availableSourceUrlSupportedScheme.scheme }}
+        </option>
+      </select>
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Separator">:</span>
+      <select class="form-control form-control-sm form-select form-select-sm" formControlName="provider" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Provider_Select" >
+        <option *ngFor="let availableSourceUrlSupportedProvider of availableSourceUrlSupportedProviders" [value]="availableSourceUrlSupportedProvider.provider" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Provider_Select_Option_{{ availableSourceUrlSupportedProvider.provider }}" >
+          {{ availableSourceUrlSupportedProvider.provider }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="mb-3" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix">
+    <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label" >
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label_Hostname">hostname</span>
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label_Separator"></span>
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label_Port">port</span>
+    </div>
+    <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input" >
+      <input class="form-control form-control-sm" formControlName="hostname" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input_Hostname" />
+      <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input_Separator">:</span>
+      <input class="form-control form-control-sm" formControlName="port" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input_Port" />
+    </div>
+  </div>
+  <div class="mb-4" id="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName" >
+    <label class="form-label sidebar-menu-label-primary" for="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName_Input" id="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName_Input_Label" >maintenance database name</label>
+    <input class="form-control form-control-sm" formControlName="maintenanceDatabaseName" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName_Input" />
+  </div>
+  <div id="dbModelSourceUrlEditForm_Form_PreviewUrl">
+    <div id="dbModelSourceUrlEditForm_Form_PreviewUrl_Title" >
+      <h5 class="sidebar-menu-form-title text-center h5" id="dbModelSourceUrlEditForm_Form_PreviewUrl_Title_Name" >
+        preview url
+      </h5>
+    </div>
+    <div class="input-group input-group-sm mb-3" id="dbModelSourceUrlEditForm_Form_PreviewUrl_InputGroup" >
+      <span class="input-group-text" id="dbModelSourceUrlEditForm_Form_PreviewUrl_InputGroup_Scheme">
+        {{ getSchemeTextPreview() }} : {{ getProviderTextPreview() }} :// {{ getHostnameTextPreview() }} : {{ getPortTextPreview() }} / {{ getMaintenanceDbNameTextPreview() }}
+      </span>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end ps-1 pe-1 pt-3 pb-1" id="dbModelSourceUrlEditForm_FormControls" >
+    <button class="btn btn-sm main-action-button m-2" type="submit" id="dbModelSourceUrlEditForm_FormControls_SaveButton" >
+      save
+    </button>
+    <button class="btn btn-sm main-cancel-button m-2" type="button" (click)="resetSourceUrlEdit()" id="dbModelSourceUrlEditForm_FormControls_CancelButton" >
+      cancel
+    </button>
+  </div>
+</form>

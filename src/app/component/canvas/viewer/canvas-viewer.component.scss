@@ -1,0 +1,27 @@
+#canvasViewerSidebar {
+  box-shadow: 8px -4px 8px -1px rgba(0, 0, 0, 0.35) !important;
+  z-index: 66;
+  position: relative;
+  // resize: horizontal;
+  // overflow: hidden;
+}
+
+#canvasViewerContent {
+  z-index: 66;
+  position: relative;
+  overflow: scroll;
+}
+
+#canvasViewerContent_Canvas {
+  height: 80vh;
+}
+
+#canvasViewerContent_Canvas_JointJs_Paper {
+  transform-origin: 0% 0% 0px;
+}
+
+#canvasViewerContent_Canvas {
+  // background-color: var(--bs-tertiary-color);
+  background-color: #807c72 !important;
+  // background-color: var(--bs-light-border-subtle);
+}

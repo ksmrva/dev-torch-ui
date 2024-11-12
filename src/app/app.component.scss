@@ -1,0 +1,43 @@
+.active {
+  color: var(--app-title-name-end-color) !important;
+}
+
+.nav-link {
+  color: var(--app-extra-light-color) !important;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--app-title-name-end-color) !important;
+}
+
+#AppRoot_BannerBar_Toggle {
+  color: var(--app-title-nav-toggle-color) !important;
+}
+
+#AppRoot_BannerBar_Top_Title_Logo {
+  // height: 50px;
+  // width: 45px;
+
+  height: 46px;
+  width: 19px;
+
+  // height: 35px;
+  // width: 35px;
+}
+
+#AppRoot_BannerBar_Top_Title_Start {
+  color: var(--app-title-name-start-color);
+}
+
+#AppRoot_BannerBar_Top_Title_Separator {
+  color: var(--app-title-name-separator-color);
+}
+
+#AppRoot_BannerBar_Top_Title_End {
+  color: var(--app-title-name-end-color);
+}
+
+#bannerBarToggleIcon_DarkMode {
+  color: var(--app-main-color);
+}

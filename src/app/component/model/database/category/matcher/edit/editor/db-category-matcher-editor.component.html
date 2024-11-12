@@ -1,0 +1,25 @@
+<div class="mb-3" id="{{htmlBaseId}}" >
+  <label class="form-label sidebar-menu-label-primary" for="{{htmlBaseId}}_MatcherSelection_Select" id="{{htmlBaseId}}_MatcherSelection_Select_Label" >
+    {{categoryTypeName}} category matchers
+  </label>
+  <select class="form-control form-select form-select-sm" (change)="setMatcherForEdit($event)" id="{{htmlBaseId}}_MatcherSelection_Select" >
+    <option value="" disabled selected hidden id="{{htmlBaseId}}_MatcherSelection_Select_Option_Placeholder" >
+      select
+    </option>
+    <option *ngFor="let matcher of categoryMatchers" [value]="matcher.objectForMatch?.name" id="{{htmlBaseId}}_MatcherSelection_Select_Option_{{ matcher.objectForMatch?.name }}" >
+      {{ matcher.objectForMatch?.name }}
+    </option>
+  </select>
+</div>
+<div *ngIf="matcherForEdit" id="{{htmlBaseId}}_MatcherSelection_SelectedMatcher" >
+  <regex-creator-input-group [htmlBaseId]="regexCreatorInputGroupBaseHtmlId" [simpleRegexCreators]="simpleRegexCreators" (addRegexEventEmitter)="addNameRegexToMatcher($event)" id="{{htmlBaseId}}_MatcherSelection_SelectedMatcher_RegexCreatorInputGroup"></regex-creator-input-group>
+  <ul *ngIf="doesMatcherHaveAnyRegexes(matcherForEdit)" class="list-group" id="{{htmlBaseId}}_MatcherSelection_SelectedMatcher_ExistingNameRegexes_List" >
+    <li *ngFor="let nameRegexToIdentifyCategory of matcherForEdit.matchingRegexes" class="list-group-item" id="{{htmlBaseId}}_MatcherSelection_SelectedMatcher_ExistingNameRegexes_List_Option_{{ nameRegexToIdentifyCategory }}" >
+      {{ nameRegexToIdentifyCategory }}
+    </li>
+  </ul>
+  <span *ngIf="!doesMatcherHaveAnyRegexes(matcherForEdit)" id="{{htmlBaseId}}_MatcherSelection_SelectedMatcher_EmptyNameRegexes_Label" >
+    no current name regex
+  </span>
+</div>
+  

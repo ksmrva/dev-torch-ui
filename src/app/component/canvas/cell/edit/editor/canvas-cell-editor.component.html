@@ -1,0 +1,10 @@
+<simple-menu-select *ngIf="!cellNameSelectedForEdit" id="{{ this.baseHtmlId }}_SimpleMenuSelect"
+                    [baseHtmlId]="simpleMenuSelectBaseHtmlId" [labelName]="simpleMenuSelectLabelName"
+                    [availableKeys]="getAvailableCellKeys()" (keyWasSelected)="loadCellForEdit($event)">
+</simple-menu-select>
+<canvas-custom-cell-edit-form *ngIf="showCustomCellEditForm" id="{{ this.baseHtmlId }}_CustomCellEditForm"
+                                  [customCellToEditObservable]="customCellForEdit$.asObservable()"
+                                  (customCellWasUpdated)="cellUpdated()" (resetCustomCellEditButtonClicked)="resetEdit()" ></canvas-custom-cell-edit-form>
+<canvas-link-cell-edit-form *ngIf="showLinkCellEditForm"  id="{{ this.baseHtmlId }}_LinkCellEditForm"
+                                [linkCellToEditObservable]="linkCellForEdit$.asObservable()" [allCanvasCellsBeingEditedObservable]=" allCanvasCells$.asObservable() "
+                                (linkCellWasUpdated)="cellUpdated()" (resetLinkCellEditButtonClicked)="resetEdit()" ></canvas-link-cell-edit-form>

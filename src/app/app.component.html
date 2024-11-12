@@ -1,0 +1,55 @@
+<div class="container-fluid p-0" id="{{htmlIdBase}}_Container">
+  <header class="border-bottom" id="{{htmlIdBase}}_Header">
+    <div id="{{htmlIdBase}}_BannerBar">
+      <div class="d-flex justify-content-between ps-2 pb-1 pt-1" id="{{htmlIdBase}}_BannerBar_Top">
+        <button class="navbar-toggler" type="button" id="{{htmlIdBase}}_BannerBar_Top_Toggle"
+                data-bs-toggle="collapse" [attr.data-bs-target]="'#' + bannerBarBottomHtmlId">
+          <i class="bi bi-list h3" id="{{htmlIdBase}}_BannerBar_Top_Toggle_Icon"></i>
+        </button>
+        <div class="d-flex align-items-center pb-1" id="{{htmlIdBase}}_BannerBar_Top_Title">
+          <h1 class="m-0" id="{{htmlIdBase}}_BannerBar_Top_Title_Start">{{titleStart}}</h1>
+          <!-- <img src="{{logoPath}}" id="bannerBarTitle_Logo"/> -->
+          <!-- <h1 class="m-0" id="bannerBarTitle_NameSeperator">.</h1> -->
+          <h1 class="m-0" id="{{htmlIdBase}}_BannerBar_Top_Title_End">{{titleEnd}}</h1>
+          <img class="m-0 ms-2" src="{{logoPath}}" id="{{htmlIdBase}}_BannerBar_Top_Title_Logo"/>
+        </div>
+        <div class="d-flex align-items-center ms-3 me-3" id="{{htmlIdBase}}_BannerBar_Top_DarkMode_Switch">
+          <div class="form-check" id="{{htmlIdBase}}_BannerBar_Top_DarkMode_Switch_Holder">
+            <label class="form-check-label" for="{{htmlIdBase}}_BannerBar_Top_DarkMode_Switch_Input" id="{{htmlIdBase}}_BannerBar_Top_DarkMode_Switch_Label">
+              <i *ngIf="darkMode" class="bi bi-moon-fill" title="Switch to Light Mode" id="{{htmlIdBase}}_BannerBar_Top_DarkMode_Switch_DarkLabel"></i>
+              <i *ngIf="!darkMode" class="bi bi-sun h4" title="Switch to Dark Mode" id="{{htmlIdBase}}_BannerBar_Top_DarkMode_Switch_LightLabel"></i>
+            </label>
+            <input class="btn-check" type="checkbox" checked id="{{htmlIdBase}}_BannerBar_Top_DarkMode_Switch_Input"/>
+          </div>
+        </div>
+      </div>
+      <div class="border-top p-0 pb-1 collapse" id="{{bannerBarBottomHtmlId}}">
+        <nav class="navbar navbar-expand-lg p-0" id="{{bannerBarBottomHtmlId}}_Nav">
+          <ul class="navbar-nav p-0" id="{{bannerBarBottomHtmlId}}_Nav_List">
+            <li class="nav-item border-end" id="{{bannerBarBottomHtmlId}}_Nav_ListItem_CanvasViewer">
+              <a class="nav-link pt-0 pb-0" id="{{bannerBarBottomHtmlId}}_Nav_ListItem_CanvasViewer_Link"
+                 routerLink="canvas" routerLinkActive="active">
+                canvas viewer
+              </a>
+            </li>
+            <li class="nav-item" id="{{bannerBarBottomHtmlId}}_Nav_ListItem_CodeViewer">
+              <a class="nav-link pt-0 pb-0" id="{{bannerBarBottomHtmlId}}_Nav_ListItem_CodeViewer_Link"
+                 routerLink="code">
+                code
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main id="{{htmlIdBase}}_Main">
+    <router-outlet id="{{htmlIdBase}}_Main_RouterOutlet"></router-outlet>
+  </main>
+  <footer id="{{htmlIdBase}}_Footer">
+    <span id="{{htmlIdBase}}_FooterMessage">
+      Version: <strong>{{ appVersion }}</strong> &nbsp;&nbsp; | &nbsp;&nbsp;
+      Creator: <strong>ksmrva</strong> &nbsp;&nbsp; | &nbsp;&nbsp; 2024
+    </span>
+  </footer>
+</div>
