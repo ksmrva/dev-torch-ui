@@ -36,15 +36,16 @@ export class DbForeignKeyModel extends ApiEntity {
 
   override isEqualTo(otherEntity: DbForeignKeyModel): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.name === otherEntity.name
-      && this.description === otherEntity.description
-      && this.localColumnId === otherEntity.localColumnId
-      && this.referencedTableId === otherEntity.referencedTableId
-      && this.referencedColumnId === otherEntity.referencedColumnId
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.name === otherEntity.name
+        && this.description === otherEntity.description
+        && this.localColumnId === otherEntity.localColumnId
+        && this.referencedTableId === otherEntity.referencedTableId
+        && this.referencedColumnId === otherEntity.referencedColumnId) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

@@ -38,7 +38,7 @@ export class DbTableModel extends ApiEntity {
     if (json) {
       this.name = json.name;
       this.description = json.description;
-      this.primaryKey = new DbPrimaryKeyModel().deserialize( json.primaryKey );
+      this.primaryKey = new DbPrimaryKeyModel().deserialize(json.primaryKey);
       this.tableCategory = new DbTableCategory().deserialize(json.tableCategory);
 
       this.columns = [];
@@ -72,51 +72,49 @@ export class DbTableModel extends ApiEntity {
 
   override isEqualTo(otherEntity: DbTableModel): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.name === otherEntity.name
-      && this.description === otherEntity.description
-      && this.columns.length === otherEntity.columns.length
-      && this.primaryKey.isEqualTo(otherEntity.primaryKey)
-      && this.foreignKeys.length === otherEntity.foreignKeys.length
-      && this.tableCategory.isEqualTo(otherEntity.tableCategory)
-    ) {
-      let allColumnsHaveMatch = true;
-      for (let i = 0; i < this.columns.length; i++) {
-        let columnModel = this.columns[i];
-        let indexOfColumn = otherEntity.columns.findIndex(
-          (otherColumn: DbColumnModel) => {
-            return columnModel.isEqualTo(otherColumn);
-          }
-        );
-        if (indexOfColumn < 0) {
-          allColumnsHaveMatch = false;
-          break;
-        }
-      }
+    if (isEqualTo) {
+      if(this.name === otherEntity.name
+        && this.description === otherEntity.description
+        && this.columns.length === otherEntity.columns.length
+        && this.primaryKey.isEqualTo(otherEntity.primaryKey)
+        && this.foreignKeys.length === otherEntity.foreignKeys.length
+        && this.tableCategory.isEqualTo(otherEntity.tableCategory)) {
 
-      let allForeignKeysHaveMatch = true;
-      for (let i = 0; i < this.foreignKeys.length; i++) {
-        let foreignKey = this.foreignKeys[i];
-        let indexOfForeignKey = otherEntity.foreignKeys.findIndex(
-          (otherForeignKey: DbForeignKeyModel) => {
-            return foreignKey.isEqualTo(otherForeignKey);
+        let allColumnsHaveMatch = true;
+        for (let i = 0; i < this.columns.length; i++) {
+          let columnModel = this.columns[i];
+          let indexOfColumn = otherEntity.columns.findIndex(
+            (otherColumn: DbColumnModel) => {
+              return columnModel.isEqualTo(otherColumn);
+            }
+          );
+          if (indexOfColumn < 0) {
+            allColumnsHaveMatch = false;
+            break;
           }
-        );
-        if (indexOfForeignKey < 0) {
-          allForeignKeysHaveMatch = false;
-          break;
         }
-      }
 
-      isEqualTo = allColumnsHaveMatch && allForeignKeysHaveMatch;
+        let allForeignKeysHaveMatch = true;
+        for (let i = 0; i < this.foreignKeys.length; i++) {
+          let foreignKey = this.foreignKeys[i];
+          let indexOfForeignKey = otherEntity.foreignKeys.findIndex(
+            (otherForeignKey: DbForeignKeyModel) => {
+              return foreignKey.isEqualTo(otherForeignKey);
+            }
+          );
+          if (indexOfForeignKey < 0) {
+            allForeignKeysHaveMatch = false;
+            break;
+          }
+        }
+
+        isEqualTo = allColumnsHaveMatch && allForeignKeysHaveMatch;
+
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }
 
-  //tableDataRowId
-  //tableDataId
-  //tableDataColumnNameId
-  //tableDataColumnTypeId
-  //tableDataColumnIconSpanId
 }

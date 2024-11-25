@@ -35,24 +35,26 @@ export class RegexMatcher<T extends ComparableEntity<T>> implements Deserializab
       isEqualTo = false;
     }
 
-    if (
-      isEqualTo
-      && this.matchingRegexes.length === otherEntity.matchingRegexes.length
-    ) {
-      let allRegexesHaveMatch = true;
-      for (let i = 0; i < this.matchingRegexes.length; i++) {
-        let regex = this.matchingRegexes[i];
-        let indexOfRegex = otherEntity.matchingRegexes.findIndex((otherRegex: string) => {
-          return otherRegex === regex;
-        });
-        if (indexOfRegex < 0) {
-          allRegexesHaveMatch = false;
-          break;
+    if (isEqualTo) {
+      if(this.matchingRegexes.length === otherEntity.matchingRegexes.length) {
+        let allRegexesHaveMatch = true;
+        for (let i = 0; i < this.matchingRegexes.length; i++) {
+          let regex = this.matchingRegexes[i];
+          let indexOfRegex = otherEntity.matchingRegexes.findIndex((otherRegex: string) => {
+            return otherRegex === regex;
+          });
+          if (indexOfRegex < 0) {
+            allRegexesHaveMatch = false;
+            break;
+          }
         }
+        isEqualTo = allRegexesHaveMatch;
+
+      } else {
+        isEqualTo = false;
       }
-      isEqualTo = allRegexesHaveMatch;
     }
     return isEqualTo;
   }
-  
+
 }

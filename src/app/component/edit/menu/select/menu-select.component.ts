@@ -37,8 +37,7 @@ export class MenuSelectComponent extends BaseComponent {
   }
 
   selectKey(): void {
-    if(
-      StringUtil.isNotEmpty(this.selectedKey)) {
+    if(StringUtil.isNotEmpty(this.selectedKey)) {
       this.keyWasSelected.emit(this.selectedKey);
     }
     this.resetSelect();

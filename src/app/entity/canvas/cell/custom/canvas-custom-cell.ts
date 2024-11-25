@@ -46,7 +46,7 @@ export class CanvasCustomCell extends CanvasCell {
     canvasPositionXInit: number,
     canvasPositionYInit: number
   ): CanvasCustomCell {
-    super.initializeBaseCellValues(
+    super.initializeBaseValues(
       idInit,
       canvasIdInit,
       nameInit,
@@ -77,15 +77,16 @@ export class CanvasCustomCell extends CanvasCell {
 
   override isEqualTo(otherEntity: CanvasCustomCell): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.html === otherEntity.html
-      && this.height === otherEntity.height
-      && this.width === otherEntity.width
-      && this.canvasPositionX === otherEntity.canvasPositionX
-      && this.canvasPositionY === otherEntity.canvasPositionY
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.html === otherEntity.html
+        && this.height === otherEntity.height
+        && this.width === otherEntity.width
+        && this.canvasPositionX === otherEntity.canvasPositionX
+        && this.canvasPositionY === otherEntity.canvasPositionY) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

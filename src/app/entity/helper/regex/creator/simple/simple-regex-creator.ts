@@ -29,4 +29,5 @@ export class SimpleRegexCreator {
   createRegex(wordToMatch: string): string {
     return this.regexSandwich.createSandwich(wordToMatch);
   }
+
 }

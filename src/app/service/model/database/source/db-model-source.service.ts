@@ -101,7 +101,7 @@ export class DbModelSourceService extends BaseApiService {
     return createSourceConfigResult;
   }
 
-  protected getResourcePathForApiUrl(): string {
+  protected override getResourcePathForApiUrl(): string {
     return "/model/db/source";
   }
 
@@ -293,7 +293,7 @@ export class DbModelSourceService extends BaseApiService {
   }
 
   private createSourceUrlApiCall( sourceUrl: DbModelSourceUrl ): Observable<DbModelSourceUrl | undefined> {
-    return this.httpClient.post<DbModelSourceUrl>(this.getApiUrlWithAddition("/url"), sourceUrl)
+    return this.httpClient.post<DbModelSourceUrl>(this.getApiUrlWithAddition("url"), sourceUrl)
                           .pipe(
                             map((createSourceUrlResult: DbModelSourceUrl) => {
                               return new DbModelSourceUrl().deserialize(createSourceUrlResult);
@@ -333,7 +333,7 @@ export class DbModelSourceService extends BaseApiService {
   }
 
   private getAllSourceUrlsApiCall(): Observable< DbModelSourceUrl[] | undefined > {
-    return this.httpClient.get<DbModelSourceUrl[]>(this.getApiUrlWithAddition("/url"))
+    return this.httpClient.get<DbModelSourceUrl[]>(this.getApiUrlWithAddition("url"))
                           .pipe(
                             map((getAllSourceUrlsResult: DbModelSourceUrl[]) => {
                               let sourceUrls: DbModelSourceUrl[] = [];
@@ -387,7 +387,7 @@ export class DbModelSourceService extends BaseApiService {
   }
 
   private getAllSourcePresetsApiCall(): Observable< DbModelSourcePreset[] | undefined > {
-    return this.httpClient.get<DbModelSourcePreset[]>(this.getApiUrlWithAddition("/preset"))
+    return this.httpClient.get<DbModelSourcePreset[]>(this.getApiUrlWithAddition("preset"))
                           .pipe(
                             map((getAllSourcePresetsResult: DbModelSourcePreset[]) => {
                               let sourcePresets: DbModelSourcePreset[] = [];
@@ -414,7 +414,7 @@ export class DbModelSourceService extends BaseApiService {
   }
 
   private getAllSourceSupportedDriversApiCall(): Observable< DbModelSourceSupportedDriver[] | undefined > {
-    return this.httpClient.get<DbModelSourceSupportedDriver[]>(this.getApiUrlWithAddition("/driver"))
+    return this.httpClient.get<DbModelSourceSupportedDriver[]>(this.getApiUrlWithAddition("driver"))
                           .pipe(
                             map((getAllSourceSupportedDriversResult: DbModelSourceSupportedDriver[]) => {
                               let sourceSupportedDrivers: DbModelSourceSupportedDriver[] = [];
@@ -443,7 +443,7 @@ export class DbModelSourceService extends BaseApiService {
   }
 
   private getAllSourceUrlSupportedSchemesApiCall(): Observable< DbModelSourceUrlSupportedScheme[] | undefined > {
-    return this.httpClient.get<DbModelSourceUrlSupportedScheme[]>(this.getApiUrlWithAddition("/url/scheme"))
+    return this.httpClient.get<DbModelSourceUrlSupportedScheme[]>(this.getApiUrlWithAddition("url/scheme"))
                           .pipe(
                             map((getAllSourceUrlSupportedSchemesResult: DbModelSourceUrlSupportedScheme[]) => {
                               let sourceUrlSupportedSchemes: DbModelSourceUrlSupportedScheme[] = [];
@@ -472,7 +472,7 @@ export class DbModelSourceService extends BaseApiService {
   }
 
   private getAllSourceUrlSupportedProvidersApiCall(): Observable< DbModelSourceUrlSupportedProvider[] | undefined > {
-    return this.httpClient.get<DbModelSourceUrlSupportedProvider[]>(this.getApiUrlWithAddition("/url/provider"))
+    return this.httpClient.get<DbModelSourceUrlSupportedProvider[]>(this.getApiUrlWithAddition("url/provider"))
                           .pipe(
                             map((getAllSourceUrlSupportedProvidersResult: DbModelSourceUrlSupportedProvider[]) => {
                               let sourceUrlSupportedProviders: DbModelSourceUrlSupportedProvider[] = [];

@@ -1,0 +1,10 @@
+<div class="row m-0" id="codeViewer">
+  <div class="col-lg-2 border-end ps-0 pe-0" id="codeViewer_ExplorerPanel">
+    <code-file-explorer (entryClicked)="handleClickedEntry($event)" id="codeViewer_Explorer"></code-file-explorer>
+  </div>
+  <div *ngIf="selectedCodeFile" class="col-lg-10" id="codeViewer_CodePanel">
+
+    <span>{{ getContentsFromFileIfText(selectedCodeFile) }}</span>
+
+  </div>
+</div>

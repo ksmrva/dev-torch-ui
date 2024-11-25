@@ -20,11 +20,14 @@ export class DbPrimaryKeyColumnModel extends ApiEntity {
 
   override isEqualTo(otherEntity: DbPrimaryKeyColumnModel): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.columnId === otherEntity.columnId) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.columnId === otherEntity.columnId) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }
+  
 }

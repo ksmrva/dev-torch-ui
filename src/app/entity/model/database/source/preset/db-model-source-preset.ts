@@ -32,14 +32,15 @@ export class DbModelSourcePreset extends ApiEntity {
 
   override isEqualTo(otherEntity: DbModelSourcePreset): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.name === otherEntity.name
-      && this.scheme === otherEntity.scheme
-      && this.provider === otherEntity.provider
-      && this.driverName === otherEntity.driverName
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.name === otherEntity.name
+        && this.scheme === otherEntity.scheme
+        && this.provider === otherEntity.provider
+        && this.driverName === otherEntity.driverName) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

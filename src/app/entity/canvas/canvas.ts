@@ -75,26 +75,28 @@ export class Canvas extends ApiEntity {
 
   override isEqualTo(otherEntity: Canvas): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.name === otherEntity.name
-      && this.height === otherEntity.height
-      && this.width === otherEntity.width
-      && this.backgroundColor === otherEntity.backgroundColor
-      && this.cells.length === otherEntity.cells.length
-    ) {
-      let allCellsHaveMatch = true;
-      for (let i = 0; i < this.cells.length; i++) {
-        let cell = this.cells[i];
-        let indexOfCell = otherEntity.cells.findIndex((otherCell: CanvasCell) => {
-          return cell.isEqualTo(otherCell);
-        });
-        if (indexOfCell < 0) {
-          allCellsHaveMatch = false;
-          break;
+    if (isEqualTo) {
+      if(this.name === otherEntity.name
+        && this.height === otherEntity.height
+        && this.width === otherEntity.width
+        && this.backgroundColor === otherEntity.backgroundColor
+        && this.cells.length === otherEntity.cells.length
+      ) {
+        let allCellsHaveMatch = true;
+        for (let i = 0; i < this.cells.length; i++) {
+          let cell = this.cells[i];
+          let indexOfCell = otherEntity.cells.findIndex((otherCell: CanvasCell) => {
+            return cell.isEqualTo(otherCell);
+          });
+          if (indexOfCell < 0) {
+            allCellsHaveMatch = false;
+            break;
+          }
         }
+        isEqualTo = allCellsHaveMatch;
+      } else {
+        isEqualTo = false;
       }
-      isEqualTo = allCellsHaveMatch;
     }
     return isEqualTo;
   }
@@ -129,4 +131,5 @@ export class Canvas extends ApiEntity {
   static setJointCanvasName( canvasName: string, jointGraph: dia.Graph ): void {
     JointModelValueAccessor.setCurrentValue( CANVAS_NAME_KEY, canvasName, jointGraph );
   }
+
 }

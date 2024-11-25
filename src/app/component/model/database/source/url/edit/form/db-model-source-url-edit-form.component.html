@@ -36,9 +36,9 @@
       <input class="form-control form-control-sm" formControlName="port" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input_Port" />
     </div>
   </div>
-  <div class="mb-4" id="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName" >
-    <label class="form-label sidebar-menu-label-primary" for="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName_Input" id="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName_Input_Label" >maintenance database name</label>
-    <input class="form-control form-control-sm" formControlName="maintenanceDatabaseName" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_MaintenanceDatabaseName_Input" />
+  <div class="mb-4" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName" >
+    <label class="form-label sidebar-menu-label-primary" for="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName_Input" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName_Input_Label" >admin db name</label>
+    <input class="form-control form-control-sm" formControlName="adminDatabaseName" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName_Input" />
   </div>
   <div id="dbModelSourceUrlEditForm_Form_PreviewUrl">
     <div id="dbModelSourceUrlEditForm_Form_PreviewUrl_Title" >
@@ -48,7 +48,7 @@
     </div>
     <div class="input-group input-group-sm mb-3" id="dbModelSourceUrlEditForm_Form_PreviewUrl_InputGroup" >
       <span class="input-group-text" id="dbModelSourceUrlEditForm_Form_PreviewUrl_InputGroup_Scheme">
-        {{ getSchemeTextPreview() }} : {{ getProviderTextPreview() }} :// {{ getHostnameTextPreview() }} : {{ getPortTextPreview() }} / {{ getMaintenanceDbNameTextPreview() }}
+        {{ getSchemeTextPreview() }} : {{ getProviderTextPreview() }} :// {{ getHostnameTextPreview() }} : {{ getPortTextPreview() }} / {{ getAdminDatabaseNameTextPreview() }}
       </span>
     </div>
   </div>

@@ -37,14 +37,15 @@ export class DbModelSourceConfig extends ApiEntity {
 
   override isEqualTo(otherEntity: DbModelSourceConfig): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.url.isEqualTo(otherEntity.url)
-      && this.driverName === otherEntity.driverName
-      && this.username === otherEntity.username
-      && this.password === otherEntity.password
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.url.isEqualTo(otherEntity.url)
+        && this.driverName === otherEntity.driverName
+        && this.username === otherEntity.username
+        && this.password === otherEntity.password) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

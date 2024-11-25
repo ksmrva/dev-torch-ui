@@ -20,11 +20,12 @@ export class DbModelSourceUrlSupportedScheme extends ApiEntity {
 
   override isEqualTo(otherEntity: DbModelSourceUrlSupportedScheme): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.scheme === otherEntity.scheme
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.scheme === otherEntity.scheme) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

@@ -677,4 +677,5 @@ export class CanvasCellFactory {
   private static getUniqueComponentForCellName(): string {
     return crypto.randomUUID();
   }
+
 }

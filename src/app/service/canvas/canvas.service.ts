@@ -66,7 +66,7 @@ export class CanvasService extends BaseApiService {
 
   getCanvas(canvasName: string): Observable<Canvas | undefined> {
     let canvasResult: Observable<Canvas | undefined>;
-    if (this.isCanvasLoaded(canvasName)) {
+    if (this.loadedCanvases.has(canvasName)) {
       let loadedCanvas = this.loadedCanvases.get(canvasName);
       if (loadedCanvas) {
         canvasResult = of(loadedCanvas);
@@ -92,7 +92,7 @@ export class CanvasService extends BaseApiService {
     return this.updateCanvasLinkCellApiCall(canvasLinkCellToUpdate);
   }
 
-  protected getResourcePathForApiUrl(): string {
+  protected override getResourcePathForApiUrl(): string {
     return "/canvas";
   }
 
@@ -140,10 +140,6 @@ export class CanvasService extends BaseApiService {
     }
   }
 
-  private isCanvasLoaded(canvasName: string): boolean {
-    return this.loadedCanvases.has(canvasName);
-  }
-
   private unloadAllCanvases(): void {
     this.loadedCanvases.clear();
   }
@@ -169,7 +165,7 @@ export class CanvasService extends BaseApiService {
   }
 
   private getCanvasApiCall( canvasName: string ): Observable<Canvas | undefined> {
-    return this.httpClient.get<Canvas>(this.getApiUrlWithAddition("/" + canvasName))
+    return this.httpClient.get<Canvas>(this.getApiUrlWithAddition(canvasName))
                           .pipe(
                             map((getCanvasResult: Canvas) => {
                               return new Canvas().deserialize(getCanvasResult);
@@ -237,7 +233,7 @@ export class CanvasService extends BaseApiService {
   }
 
   private updateCanvasCustomCellApiCall( canvasCustomCellToUpdate: CanvasCustomCell ): Observable<CanvasCustomCell | undefined> {
-    return this.httpClient.put<CanvasCustomCell>(this.getApiUrlWithAddition("/cell/custom"), canvasCustomCellToUpdate)
+    return this.httpClient.put<CanvasCustomCell>(this.getApiUrlWithAddition("cell/custom"), canvasCustomCellToUpdate)
                           .pipe(
                             map((updateCanvasCustomCellResult: CanvasCustomCell) => {
                               return new CanvasCustomCell().deserialize(updateCanvasCustomCellResult);
@@ -258,7 +254,7 @@ export class CanvasService extends BaseApiService {
   }
 
   private updateCanvasLinkCellApiCall( canvasLinkCellToUpdate: CanvasLinkCell ): Observable<CanvasLinkCell | undefined> {
-    return this.httpClient.put<CanvasLinkCell>(this.getApiUrlWithAddition("/cell/link"), canvasLinkCellToUpdate)
+    return this.httpClient.put<CanvasLinkCell>(this.getApiUrlWithAddition("cell/link"), canvasLinkCellToUpdate)
                           .pipe(
                             map((updateCanvasLinkCellResult: CanvasLinkCell) => {
                               return new CanvasLinkCell().deserialize(updateCanvasLinkCellResult);

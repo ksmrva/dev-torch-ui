@@ -30,7 +30,6 @@ export class CanvasLinkCell extends CanvasCell {
 
   linkTargetDy: number;
 
-
   constructor() {
     super();
 
@@ -55,7 +54,7 @@ export class CanvasLinkCell extends CanvasCell {
     linkTargetDxInit: number,
     linkTargetDyInit: number
 ): CanvasLinkCell {
-    super.initializeBaseCellValues(
+    super.initializeBaseValues(
       idInit,
       canvasIdInit,
       nameInit,
@@ -86,16 +85,17 @@ export class CanvasLinkCell extends CanvasCell {
 
   override isEqualTo(otherEntity: CanvasLinkCell): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.sourceCellLocalName === otherEntity.sourceCellLocalName
-      && this.targetCellLocalName === otherEntity.targetCellLocalName
-      && this.linkSourceDx === otherEntity.linkSourceDx
-      && this.linkSourceDy === otherEntity.linkSourceDy
-      && this.linkTargetDx === otherEntity.linkTargetDx
-      && this.linkTargetDy === otherEntity.linkTargetDy
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.sourceCellLocalName === otherEntity.sourceCellLocalName
+        && this.targetCellLocalName === otherEntity.targetCellLocalName
+        && this.linkSourceDx === otherEntity.linkSourceDx
+        && this.linkSourceDy === otherEntity.linkSourceDy
+        && this.linkTargetDx === otherEntity.linkTargetDx
+        && this.linkTargetDy === otherEntity.linkTargetDy) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

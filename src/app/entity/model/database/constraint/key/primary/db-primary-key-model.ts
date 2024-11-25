@@ -47,30 +47,33 @@ export class DbPrimaryKeyModel extends ApiEntity {
 
   override isEqualTo(otherEntity: DbPrimaryKeyModel): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.name === otherEntity.name
-      && this.description === otherEntity.description
-      && this.primaryKeyColumns.length === otherEntity.primaryKeyColumns.length
-    ) {
-      let allPrimaryKeyColumnsHaveMatch = true;
-      for (let i = 0; i < this.primaryKeyColumns.length; i++) {
-        let primaryKeyColumn = this.primaryKeyColumns[i];
-        let indexOfPrimaryKeyColumn =
-          otherEntity.primaryKeyColumns.findIndex(
-            (otherPrimaryKeyColumn: DbPrimaryKeyColumnModel) => {
-              return primaryKeyColumn.isEqualTo(
-                otherPrimaryKeyColumn
-              );
-            }
-          );
-        if (indexOfPrimaryKeyColumn < 0) {
-          allPrimaryKeyColumnsHaveMatch = false;
-          break;
+    if (isEqualTo) {
+      if(this.name === otherEntity.name
+        && this.description === otherEntity.description
+        && this.primaryKeyColumns.length === otherEntity.primaryKeyColumns.length) {
+
+        let allPrimaryKeyColumnsHaveMatch = true;
+        for (let i = 0; i < this.primaryKeyColumns.length; i++) {
+          let primaryKeyColumn = this.primaryKeyColumns[i];
+          let indexOfPrimaryKeyColumn =
+            otherEntity.primaryKeyColumns.findIndex(
+              (otherPrimaryKeyColumn: DbPrimaryKeyColumnModel) => {
+                return primaryKeyColumn.isEqualTo(
+                  otherPrimaryKeyColumn
+                );
+              }
+            );
+          if (indexOfPrimaryKeyColumn < 0) {
+            allPrimaryKeyColumnsHaveMatch = false;
+            break;
+          }
         }
+        isEqualTo = allPrimaryKeyColumnsHaveMatch;
+      } else {
+        isEqualTo = false;
       }
-      isEqualTo = allPrimaryKeyColumnsHaveMatch;
     }
     return isEqualTo;
   }
+
 }

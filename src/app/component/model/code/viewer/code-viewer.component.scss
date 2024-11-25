@@ -1,0 +1,15 @@
+#codeViewer {
+  height: 100%;
+}
+
+#codeViewer_NavigationPanel {
+  height: 100%;
+}
+
+#codeViewer_NavigationPanel {
+  overflow: hidden;
+}
+
+#codeViewer_NavigationPanel:hover {
+  overflow: scroll;
+}

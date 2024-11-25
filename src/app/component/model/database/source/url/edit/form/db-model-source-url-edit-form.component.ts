@@ -54,7 +54,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
       provider: new FormControl(),
       hostname: new FormControl(),
       port: new FormControl(),
-      maintenanceDatabaseName: new FormControl()
+      adminDatabaseName: new FormControl()
     });
 
     this.sourceUrlForEdit = undefined;
@@ -149,14 +149,14 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
         let provider = this.sourceUrlEditForm.value.provider;
         let hostname = this.sourceUrlEditForm.value.hostname;
         let port = this.sourceUrlEditForm.value.port;
-        let maintenanceDatabaseName = this.sourceUrlEditForm.value.maintenanceDatabaseName;
+        let adminDatabaseName = this.sourceUrlEditForm.value.adminDatabaseName;
 
         let sourceUrlForCreate: DbModelSourceUrl = new DbModelSourceUrl();
         sourceUrlForCreate.scheme = scheme;
         sourceUrlForCreate.hostname = hostname;
         sourceUrlForCreate.port = port;
         sourceUrlForCreate.provider = provider;
-        sourceUrlForCreate.maintenanceDatabaseName = maintenanceDatabaseName;
+        sourceUrlForCreate.adminDatabaseName = adminDatabaseName;
 
         this.dbModelSourceService.createSourceUrl(sourceUrlForCreate).subscribe({
                                                                     next: (createdSourceUrl: DbModelSourceUrl | undefined) => {
@@ -225,14 +225,14 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
     return portTextPreview;
   }
 
-  getMaintenanceDbNameTextPreview(): string {
-    let maintenanceDbNameTextPreview;
-    if(this.sourceUrlEditForm.value.maintenanceDatabaseName) {
-      maintenanceDbNameTextPreview = this.sourceUrlEditForm.value.maintenanceDatabaseName;
+  getAdminDatabaseNameTextPreview(): string {
+    let adminDatabaseNameTextPreview;
+    if(this.sourceUrlEditForm.value.adminDatabaseName) {
+      adminDatabaseNameTextPreview = this.sourceUrlEditForm.value.adminDatabaseName;
     } else {
-      maintenanceDbNameTextPreview = "{maintenance_database_name}";
+      adminDatabaseNameTextPreview = "{admin_db_name}";
     }
-    return maintenanceDbNameTextPreview;
+    return adminDatabaseNameTextPreview;
   }
 
   resetSourceUrlEditForms(): void {
@@ -267,7 +267,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
       provider: sourceUrlForEdit.provider,
       hostname: sourceUrlForEdit.hostname,
       port: sourceUrlForEdit.port,
-      maintenanceDatabaseName: sourceUrlForEdit.maintenanceDatabaseName
+      adminDatabaseName: sourceUrlForEdit.adminDatabaseName
     });
   }
 

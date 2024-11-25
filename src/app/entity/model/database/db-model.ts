@@ -63,23 +63,25 @@ export class DbModel extends ApiEntity {
 
   override isEqualTo(otherEntity: DbModel): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (isEqualTo
-      && this.name.isEqualTo(otherEntity.name)
-      && this.description === otherEntity.description
-      && this.tables.length === otherEntity.tables.length
-    ) {
-      let allTablesHaveMatch = true;
-      for (let i = 0; i < this.tables.length; i++) {
-        let table = this.tables[i];
-        let indexOfTable = otherEntity.tables.findIndex((otherTable: DbTableModel) => {
-          return table.isEqualTo(otherTable);
-        });
-        if (indexOfTable < 0) {
-          allTablesHaveMatch = false;
-          break;
+    if (isEqualTo) {
+      if(this.name.isEqualTo(otherEntity.name)
+        && this.description === otherEntity.description
+        && this.tables.length === otherEntity.tables.length) {
+        let allTablesHaveMatch = true;
+        for (let i = 0; i < this.tables.length; i++) {
+          let table = this.tables[i];
+          let indexOfTable = otherEntity.tables.findIndex((otherTable: DbTableModel) => {
+            return table.isEqualTo(otherTable);
+          });
+          if (indexOfTable < 0) {
+            allTablesHaveMatch = false;
+            break;
+          }
         }
+        isEqualTo = allTablesHaveMatch;
+      } else {
+        isEqualTo = false;
       }
-      isEqualTo = allTablesHaveMatch;
     }
     return isEqualTo;
   }

@@ -10,7 +10,7 @@ export class DbModelSourceUrl extends ApiEntity {
 
   port: string;
 
-  maintenanceDatabaseName: string;
+  adminDatabaseName: string;
 
   constructor() {
     super();
@@ -19,11 +19,11 @@ export class DbModelSourceUrl extends ApiEntity {
     this.provider = "";
     this.hostname = "";
     this.port = "";
-    this.maintenanceDatabaseName = "";
+    this.adminDatabaseName = "";
   }
 
   override toString(): string {
-    return this.scheme + ":" + this.provider + "://" + this.hostname + ":" + this.port + "/" + this.maintenanceDatabaseName;
+    return this.scheme + ":" + this.provider + "://" + this.hostname + ":" + this.port + "/" + this.adminDatabaseName;
   }
 
   override deserialize(json: any): DbModelSourceUrl {
@@ -33,22 +33,23 @@ export class DbModelSourceUrl extends ApiEntity {
       this.provider = json.provider;
       this.hostname = json.hostname;
       this.port = json.port;
-      this.maintenanceDatabaseName = json.maintenanceDatabaseName;
+      this.adminDatabaseName = json.adminDatabaseName;
     }
     return this;
   }
 
   override isEqualTo(otherEntity: DbModelSourceUrl): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.scheme === otherEntity.scheme
-      && this.provider === otherEntity.provider
-      && this.hostname === otherEntity.hostname
-      && this.port === otherEntity.port
-      && this.maintenanceDatabaseName === otherEntity.maintenanceDatabaseName
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.scheme === otherEntity.scheme
+        && this.provider === otherEntity.provider
+        && this.hostname === otherEntity.hostname
+        && this.port === otherEntity.port
+        && this.adminDatabaseName === otherEntity.adminDatabaseName) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

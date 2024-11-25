@@ -33,8 +33,7 @@ export class DbModelName implements DeserializableEntity<DbModelName>, Comparabl
 
   isEqualTo(otherEntity: DbModelName): boolean {
     let isEqualTo = false;
-    if (
-      this.databaseName === otherEntity.databaseName
+    if (this.databaseName === otherEntity.databaseName
       && this.schemaName === otherEntity.schemaName
     ) {
       isEqualTo = true;

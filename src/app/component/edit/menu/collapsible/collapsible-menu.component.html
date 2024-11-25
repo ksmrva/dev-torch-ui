@@ -7,7 +7,7 @@
           {{ menuTitle }}
         </span>
         <div class="d-flex align-items-center" id="{{ baseHtmlId }}_ContentToggle_LabelIconHolder">
-          <i class="bi bi-chevron-down" id="{{ baseHtmlId }}_ContentToggle_LabelIcon"></i>
+          <i [ngClass]="additionalLabelIconClasses" class="bi" id="{{ baseHtmlId }}_ContentToggle_LabelIcon"></i>
         </div>
       </div>
     </button>

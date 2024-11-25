@@ -43,6 +43,8 @@ export class CollapsibleMenuComponent extends BaseComponent implements OnInit, O
 
   additionalLabelNameClasses: string;
 
+  additionalLabelIconClasses: string;
+
   constructor(
     @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef
   ) {
@@ -62,6 +64,7 @@ export class CollapsibleMenuComponent extends BaseComponent implements OnInit, O
     this.additionalTitleClasses = "";
     this.additionalLabelClasses = "";
     this.additionalLabelNameClasses = "";
+    this.additionalLabelIconClasses = "";
   }
 
   ngOnInit(): void {
@@ -74,6 +77,7 @@ export class CollapsibleMenuComponent extends BaseComponent implements OnInit, O
     this.initAdditionalTitleClasses();
     this.initAdditionalLabelClasses();
     this.initAdditionalLabelNameClasses();
+    this.initAdditionalLabelIconClasses();
   }
 
   ngAfterViewInit(): void {
@@ -117,6 +121,7 @@ export class CollapsibleMenuComponent extends BaseComponent implements OnInit, O
     }
     this.initAdditionalLabelNameClasses();
     this.initAdditionalContentHolderClasses();
+    this.initAdditionalLabelIconClasses();
   }
 
   closeMenuContent(): void {
@@ -183,6 +188,14 @@ export class CollapsibleMenuComponent extends BaseComponent implements OnInit, O
     }
   }
 
+  private initAdditionalLabelIconClasses(): void {
+    if (this.menuContentIsClosed) {
+      this.additionalLabelIconClasses = "bi-chevron-down";
+    } else {
+      this.additionalLabelIconClasses = "bi-chevron-up";
+    }
+  }
+
   private addBorderBottomToTitle(): void {
     if(this.isSubMenu) {
       this.additionalTitleClasses += " border-bottom menu-title-shadow";
@@ -195,7 +208,7 @@ export class CollapsibleMenuComponent extends BaseComponent implements OnInit, O
     this.initAdditionalTitleClasses();
   }
 
-  private isCurrentlyCollapsed(): boolean {
+   private isCurrentlyCollapsed(): boolean {
     return !$(this.jQuerySelectorIdForMenuContent).hasClass("show");
   }
 

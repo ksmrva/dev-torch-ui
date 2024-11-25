@@ -54,18 +54,19 @@ export class DbColumnModel extends ApiEntity {
 
   override isEqualTo(otherEntity: DbColumnModel): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.tableId === otherEntity.tableId
-      && this.name === otherEntity.name
-      && this.description === otherEntity.description
-      && this.dataType.isEqualTo(otherEntity.dataType)
-      && this.columnCategory.isEqualTo(otherEntity.columnCategory)
-      && this.isNullable === otherEntity.isNullable
-      && this.isAutoIncrement === otherEntity.isAutoIncrement
-      && this.columnIndex === otherEntity.columnIndex
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.tableId === otherEntity.tableId
+        && this.name === otherEntity.name
+        && this.description === otherEntity.description
+        && this.dataType.isEqualTo(otherEntity.dataType)
+        && this.columnCategory.isEqualTo(otherEntity.columnCategory)
+        && this.isNullable === otherEntity.isNullable
+        && this.isAutoIncrement === otherEntity.isAutoIncrement
+        && this.columnIndex === otherEntity.columnIndex) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

@@ -2,8 +2,6 @@ import { CommonModule, DOCUMENT } from "@angular/common";
 import { Component, AfterViewInit, Inject } from "@angular/core";
 import { RouterOutlet, RouterLink, RouterLinkActive } from "@angular/router";
 import { APP_LOGO_PATH } from "./app.constants";
-import { CanvasViewerComponent } from "./component/canvas/viewer/canvas-viewer.component";
-
 
 @Component({
   selector: "app-root",
@@ -12,8 +10,7 @@ import { CanvasViewerComponent } from "./component/canvas/viewer/canvas-viewer.c
     CommonModule,
     RouterOutlet,
     RouterLink,
-    RouterLinkActive,
-    CanvasViewerComponent
+    RouterLinkActive
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss"
@@ -37,7 +34,7 @@ export class AppComponent implements AfterViewInit {
   constructor(
     @Inject(DOCUMENT) private document: Document
   ) {
-    this.htmlIdBase = "AppRoot";
+    this.htmlIdBase = "appRoot";
     this.bannerBarBottomHtmlId = this.htmlIdBase + "_BannerBar_Bottom";
     this.titleStart = "dev";
     this.titleEnd = "Torch";
@@ -77,4 +74,5 @@ export class AppComponent implements AfterViewInit {
       }
     });
   }
+
 }

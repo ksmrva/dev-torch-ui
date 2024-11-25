@@ -55,4 +55,5 @@ export class CanvasFactory {
     canvas.cells = canvasCells;
     return canvas;
   }
+
 }

@@ -22,8 +22,12 @@ export class DbDataType extends ApiEntity {
 
   override isEqualTo(otherEntity: DbDataType): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (isEqualTo && this.name === otherEntity.name) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.name === otherEntity.name) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }

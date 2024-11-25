@@ -23,7 +23,7 @@ export abstract class CanvasCell extends ApiEntity {
     this.localName = "";
   }
 
-  initializeBaseCellValues( idInit: number, canvasIdInit: number, nameInit: string, localName: string ): CanvasCell {
+  initializeBaseValues( idInit: number, canvasIdInit: number, nameInit: string, localName: string ): CanvasCell {
     this.id = idInit;
     this.canvasId = canvasIdInit;
     this.name = nameInit;
@@ -32,7 +32,7 @@ export abstract class CanvasCell extends ApiEntity {
     return this;
   }
 
-  override deserialize(json: any): ApiEntity {
+  override deserialize(json: any): CanvasCell {
     super.deserialize(json);
     if (json) {
       this.canvasId = json.canvasId;
@@ -44,13 +44,15 @@ export abstract class CanvasCell extends ApiEntity {
 
   override isEqualTo(otherEntity: CanvasCell): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
-    if (
-      isEqualTo
-      && this.canvasId === otherEntity.canvasId
-      && this.name === otherEntity.name
-      && this.localName === otherEntity.localName
-    ) {
-      isEqualTo = true;
+    if (isEqualTo) {
+      if(this.canvasId === otherEntity.canvasId
+        && this.name === otherEntity.name
+        && this.localName === otherEntity.localName
+      ) {
+        isEqualTo = true;
+      } else {
+        isEqualTo = false;
+      }
     }
     return isEqualTo;
   }
@@ -99,4 +101,5 @@ export abstract class CanvasCell extends ApiEntity {
   static setCurrentJointCellLocalName( cellLocalName: string, jointCell: dia.Cell ): void {
     JointModelValueAccessor.setCurrentValue( CELL_LOCAL_NAME_JOINT_KEY, cellLocalName, jointCell );
   }
+
 }

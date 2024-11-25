@@ -81,18 +81,14 @@ export class DbModelService extends BaseApiService {
 
   getDbModel(dbModelNameToGet: DbModelName): Observable<DbModel | undefined> {
     let dbModelResult: Observable<DbModel | undefined>;
-    let loadedDbModel = undefined;
-    if (this.isDbLoaded(dbModelNameToGet)) {
-      loadedDbModel = this.dbModels$.value.find((dbModel: DbModel) => {
-        return dbModel.name.isEqualTo(dbModelNameToGet);
-      });
-    }
-
+    let loadedDbModel = this.getDbModelFromCache(dbModelNameToGet);
     if (loadedDbModel) {
       dbModelResult = of(loadedDbModel);
+
     } else {
       console.info("Database Model with name [" + dbModelNameToGet.databaseName + "." + dbModelNameToGet.schemaName + "] not found within the Loaded Database Models Map");
       dbModelResult = this.getDbModelApiCall(dbModelNameToGet);
+
     }
     return dbModelResult;
   }
@@ -110,7 +106,7 @@ export class DbModelService extends BaseApiService {
     return this.updateDbColumnModelApiCall(dbColumnModelForUpdate);
   }
 
-  protected getResourcePathForApiUrl(): string {
+  protected override getResourcePathForApiUrl(): string {
     return "/model/db";
   }
 
@@ -178,19 +174,10 @@ export class DbModelService extends BaseApiService {
                                         });
   }
 
-  private isDbLoaded(dbModelNameToCheck: DbModelName): boolean {
-    let isDbLoaded = false;
-    let loadedDbModelNames = this.dbModels$.value.map((dbModel: DbModel) => {
-      return dbModel.name;
+  private getDbModelFromCache(dbModelNameToCheck: DbModelName): DbModel | undefined {
+    return this.dbModels$.value.find((dbModel: DbModel) => {
+      return dbModel.name.isEqualTo(dbModelNameToCheck);
     });
-
-    let loadedDbModelName = loadedDbModelNames.find((loadedDbModelName: DbModelName) => {
-      return loadedDbModelName.isEqualTo(dbModelNameToCheck);
-    });
-    if (loadedDbModelName) {
-      isDbLoaded = true;
-    }
-    return isDbLoaded;
   }
 
   private addDbModel(dbModelToAdd: DbModel): void {
@@ -200,7 +187,7 @@ export class DbModelService extends BaseApiService {
         && StringUtil.isNotEmpty(dbModelNameToAdd.databaseName)
         && StringUtil.isNotEmpty(dbModelNameToAdd.schemaName)
       ) {
-        if (!this.isDbLoaded(dbModelNameToAdd)) {
+        if (!this.getDbModelFromCache(dbModelNameToAdd)) {
           this.dbModels$.next([...this.dbModels$.value, dbModelToAdd]);
         }
         this.addAvailableDbModelName(dbModelNameToAdd);
@@ -293,7 +280,7 @@ export class DbModelService extends BaseApiService {
   }
 
   private getDbModelApiCall(dbModelName: DbModelName): Observable<DbModel | undefined> {
-    return this.httpClient.get<DbModel>(this.getApiUrlWithAddition("/" + dbModelName.databaseName + "/" + dbModelName.schemaName))
+    return this.httpClient.get<DbModel>(this.getApiUrlWithAddition(dbModelName.databaseName + "/" + dbModelName.schemaName))
                           .pipe(
                             map((getDbModelResult: DbModel) => {
                               return new DbModel().deserialize(getDbModelResult);
@@ -313,7 +300,7 @@ export class DbModelService extends BaseApiService {
   }
 
   private getAllDbModelNamesApiCall(): Observable<DbModelName[] | undefined> {
-    return this.httpClient.get<DbModelName[]>(this.getApiUrlWithAddition("/name"))
+    return this.httpClient.get<DbModelName[]>(this.getApiUrlWithAddition("name"))
                           .pipe(
                             map((getAllDbModelNamesResult: DbModelName[]) => {
                               let dbModelNames: DbModelName[] = [];
@@ -342,7 +329,7 @@ export class DbModelService extends BaseApiService {
   }
 
   private getAllDataTypesApiCall(): Observable<DbDataType[] | undefined> {
-    return this.httpClient.get<DbDataType[]>(this.getApiUrlWithAddition("/data/type"))
+    return this.httpClient.get<DbDataType[]>(this.getApiUrlWithAddition("data/type"))
                           .pipe(
                             map((getAllDbDataTypeResult: DbDataType[]) => {
                               let dbDataTypes: DbDataType[] = [];
@@ -371,7 +358,7 @@ export class DbModelService extends BaseApiService {
   }
 
   private getAllTableCategoriesApiCall(): Observable<DbTableCategory[] | undefined> {
-    return this.httpClient.get<DbTableCategory[]>(this.getApiUrlWithAddition("/table/category"))
+    return this.httpClient.get<DbTableCategory[]>(this.getApiUrlWithAddition("table/category"))
                           .pipe(
                             map((getAllTableCategoriesResult: DbTableCategory[]) => {
                               let tableCategories: DbTableCategory[] = [];
@@ -400,7 +387,7 @@ export class DbModelService extends BaseApiService {
   }
 
   private getAllColumnCategoriesApiCall(): Observable<DbColumnCategory[] | undefined> {
-    return this.httpClient.get<DbColumnCategory[]>(this.getApiUrlWithAddition("/column/category"))
+    return this.httpClient.get<DbColumnCategory[]>(this.getApiUrlWithAddition("column/category"))
                           .pipe(
                             map((getAllColumnCategoriesResult: DbColumnCategory[]) => {
                               let columnCategories: DbColumnCategory[] = [];
@@ -429,7 +416,7 @@ export class DbModelService extends BaseApiService {
   }
 
   private updateDbColumnModelApiCall(dbColumnModelForUpdate: DbColumnModel): Observable<DbColumnModel | undefined> {
-    return this.httpClient.post<DbColumnModel>(this.getApiUrlWithAddition("/column"), dbColumnModelForUpdate)
+    return this.httpClient.post<DbColumnModel>(this.getApiUrlWithAddition("column"), dbColumnModelForUpdate)
                           .pipe(
                             map((updatedDbColumnModelResult: DbColumnModel) => {
                               if (!updatedDbColumnModelResult) {
