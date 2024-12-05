@@ -4,6 +4,6 @@
 </simple-menu-select>
 <db-column-model-edit-form *ngIf="columnModelNameSelectedForEdit" id="tableModelEditForm_Form_ColumnsSection_ColumnEdit_Form"
                         [columnModelForEditObservable]="columnModelForEdit$.asObservable()" [tableModelId]="tableModelId"
-                        (resetColumnModelEditButtonClicked)="resetEdit()" (columnModelWasUpdated)="resetAfterUpdate()" >
+                        (resetEditButtonClicked)="resetEdit()" (columnModelWasUpdated)="resetAfterUpdate()" >
 </db-column-model-edit-form>
 

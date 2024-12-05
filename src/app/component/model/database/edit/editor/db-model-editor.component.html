@@ -3,7 +3,7 @@
             (keyWasSelected)="loadDbModelForEdit($event)" (addNewButtonClicked)="loadNewDbModelForEdit()">
   </menu-select>
   <db-model-edit-form *ngIf="!showSelect" [dbModelForEditObservable]="dbModelForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
-                            (dbModelWasUpdated)="resetDbModelEdit()" (resetDbModelEditButtonClicked)="resetDbModelEdit()" >
+                            (dbModelWasUpdated)="resetDbModelEdit()" (resetEditButtonClicked)="resetDbModelEdit()" >
   </db-model-edit-form>
 </div>
 

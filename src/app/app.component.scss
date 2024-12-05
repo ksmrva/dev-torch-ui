@@ -1,14 +1,12 @@
-#appRoot_Header {
-  min-height: 7vh;
-  max-height: 11vh;
-}
-
 #appRoot_Main {
-  height: 89vh;
+  height: 88vh;
+  overflow: auto;
 }
 
 #appRoot_Footer {
-  height: 4vh;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .active {

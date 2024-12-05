@@ -7,7 +7,7 @@ import { DbModelSourcePreset } from "../../../../../../../entity/model/database/
 import { DbModelSourceService } from "../../../../../../../service/model/database/source/db-model-source.service";
 import { BaseComponent } from "../../../../../../base.component";
 import { DbModelSourceUrl } from '../../../../../../../entity/model/database/source/url/db-model-source-url';
-import { DbModelSourceSupportedDriver } from "../../../../../../../entity/model/database/source/driver/db-model-source-supported-driver";
+import { DbModelSourceSupportedDriver } from "../../../../../../../entity/model/database/source/config/driver/db-model-source-supported-driver";
 
 @Component({
   selector: "db-model-source-config-edit-form",
@@ -26,7 +26,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
 
   @Output() sourceConfigWasUpdated: EventEmitter<boolean>;
 
-  @Output() resetSourceConfigEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   sourceConfigEditForm: FormGroup;
 
@@ -49,7 +49,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
     super();
     this.sourceConfigForEditObservable = of(undefined);
     this.sourceConfigWasUpdated = new EventEmitter<boolean>();
-    this.resetSourceConfigEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
 
     this.sourceConfigEditForm = formBuilder.group({
       urlId: new FormControl(),
@@ -227,7 +227,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
   resetSourceConfigEdit(): void {
     this.resetSourceConfigEditForms();
 
-    this.resetSourceConfigEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   private setSourceConfigForEdit( sourceConfigForEdit: DbModelSourceConfig | undefined ): void {

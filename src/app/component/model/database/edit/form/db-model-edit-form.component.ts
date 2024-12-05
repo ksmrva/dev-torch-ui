@@ -36,7 +36,7 @@ export class DbModelEditFormComponent extends BaseComponent implements OnInit {
 
   @Output() dbModelWasUpdated: EventEmitter<boolean>;
 
-  @Output() resetDbModelEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   dbModelEditForm: FormGroup;
 
@@ -58,7 +58,7 @@ export class DbModelEditFormComponent extends BaseComponent implements OnInit {
     super();
     this.dbModelForEditObservable = of(undefined);
     this.dbModelWasUpdated = new EventEmitter<boolean>();
-    this.resetDbModelEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
 
     this.dbModelEditForm = formBuilder.group({
       sourceConfigId: new FormControl(-1),
@@ -198,7 +198,7 @@ export class DbModelEditFormComponent extends BaseComponent implements OnInit {
   resetDbModelEdit(): void {
     this.resetDbModelEditForms();
 
-    this.resetDbModelEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   private setDbModelForEdit( dbModelForEdit: DbModel | undefined ): void {

@@ -88,7 +88,7 @@ export class CanvasEditorComponent extends BaseComponent implements OnInit {
     }
   }
 
-  resetCanvasEdit(): void {
+  resetEdit(): void {
     this.setCanvasForEdit(undefined);
     this.showSelect = true;
   }
@@ -97,4 +97,5 @@ export class CanvasEditorComponent extends BaseComponent implements OnInit {
     this.canvasForEdit$.next(canvasForEdit);
     this.showSelect = false;
   }
+
 }

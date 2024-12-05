@@ -3,6 +3,6 @@
             (keyWasSelected)="loadSourceUrlForEdit($event)" (addNewButtonClicked)="loadNewSourceUrlForEdit()">
   </menu-select>
   <db-model-source-url-edit-form *ngIf="!showSelect" [sourceUrlForEditObservable]="sourceUrlForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
-                            (sourceUrlWasUpdated)="resetSourceUrlEdit()" (resetSourceUrlEditButtonClicked)="resetSourceUrlEdit()" >
+                            (sourceUrlWasUpdated)="resetSourceUrlEdit()" (resetEditButtonClicked)="resetSourceUrlEdit()" >
   </db-model-source-url-edit-form>
 </div>

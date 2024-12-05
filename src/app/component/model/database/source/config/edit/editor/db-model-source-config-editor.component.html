@@ -3,6 +3,6 @@
             (keyWasSelected)="loadSourceConfigForEdit($event)" (addNewButtonClicked)="loadNewSourceConfigForEdit()">
   </menu-select>
   <db-model-source-config-edit-form *ngIf="!showSelect" [sourceConfigForEditObservable]="sourceConfigForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
-                            (sourceConfigWasUpdated)="resetSourceConfigEdit()" (resetSourceConfigEditButtonClicked)="resetSourceConfigEdit()" >
+                            (sourceConfigWasUpdated)="resetSourceConfigEdit()" (resetEditButtonClicked)="resetSourceConfigEdit()" >
   </db-model-source-config-edit-form>
 </div>

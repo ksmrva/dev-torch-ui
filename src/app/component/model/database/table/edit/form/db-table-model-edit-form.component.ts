@@ -28,7 +28,7 @@ export class DbTableModelEditFormComponent extends BaseComponent implements OnIn
 
   @Input() dbModelId: number;
 
-  @Output() resetTableModelEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   @Output() tableModelWasUpdated: EventEmitter<boolean>;
 
@@ -47,7 +47,7 @@ export class DbTableModelEditFormComponent extends BaseComponent implements OnIn
     super();
     this.tableModelForEditObservable = of(undefined);
     this.dbModelId = -1;
-    this.resetTableModelEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
     this.tableModelWasUpdated = new EventEmitter<boolean>();
 
     this.tableModelEditForm = formBuilder.group({
@@ -155,7 +155,7 @@ export class DbTableModelEditFormComponent extends BaseComponent implements OnIn
   resetTableModelEdit(): void {
     this.resetTableModelEditForms();
 
-    this.resetTableModelEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   resetTableModelEditAfterUpdate(): void {

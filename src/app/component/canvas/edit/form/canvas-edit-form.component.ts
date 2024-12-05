@@ -19,8 +19,6 @@ import { CanvasLinkCellEditFormComponent } from "../../cell/link/edit/form/canva
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CanvasCustomCellEditFormComponent,
-    CanvasLinkCellEditFormComponent,
     CanvasCellEditorComponent
 ],
   templateUrl: "./canvas-edit-form.component.html",
@@ -32,7 +30,7 @@ export class CanvasEditFormComponent extends BaseComponent implements OnInit {
 
   @Output() canvasWasUpdated: EventEmitter<boolean>;
 
-  @Output() resetCanvasEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   canvasEditForm: FormGroup;
 
@@ -55,7 +53,7 @@ export class CanvasEditFormComponent extends BaseComponent implements OnInit {
     super();
     this.canvasForEditObservable = of(undefined);
     this.canvasWasUpdated = new EventEmitter<boolean>();
-    this.resetCanvasEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
 
     this.canvasEditForm = formBuilder.group({
       name: new FormControl("", Validators.required),
@@ -204,7 +202,7 @@ export class CanvasEditFormComponent extends BaseComponent implements OnInit {
   resetEdit(): void {
     this.resetEditForms();
 
-    this.resetCanvasEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   resetEditForms(): void {
@@ -248,4 +246,5 @@ export class CanvasEditFormComponent extends BaseComponent implements OnInit {
   private setCanvasLinkCellForEdit(canvasLinkCellForEdit: CanvasLinkCell): void {
     this.canvasLinkCells$.next(canvasLinkCellForEdit);
   }
+
 }

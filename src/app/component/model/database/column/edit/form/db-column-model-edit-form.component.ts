@@ -25,7 +25,7 @@ export class DbColumnModelEditFormComponent extends BaseComponent implements OnI
 
   @Input() tableModelId: number;
 
-  @Output() resetColumnModelEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   @Output() columnModelWasUpdated: EventEmitter<boolean>;
 
@@ -44,7 +44,7 @@ export class DbColumnModelEditFormComponent extends BaseComponent implements OnI
     super();
     this.columnModelForEditObservable = of(undefined);
     this.tableModelId = -1;
-    this.resetColumnModelEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
     this.columnModelWasUpdated = new EventEmitter<boolean>();
 
     this.columnModelEditForm = formBuilder.group({
@@ -168,7 +168,7 @@ export class DbColumnModelEditFormComponent extends BaseComponent implements OnI
   resetColumnModelEdit(): void {
     this.resetColumnModelEditForms();
 
-    this.resetColumnModelEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   resetColumnModelEditAfterUpdate(): void {

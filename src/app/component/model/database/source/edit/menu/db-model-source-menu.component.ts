@@ -41,4 +41,5 @@ export class DbModelSourceMenuComponent extends BaseComponent {
   menuClickedEventHandler(): void {
     this.menuToggleEvent.emit(true);
   }
+
 }

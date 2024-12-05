@@ -26,7 +26,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
 
   @Output() sourceUrlWasUpdated: EventEmitter<boolean>;
 
-  @Output() resetSourceUrlEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   sourceUrlEditForm: FormGroup;
 
@@ -47,7 +47,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
     super();
     this.sourceUrlForEditObservable = of(undefined);
     this.sourceUrlWasUpdated = new EventEmitter<boolean>();
-    this.resetSourceUrlEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
 
     this.sourceUrlEditForm = formBuilder.group({
       scheme: new FormControl(),
@@ -249,7 +249,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
   resetSourceUrlEdit(): void {
     this.resetSourceUrlEditForms();
 
-    this.resetSourceUrlEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   private setSourceUrlForEdit( sourceUrlForEdit: DbModelSourceUrl | undefined ): void {

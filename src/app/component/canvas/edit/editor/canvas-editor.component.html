@@ -3,6 +3,6 @@
                 (keyWasSelected)="loadCanvasForEdit($event)" (addNewButtonClicked)="loadNewCanvasForEdit()">
   </menu-select>
   <canvas-edit-form *ngIf="!showSelect" [canvasForEditObservable]="canvasForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
-                        (canvasWasUpdated)="resetCanvasEdit()" (resetCanvasEditButtonClicked)="resetCanvasEdit()">
+                        (canvasWasUpdated)="resetEdit()" (resetEditButtonClicked)="resetEdit()">
   </canvas-edit-form>
 </div>

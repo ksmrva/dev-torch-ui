@@ -5,7 +5,7 @@ import { DbModelSourceConfig } from "../../../../entity/model/database/source/co
 import { DbModelSourceUrl } from "../../../../entity/model/database/source/url/db-model-source-url";
 import { BaseApiService } from "../../../base.api.service";
 import { DbModelSourcePreset } from "../../../../entity/model/database/source/preset/db-model-source-preset";
-import { DbModelSourceSupportedDriver } from "../../../../entity/model/database/source/driver/db-model-source-supported-driver";
+import { DbModelSourceSupportedDriver } from "../../../../entity/model/database/source/config/driver/db-model-source-supported-driver";
 import { DbModelSourceUrlSupportedProvider } from "../../../../entity/model/database/source/url/provider/db-model-source-url-supported-provider";
 import { DbModelSourceUrlSupportedScheme } from "../../../../entity/model/database/source/url/scheme/db-model-source-url-supported-scheme";
 

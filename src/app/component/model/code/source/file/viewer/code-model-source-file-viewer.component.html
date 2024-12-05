@@ -1,0 +1,8 @@
+<div class="row m-0" id="codeViewer">
+  <div class="col-lg-2 border-end ps-0 pe-0" id="codeViewer_ModelSourceFileExplorerPanel">
+    <code-model-source-file-explorer (entryClicked)="handleClickedEntry($event)" id="codeViewer_ModelSourceFileExplorer"></code-model-source-file-explorer>
+  </div>
+  <div *ngIf="selectedFileTextContents" class="col-lg-10" id="codeViewer_CodePanel">
+    <ngx-monaco-editor [options]="codeEditorOptions" [(ngModel)]="selectedFileTextContents" id="codeViewer_CodePanel_Editor"></ngx-monaco-editor>
+  </div>
+</div>

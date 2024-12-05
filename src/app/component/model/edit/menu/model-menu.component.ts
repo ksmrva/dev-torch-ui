@@ -2,13 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CollapsibleMenuComponent } from '../../../edit/menu/collapsible/collapsible-menu.component';
 import { BaseComponent } from '../../../base.component';
 import { DbModelMenuComponent } from "../../database/edit/menu/db-model-menu.component";
+import { CodeModelMenuComponent } from "../../code/edit/menu/code-model-menu.component";
 
 @Component({
   selector: 'model-menu',
   standalone: true,
   imports: [
     CollapsibleMenuComponent,
-    DbModelMenuComponent
+    DbModelMenuComponent,
+    CodeModelMenuComponent
 ],
   templateUrl: './model-menu.component.html',
   styleUrl: './model-menu.component.scss'
@@ -27,6 +29,8 @@ export class ModelMenuComponent extends BaseComponent {
 
   databaseMenuIsClosed: boolean;
 
+  codeMenuIsClosed: boolean;
+
   showBottomPadding: boolean;
 
   constructor() {
@@ -39,6 +43,7 @@ export class ModelMenuComponent extends BaseComponent {
     this.collapsibleMenuBaseHtmlId = this.baseHtmlId + "_CollapsibleMenu";
 
     this.databaseMenuIsClosed = true;
+    this.codeMenuIsClosed = true;
     this.showBottomPadding = false;
   }
 
@@ -48,22 +53,30 @@ export class ModelMenuComponent extends BaseComponent {
 
   databaseMenuToggleClicked(): void {
     if (this.databaseMenuIsClosed) {
-      this.openDatabaseMenu();
+      this.databaseMenuIsClosed = false;
+
+      this.codeMenuIsClosed = true;
+      this.showBottomPadding = false;
 
     } else {
-      this.closeDatabaseMenu();
+      this.databaseMenuIsClosed = true;
 
+      this.showBottomPadding = false;
     }
   }
 
-  private openDatabaseMenu(): void {
-    this.databaseMenuIsClosed = false;
-    this.showBottomPadding = true;
-  }
+  codeMenuToggleClicked(): void {
+    if (this.codeMenuIsClosed) {
+      this.codeMenuIsClosed = false;
 
-  private closeDatabaseMenu(): void {
-    this.databaseMenuIsClosed = true;
-    this.showBottomPadding = false;
+      this.databaseMenuIsClosed = true;
+      this.showBottomPadding = true;
+
+    } else {
+      this.codeMenuIsClosed = true;
+
+      this.showBottomPadding = false;
+    }
   }
 
 }

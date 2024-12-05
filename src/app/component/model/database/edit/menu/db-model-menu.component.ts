@@ -17,39 +17,39 @@ import { DbModelSourceEditorComponent } from "../../source/edit/editor/db-model-
 })
 export class DbModelMenuComponent extends BaseComponent {
 
-  @Input() dbMenuContentIsClosed: boolean;
+  @Input() menuContentIsClosed: boolean;
 
-  @Output() dbMenuToggleEvent: EventEmitter<boolean>;
+  @Output() menuContentToggleEvent: EventEmitter<boolean>;
 
   menuTitle: string;
 
   baseHtmlId: string;
 
-  dbModelSourceMenuIsClosed: boolean;
+  sourceMenuIsClosed: boolean;
 
   showBottomPadding: boolean;
 
   constructor() {
     super();
-    this.dbMenuContentIsClosed = true;
-    this.dbMenuToggleEvent = new EventEmitter<boolean>();
+    this.menuContentIsClosed = true;
+    this.menuContentToggleEvent = new EventEmitter<boolean>();
 
     this.menuTitle = "database";
     this.baseHtmlId = "dbModelMenu_CollapsibleMenu";
-    this.dbModelSourceMenuIsClosed = true;
+    this.sourceMenuIsClosed = true;
     this.showBottomPadding = false;
   }
 
   menuClickedEventHandler(): void {
-    this.dbMenuToggleEvent.emit(true);
+    this.menuContentToggleEvent.emit(true);
   }
 
-  dbModelSourceMenuToggleClicked(): void {
-    if (this.dbModelSourceMenuIsClosed) {
-      this.dbModelSourceMenuIsClosed = false;
+  sourceMenuToggleClicked(): void {
+    if (this.sourceMenuIsClosed) {
+      this.sourceMenuIsClosed = false;
 
     } else {
-      this.dbModelSourceMenuIsClosed = true;
+      this.sourceMenuIsClosed = true;
     }
   }
 

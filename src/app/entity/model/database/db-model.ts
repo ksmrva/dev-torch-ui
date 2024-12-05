@@ -64,7 +64,8 @@ export class DbModel extends ApiEntity {
   override isEqualTo(otherEntity: DbModel): boolean {
     let isEqualTo = super.isEqualTo(otherEntity);
     if (isEqualTo) {
-      if(this.name.isEqualTo(otherEntity.name)
+      if(
+        this.name.isEqualTo(otherEntity.name)
         && this.description === otherEntity.description
         && this.tables.length === otherEntity.tables.length) {
         let allTablesHaveMatch = true;
@@ -79,6 +80,7 @@ export class DbModel extends ApiEntity {
           }
         }
         isEqualTo = allTablesHaveMatch;
+
       } else {
         isEqualTo = false;
       }

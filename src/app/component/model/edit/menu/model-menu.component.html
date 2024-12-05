@@ -2,5 +2,6 @@
                   [menuContentIsClosed]="menuContentIsClosed" [showBottomPadding]="showBottomPadding"
                   [baseHtmlId]="collapsibleMenuBaseHtmlId" [menuTitle]="menuTitle"
                   (menuToggleEvent)="menuToggleClicked()" >
-  <db-model-menu [dbMenuContentIsClosed]="databaseMenuIsClosed" (dbMenuToggleEvent)="databaseMenuToggleClicked()" ></db-model-menu>
+  <db-model-menu [menuContentIsClosed]="databaseMenuIsClosed" (menuContentToggleEvent)="databaseMenuToggleClicked()" ></db-model-menu>
+  <code-model-menu [menuContentIsClosed]="codeMenuIsClosed" (menuContentToggleEvent)="codeMenuToggleClicked()" ></code-model-menu>
 </collapsible-menu>

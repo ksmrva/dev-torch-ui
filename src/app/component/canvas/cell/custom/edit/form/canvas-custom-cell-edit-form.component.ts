@@ -23,7 +23,7 @@ export class CanvasCustomCellEditFormComponent extends BaseComponent implements 
 
   @Output() customCellWasUpdated: EventEmitter<boolean>;
 
-  @Output() resetCustomCellEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   customCellEditForm: FormGroup;
 
@@ -36,7 +36,7 @@ export class CanvasCustomCellEditFormComponent extends BaseComponent implements 
     super();
     this.customCellToEditObservable = of(undefined);
     this.customCellWasUpdated = new EventEmitter<boolean>();
-    this.resetCustomCellEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
 
     this.customCellEditForm = formBuilder.group({
       name: new FormControl(""),
@@ -95,7 +95,7 @@ export class CanvasCustomCellEditFormComponent extends BaseComponent implements 
   }
 
   resetCustomCellEdit(): void {
-    this.resetCustomCellEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   private setCustomCellForEdit( customCellForEdit: CanvasCustomCell ): void {

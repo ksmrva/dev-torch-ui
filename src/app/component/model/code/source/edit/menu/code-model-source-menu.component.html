@@ -1,0 +1,6 @@
+<collapsible-menu id="{{ this.collapsibleMenuBaseHtmlId }}" [showBottomPadding]="showBottomPadding"
+                  [menuContentIsClosed]="menuContentIsClosed" [menuTitle]="menuTitle"
+                  [baseHtmlId]="collapsibleMenuBaseHtmlId"
+                  (menuToggleEvent)="menuClickedEventHandler()" >
+  <code-model-source-editor id="{{ this.baseHtmlId }}_CodeModelSourceEditor"></code-model-source-editor>
+</collapsible-menu>

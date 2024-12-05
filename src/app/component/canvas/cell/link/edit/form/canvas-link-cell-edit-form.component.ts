@@ -26,7 +26,7 @@ export class CanvasLinkCellEditFormComponent extends BaseComponent implements On
 
   @Output() linkCellWasUpdated: EventEmitter<boolean>;
 
-  @Output() resetLinkCellEditButtonClicked: EventEmitter<boolean>;
+  @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
   linkCellEditForm: FormGroup;
 
@@ -41,7 +41,7 @@ export class CanvasLinkCellEditFormComponent extends BaseComponent implements On
     this.linkCellToEditObservable = of(undefined);
     this.allCanvasCellsBeingEditedObservable = of(undefined);
     this.linkCellWasUpdated = new EventEmitter<boolean>();
-    this.resetLinkCellEditButtonClicked = new EventEmitter<boolean>();
+    this.resetEditButtonClicked = new EventEmitter<boolean>();
 
     this.linkCellEditForm = formBuilder.group({
       name: new FormControl(""),
@@ -116,7 +116,7 @@ export class CanvasLinkCellEditFormComponent extends BaseComponent implements On
   }
 
   resetLinkCellEdit(): void {
-    this.resetLinkCellEditButtonClicked.emit(true);
+    this.resetEditButtonClicked.emit(true);
   }
 
   private setLinkCellForEdit(linkCellForEdit: CanvasLinkCell) {

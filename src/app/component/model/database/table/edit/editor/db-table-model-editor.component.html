@@ -4,5 +4,5 @@
 </simple-menu-select>
 <db-table-model-edit-form *ngIf="tableModelNameSelectedForEdit"  id="{{ this.baseHtmlId }}_Form"
                        [tableModelForEditObservable]="tableModelForEdit$.asObservable()" [dbModelId]="dbModelId"
-                       (resetTableModelEditButtonClicked)="resetEdit()" (tableModelWasUpdated)="resetAfterUpdate()" >
+                       (resetEditButtonClicked)="resetEdit()" (tableModelWasUpdated)="resetAfterUpdate()" >
 </db-table-model-edit-form>
