@@ -1,20 +1,20 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { Observable, BehaviorSubject, of } from "rxjs";
-import { RegexMatcher } from "../../../../../entity/helper/regex/matcher/regex-matcher";
-import { DbColumnCategory } from "../../../../../entity/model/database/column/category/db-column-category";
-import { DbModelCreateArgs } from "../../../../../entity/model/database/create/db-model-create-args";
-import { DbModel } from "../../../../../entity/model/database/db-model";
-import { DbModelName } from "../../../../../entity/model/database/name/db-model-name";
+import { RegexMatcher } from "../../../../../entity/misc/regex/matcher/regex-matcher";
+import { DbColumnCategory } from "../../../../../entity/model/database/component/column/category/db-column-category";
+import { DatabaseComponentCreateArgs } from "../../../../../entity/model/database/component/create/database-component-create-args";
+import { DbModel } from "../../../../../entity/model/database/component/db-model";
+import { DatabasePath } from "../../../../../entity/model/database/component/path/database-path";
+import { DbTableCategory } from "../../../../../entity/model/database/component/table/category/db-table-category";
 import { DbModelSourceConfig } from "../../../../../entity/model/database/source/config/db-model-source-config";
-import { DbTableCategory } from "../../../../../entity/model/database/table/category/db-table-category";
-import { DbModelService } from "../../../../../service/model/database/db-model.service";
+import { DbModelComponentService } from "../../../../../service/model/database/component/db-model-component.service";
 import { DbModelSourceService } from "../../../../../service/model/database/source/db-model-source.service";
 import { BaseComponent } from "../../../../base.component";
-import { DbColumnCategoryMatcherEditorComponent } from "../../column/category/matcher/edit/editor/db-column-category-matcher-editor.component";
-import { DbTableCategoryMatcherEditorComponent } from "../../table/category/matcher/edit/editor/db-table-category-matcher-editor.component";
-import { DbTableModelEditorComponent } from "../../table/edit/editor/db-table-model-editor.component";
+import { DbColumnCategoryMatcherEditorComponent } from "../../component/column/category/matcher/edit/editor/db-column-category-matcher-editor.component";
+import { DbTableCategoryMatcherEditorComponent } from "../../component/table/category/matcher/edit/editor/db-table-category-matcher-editor.component";
+import { DbTableModelEditorComponent } from "../../component/table/edit/editor/db-table-model-editor.component";
 
 @Component({
   selector: "db-model-edit-form",
@@ -51,7 +51,7 @@ export class DbModelEditFormComponent extends BaseComponent implements OnInit {
   availableSourceConfigs: DbModelSourceConfig[];
 
   constructor(
-    private dbModelService: DbModelService,
+    private dbModelService: DbModelComponentService,
     private dbModelSourceService: DbModelSourceService,
     formBuilder: FormBuilder
   ) {
@@ -75,7 +75,7 @@ export class DbModelEditFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let availableSourceConfigsSubscription = this.dbModelSourceService.getSourceConfigs().subscribe({
+    let availableSourceConfigsSubscription = this.dbModelSourceService.getConfigs().subscribe({
                                                                                                       next: (sourceConfigs: DbModelSourceConfig[] | undefined) => {
                                                                                                         if (!sourceConfigs) {
                                                                                                           throw new Error("Failed to load the available Database Model Source Configs");
@@ -127,7 +127,7 @@ export class DbModelEditFormComponent extends BaseComponent implements OnInit {
         // Don"t attempt to save any Table Models with this call, they have their own form
         dbModelForUpdate.tables = [];
 
-        this.dbModelService.updateDbModel(dbModelForUpdate).subscribe({
+        this.dbModelService.updateDatabase(dbModelForUpdate).subscribe({
                                                                         next: (updatedDbModel: DbModel | undefined) => {
                                                                           if (updatedDbModel) {
                                                                             this.resetDbModelEditAfterSave();
@@ -143,18 +143,18 @@ export class DbModelEditFormComponent extends BaseComponent implements OnInit {
                                                                         }
                                                                       });
       } else {
-        let dbModelCreateArgs = new DbModelCreateArgs();
+        let dbModelCreateArgs = new DatabaseComponentCreateArgs();
         dbModelCreateArgs.sourceConfigId = this.dbModelEditForm.value.sourceConfigId;
 
-        let dbModelName = new DbModelName();
+        let dbModelName = new DatabasePath();
         dbModelName.databaseName = this.dbModelEditForm.value.databaseName;
         dbModelName.schemaName = this.dbModelEditForm.value.schemaName;
 
-        dbModelCreateArgs.name = dbModelName;
+        dbModelCreateArgs.path = dbModelName;
         dbModelCreateArgs.tableCategoryMatchers = this.tableCategoryMatchersForNewModel;
         dbModelCreateArgs.columnCategoryMatchers = this.columnCategoryMatchersForNewModel;
 
-        this.dbModelService.createDbModel(dbModelCreateArgs).subscribe({
+        this.dbModelService.createDatabase(dbModelCreateArgs).subscribe({
                                                                   next: (createdDbModel: DbModel | undefined) => {
                                                                     if (createdDbModel) {
                                                                       this.resetDbModelEditAfterSave();

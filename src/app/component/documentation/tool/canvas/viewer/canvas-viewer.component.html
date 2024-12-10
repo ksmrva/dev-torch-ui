@@ -1,0 +1,18 @@
+<div class="border-start border-end border-bottom p-0" [ngClass]="canvasContentClass" id="canvasViewerContent" >
+  <canvas-viewer-header
+    [canvasTitle]="getCanvasTitle()"
+    [sidebarOpenInitialValue]="defaultSidebarOpen"
+    [zoomSettingInitialValue]="defaultZoomSetting"
+    [zoomSettingMaxValue]="maxZoomSetting"
+    [availableCanvasNames]="getAvailableCanvasNames()"
+    [availableDbModelNames]="availableDbModelNames"
+    (zoomSettingEvent)="updateCanvasZoom($event)"
+    (sidebarToggleEvent)="onToggleCanvasSidebar()"
+    (loadSelectedCanvasEvent)="loadSelectedCanvas($event)"
+    (addCellsFromDbModelEvent)="addCellsFromDbModel($event)"
+    (saveAllChangesButtonClickEvent)="saveAllChanges()"
+    (undoAllChangesButtonClickEvent)="undoAllChanges()" ></canvas-viewer-header>
+  <div id="canvasViewerContent_Canvas">
+    <div [ngStyle]="{ transform: jointJsPaperTransformScale }" id="canvasViewerContent_Canvas_JointJs_Paper" ></div>
+  </div>
+</div>

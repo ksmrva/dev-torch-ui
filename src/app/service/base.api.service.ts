@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StringUtil } from '../entity/helper/string/util/string-util';
+import { StringUtil } from '../entity/misc/string/util/string-util';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export abstract class BaseApiService {
     this.apiUrlBase = "http://localhost:8080/api/v1";
   }
 
-  protected abstract getResourcePathForApiUrl(): string;
+  abstract getResourcePathForApiUrl(): string;
 
   protected getApiUrl(): string {
     return this.getApiUrlWithAddition("");

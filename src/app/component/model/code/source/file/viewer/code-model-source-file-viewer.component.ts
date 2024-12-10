@@ -6,10 +6,12 @@ import { CodeModelSourceFile } from "../../../../../../entity/model/code/source/
 import { CodeModelSourceFileService } from "../../../../../../service/model/code/source/file/code-model-source-file.service";
 import { CodeModelSourceFileIconService } from "../../../../../../service/model/code/source/file/icon/code-model-source-file-icon.service";
 import { BaseComponent } from "../../../../../base.component";
-import { CodeModelSourceFileExplorerComponent } from "../explorer/code-model-source-file-explorer.component";
 import { CodeModelSourceFileTreeNode } from "../../../../../../entity/model/code/source/file/tree/node/code-model-source-file-tree-node";
 import { CodeModelLanguage } from "../../../../../../entity/model/code/language/code-model-language";
 import { CodeModelSourceFileCodeExtension } from "../../../../../../entity/model/code/source/file/extension/code-model-source-file-code-extension";
+import { CodeModelSourceFileExplorerComponent } from "./explorer/code-model-source-file-explorer.component";
+import { CanvasViewerHeaderComponent } from "../../../../../documentation/tool/canvas/viewer/header/canvas-viewer-header.component";
+import { CodeModelSourceFileViewerHeaderComponent } from "./header/code-model-source-file-viewer-header.component";
 
 @Component({
   selector: "code-model-source-file-viewer",
@@ -18,8 +20,10 @@ import { CodeModelSourceFileCodeExtension } from "../../../../../../entity/model
     CommonModule,
     FormsModule,
     CodeModelSourceFileExplorerComponent,
-    MonacoEditorModule
-  ],
+    MonacoEditorModule,
+    CanvasViewerHeaderComponent,
+    CodeModelSourceFileViewerHeaderComponent
+],
   templateUrl: "./code-model-source-file-viewer.component.html",
   styleUrl: "./code-model-source-file-viewer.component.scss"
 })

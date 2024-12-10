@@ -67,7 +67,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
   }
 
   ngOnInit(): void {
-    let availableSourceConfigsSubscription = this.dbModelSourceService.getSourceConfigs().subscribe({
+    let availableSourceConfigsSubscription = this.dbModelSourceService.getConfigs().subscribe({
                                                                                                 next: (sourceConfigs: DbModelSourceConfig[] | undefined) => {
                                                                                                   if (!sourceConfigs) {
                                                                                                     throw new Error("Failed to load the available Database Model Source Configs");
@@ -83,7 +83,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
                                                                                               });
      this.addLongLivingSubscription(availableSourceConfigsSubscription);
 
-    let availableSourcePresetsSubscription = this.dbModelSourceService.getSourcePresets().subscribe({
+    let availableSourcePresetsSubscription = this.dbModelSourceService.getPresets().subscribe({
                                                                                       next: (sourcePresets: DbModelSourcePreset[] | undefined) => {
                                                                                         if (!sourcePresets) {
                                                                                           throw new Error("Failed to load the available Database Model Source Presets");
@@ -99,7 +99,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
                                                                                     });
     this.addLongLivingSubscription(availableSourcePresetsSubscription);
 
-    let availableSourceUrlsSubscription = this.dbModelSourceService.getSourceUrls().subscribe({
+    let availableSourceUrlsSubscription = this.dbModelSourceService.getUrls().subscribe({
                                                                                         next: (sourceUrls: DbModelSourceUrl[] | undefined) => {
                                                                                           if (!sourceUrls) {
                                                                                             throw new Error("Failed to load the available Database Model Source URLs");
@@ -115,7 +115,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
                                                                                       });
     this.addLongLivingSubscription(availableSourceUrlsSubscription);
 
-    let availableSupportedDriversSubscription = this.dbModelSourceService.getSourceSupportedDrivers().subscribe({
+    let availableSupportedDriversSubscription = this.dbModelSourceService.getConfigSupportedDrivers().subscribe({
                                                                                                             next: (supportedDrivers: DbModelSourceSupportedDriver[] | undefined) => {
                                                                                                               if (!supportedDrivers) {
                                                                                                                 throw new Error("Failed to load the available Database Model Source Supported Drivers");
@@ -178,7 +178,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
         sourceConfig.username = username;
         sourceConfig.password = password;
 
-        this.dbModelSourceService.createDbModelConfig(sourceConfig).subscribe({
+        this.dbModelSourceService.createConfig(sourceConfig).subscribe({
                                                                           next: (sourceConfig: DbModelSourceConfig | undefined) => {
                                                                             if (!sourceConfig) {
                                                                               throw new Error("Failed to create Database Model Source Config");

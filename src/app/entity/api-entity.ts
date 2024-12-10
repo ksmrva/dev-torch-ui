@@ -53,4 +53,5 @@ export abstract class ApiEntity implements DeserializableEntity<ApiEntity>, Comp
     }
     return isNewEntity;
   }
+
 }

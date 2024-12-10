@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of, map, catchError, tap } from "rxjs";
-import { StringUtil } from "../../../../../entity/helper/string/util/string-util";
+import { StringUtil } from "../../../../../entity/misc/string/util/string-util";
 import { CodeModelSourceFile } from "../../../../../entity/model/code/source/file/code-model-source-file";
 import { BaseApiService } from "../../../../base.api.service";
 import { CodeModelSourceFileTreeNode } from "../../../../../entity/model/code/source/file/tree/node/code-model-source-file-tree-node";
@@ -27,6 +27,10 @@ export class CodeModelSourceFileService extends BaseApiService {
     this.codeExtensions$ = new BehaviorSubject<CodeModelSourceFileCodeExtension[]>([]);
 
     this.initCodeExtensions();
+  }
+
+  override getResourcePathForApiUrl(): string {
+    return "/model/code/source/file";
   }
 
   getFiles(): Observable<CodeModelSourceFile[]> {
@@ -81,10 +85,6 @@ export class CodeModelSourceFileService extends BaseApiService {
       }
     }
     return fileExtension;
-  }
-
-  protected override getResourcePathForApiUrl(): string {
-    return "/model/code/source/file";
   }
 
   private initCodeExtensions(): void {

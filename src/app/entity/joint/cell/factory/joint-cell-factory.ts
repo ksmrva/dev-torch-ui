@@ -1,8 +1,8 @@
 import { dia, shapes, util } from "@joint/core";
-import { CANVAS_CUSTOM_CELL_JOINT_TYPE_NAME, CanvasCustomCell } from "../../../canvas/cell/custom/canvas-custom-cell";
-import { CanvasCell } from "../../../canvas/cell/canvas-cell";
-import { CanvasCellFactory } from "../../../canvas/cell/factory/canvas-cell-factory";
-import { CanvasLinkCell } from "../../../canvas/cell/link/canvas-link-cell";
+import { CanvasCell } from "../../../documentation/tool/canvas/cell/canvas-cell";
+import { CanvasCustomCell, CANVAS_CUSTOM_CELL_JOINT_TYPE_NAME } from "../../../documentation/tool/canvas/cell/custom/canvas-custom-cell";
+import { CanvasCellFactory } from "../../../documentation/tool/canvas/cell/factory/canvas-cell-factory";
+import { CanvasLinkCell } from "../../../documentation/tool/canvas/cell/link/canvas-link-cell";
 
 export class JointCellFactory {
 
@@ -93,7 +93,7 @@ export class JointCellFactory {
 
     CanvasLinkCell.initializeJointLinkValues(
       canvasLinkCell.id,
-      canvasLinkCell.name,
+      canvasLinkCell.globalName,
       canvasLinkCell.localName,
       sourceCellName,
       sourceDx,
@@ -175,7 +175,7 @@ export class JointCellFactory {
 
     CanvasCustomCell.initializeJointCustomValues(
       canvasCustomCell.id,
-      canvasCustomCell.name,
+      canvasCustomCell.globalName,
       canvasCustomCell.localName,
       html,
       [],

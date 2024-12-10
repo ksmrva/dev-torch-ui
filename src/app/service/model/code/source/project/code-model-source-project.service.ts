@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { BaseApiService } from '../../../../base.api.service';
 import { HttpClient } from '@angular/common/http';
-import { StringUtil } from '../../../../../entity/helper/string/util/string-util';
+import { StringUtil } from '../../../../../entity/misc/string/util/string-util';
 import { CodeModelSourceProject } from '../../../../../entity/model/code/source/project/code-model-source-project';
 import { CodeModelSourceProjectCreateArgs } from '../../../../../entity/model/code/source/project/create/code-model-source-project-create-args';
 
@@ -23,6 +23,10 @@ export class CodeModelSourceProjectService extends BaseApiService {
     this.projectNames$ = new BehaviorSubject<string[]>([]);
 
     this.initProjectNames();
+  }
+
+  override getResourcePathForApiUrl(): string {
+    return "/model/code/source/project";
   }
 
   getProjectNames(): Observable<string[]> {
@@ -58,10 +62,6 @@ export class CodeModelSourceProjectService extends BaseApiService {
     }
 
     return createProjectObservable;
-  }
-
-  protected override getResourcePathForApiUrl(): string {
-    return "/model/code/source/project";
   }
 
   private initProjectNames(): void {

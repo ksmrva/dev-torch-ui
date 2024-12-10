@@ -1,57 +1,54 @@
 import { Injectable } from "@angular/core";
-import { ModalComponent } from "../../component/modal/modal-component";
+import { ModalComponent } from "../../component/modal/modal.component";
 
 @Injectable({
   providedIn: "root"
 })
-export class ModalService<T> {
+export class ModalService {
 
-  private modals: ModalComponent<T>[];
+  private modals: ModalComponent[];
 
   constructor() {
     this.modals = [];
   }
 
-  add(modal: ModalComponent<T>): void {
-    // ensure component has a unique id attribute
-    if (
-      !modal.getId()
-      || this.modals.find((x: ModalComponent<T>) => {
-        return x.getId() === modal.getId();
-      })
-    ) {
-      throw new Error("modal must have a unique id attribute");
+  add(modalToAdd: ModalComponent): void {
+    let modelToAddId = modalToAdd.getId();
+    let existingModalSearchResult = this.modals.find((existingModal: ModalComponent) => {
+      return existingModal.getId() === modelToAddId;
+    });
+    if (!existingModalSearchResult) {
+      this.modals.push(modalToAdd);
+    } else {
+      console.warn("Attempted to add Modal with ID [" + modelToAddId + "] but it was already added");
     }
-
-    // add modal to array of active modals
-    this.modals.push(modal);
   }
 
-  remove(modal: ModalComponent<T>): void {
-    // remove modal from array of active modals
-    this.modals = this.modals.filter((x: ModalComponent<T>) => {
-      return x === modal;
+  remove(modalToRemove: ModalComponent): void {
+    this.modals = this.modals.filter((modal: ModalComponent) => {
+      return modal === modalToRemove;
     });
   }
 
-  open(id: string, modalBodyPositionX: number, modalBodyPositionY: number, data: T): void {
-    // open modal specified by id
-    const modal = this.modals.find((x: ModalComponent<T>) => {
-      return x.getId() === id;
+  open(modalToOpenId: string): void {
+    let modalToOpenResult = this.modals.find((modal: ModalComponent) => {
+      return modal.getId() === modalToOpenId;
     });
 
-    if (!modal) {
-      throw new Error("Modal '${id}' not found");
+    if (!modalToOpenResult) {
+      throw new Error("Attempted to open Modal with ID [" + modalToOpenId + "], but it was not found in the active Modal list");
     }
 
-    modal.open(modalBodyPositionX, modalBodyPositionY, data);
+    modalToOpenResult.open();
   }
 
   close(): void {
-    // close the modal that is currently open
-    const modal = this.modals.find((x: ModalComponent<T>) => {
-      x.isOpen
+    let currentlyOpenModal = this.modals.find((modal: ModalComponent) => {
+      return modal.isOpen();
     });
-    modal?.close();
+    if(currentlyOpenModal) {
+      currentlyOpenModal.close();
+    }
   }
+
 }

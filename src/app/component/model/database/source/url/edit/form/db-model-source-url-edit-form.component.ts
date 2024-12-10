@@ -78,7 +78,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
                                                                             });
     this.addLongLivingSubscription(sourceUrlForEditSubscription);
 
-    let availableSourcePresetsSubscription = this.dbModelSourceService.getSourcePresets().subscribe({
+    let availableSourcePresetsSubscription = this.dbModelSourceService.getPresets().subscribe({
                                                                                               next: (sourcePresets: DbModelSourcePreset[] | undefined) => {
                                                                                                 if (!sourcePresets) {
                                                                                                   throw new Error("Failed to load the available Database Model Source Presets");
@@ -94,7 +94,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
                                                                                             });
     this.addLongLivingSubscription(availableSourcePresetsSubscription);
 
-    let availableSourceUrlSupportedSchemesSubscription = this.dbModelSourceService.getSourceUrlSupportedSchemes().subscribe({
+    let availableSourceUrlSupportedSchemesSubscription = this.dbModelSourceService.getUrlSupportedSchemes().subscribe({
                                                                                                                       next: (sourceUrlSupportedSchemes: DbModelSourceUrlSupportedScheme[] | undefined) => {
                                                                                                                         if (!sourceUrlSupportedSchemes) {
                                                                                                                           throw new Error("Failed to load the available Database Model Source URL Supported Schemes");
@@ -110,7 +110,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
                                                                                                                     });
     this.addLongLivingSubscription(availableSourceUrlSupportedSchemesSubscription);
 
-    let availableSourceUrlSupportedProvidersSubscription = this.dbModelSourceService.getSourceUrlSupportedProviders().subscribe({
+    let availableSourceUrlSupportedProvidersSubscription = this.dbModelSourceService.getUrlSupportedProviders().subscribe({
                                                                                                                             next: (sourceUrlSupportedProviders: DbModelSourceUrlSupportedProvider[] | undefined) => {
                                                                                                                               if (!sourceUrlSupportedProviders) {
                                                                                                                                 throw new Error("Failed to load the available Database Model Source URL Supported Providers");
@@ -158,7 +158,7 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
         sourceUrlForCreate.provider = provider;
         sourceUrlForCreate.adminDatabaseName = adminDatabaseName;
 
-        this.dbModelSourceService.createSourceUrl(sourceUrlForCreate).subscribe({
+        this.dbModelSourceService.createUrl(sourceUrlForCreate).subscribe({
                                                                     next: (createdSourceUrl: DbModelSourceUrl | undefined) => {
                                                                       if (!createdSourceUrl) {
                                                                         throw new Error("Failed to create the Database Model Source URL");

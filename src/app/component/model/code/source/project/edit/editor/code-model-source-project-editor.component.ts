@@ -6,7 +6,7 @@ import { CodeModelSourceProjectService } from '../../../../../../../service/mode
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { StringUtil } from '../../../../../../../entity/helper/string/util/string-util';
+import { StringUtil } from '../../../../../../../entity/misc/string/util/string-util';
 import { CodeModelSourceProject } from '../../../../../../../entity/model/code/source/project/code-model-source-project';
 
 @Component({

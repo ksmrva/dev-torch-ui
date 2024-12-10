@@ -3,25 +3,6 @@
   overflow: auto;
 }
 
-#appRoot_Footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-.active {
-  color: var(--app-title-name-end-color) !important;
-}
-
-.nav-link {
-  color: var(--app-extra-light-color) !important;
-}
-
-.nav-link:focus,
-.nav-link:hover {
-  color: var(--app-title-name-end-color) !important;
-}
-
 #appRoot_BannerBar_Toggle {
   color: var(--app-title-nav-toggle-color) !important;
 }
@@ -45,4 +26,17 @@
 
 #bannerBarToggleIcon_DarkMode {
   color: var(--app-main-color);
+}
+
+.nav-link {
+  color: var(--app-extra-light-color) !important;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--app-title-name-end-color) !important;
+}
+
+.active {
+  color: var(--app-title-name-end-color) !important;
 }

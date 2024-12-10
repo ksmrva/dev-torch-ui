@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DbModelSourceConfig } from '../../../../../../../entity/model/database/source/config/db-model-source-config';
 import { DbModelSourceService } from '../../../../../../../service/model/database/source/db-model-source.service';
 import { BaseComponent } from '../../../../../../base.component';
-import { StringUtil } from '../../../../../../../entity/helper/string/util/string-util';
+import { StringUtil } from '../../../../../../../entity/misc/string/util/string-util';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -43,7 +43,7 @@ export class DbModelSourceConfigEditorComponent extends BaseComponent implements
   }
 
   ngOnInit(): void {
-    let availableSourceConfigsSubscription = this.dbModelSourceService.getSourceConfigs().subscribe({
+    let availableSourceConfigsSubscription = this.dbModelSourceService.getConfigs().subscribe({
                                                                                               next: (sourceConfigs: DbModelSourceConfig[] | undefined) => {
                                                                                                 if (!sourceConfigs) {
                                                                                                   throw new Error("Failed to load the available Database Model Source Configs");

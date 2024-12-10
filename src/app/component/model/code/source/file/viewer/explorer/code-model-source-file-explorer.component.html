@@ -1,0 +1,20 @@
+<div id="codeModelSourceFileExplorer">
+  <div class="" >
+    <div class="d-flex justify-content-between border-bottom p-2" id="codeModelSourceFileExplorer_Title">
+      <span class="h6" id="codeModelSourceFileExplorer_Title_Name">
+        code explorer
+      </span>
+      <div></div>
+      <i class="bi bi-list h4 m-0" id=""></i>
+      <!-- <select class="form-select form-select-sm" [(ngModel)]="selectedProjectName" (ngModelChange)="selectProject()" type="text" id="codeModelSourceFileExplorer_Title_Select" >
+        <option *ngFor="let projectName of projectNames" [ngValue]="projectName" id="codeModelSourceFileExplorer_Title_Select_Option" >
+          {{ projectName }}
+        </option>
+      </select> -->
+    </div>
+  </div>
+  <div *ngIf="selectedProject" class="pt-1" id="codeModelSourceFileExplorer_Entries">
+    <code-model-source-file-explorer-entry [fileEntry]="selectedProject.rootTreeNode" [entryListLevel]="0" id="codeModelSourceFileExplorer_Entries_Entry_{{selectedProject.rootTreeNode.id}}"
+                              (entryClicked)="handleClickedEntry($event)"></code-model-source-file-explorer-entry>
+  </div>
+</div>

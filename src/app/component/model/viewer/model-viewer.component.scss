@@ -1,0 +1,67 @@
+#modelViewer {
+  height: 100%;
+}
+
+#modelViewerContent {
+  height: 100%;
+}
+
+#modelViewerContent_CodeModelViewer {
+  height: 100%;
+}
+
+#modelViewerContent_CodeModelViewerHolder {
+  height: 100%;
+}
+
+#modelViewerSidebar {
+  position: relative;
+  width: 5%;
+  // background-color: var(--header-primary-bg-color) !important;
+  // background-color: #2b3035 !important;
+  background-color: #25282a !important;
+}
+
+#modelViewerContent {
+  position: relative;
+  overflow: scroll;
+  height: 100%;
+  width: 95%;
+}
+
+.model-viewer-sidebar-item-container {
+  height: 75px;
+  overflow: hidden;
+}
+
+.model-viewer-sidebar-item-icon-container {
+  display: grid;
+}
+
+.model-viewer-sidebar-title-container {
+  height: 30px;
+  overflow: hidden;
+  // background-color: var(--sidebar-menu-title-tertiary-color) !important;
+  background-color: #585e63 !important;
+}
+
+.model-viewer-sidebar-title {
+  font-weight: bolder;
+}
+
+.model-viewer-sidebar-item-button {
+  height: 100%;
+  width: 100%;
+}
+
+.btn:active {
+  border-color: var(--app-title-name-end-color) !important;
+}
+
+.model-viewer-sidebar-item-button-selected {
+  border-top: .5px solid var(--bs-btn-border-color) !important;
+  border-bottom: .5px solid var(--bs-btn-border-color) !important;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: var(--app-title-name-end-color) !important;
+}

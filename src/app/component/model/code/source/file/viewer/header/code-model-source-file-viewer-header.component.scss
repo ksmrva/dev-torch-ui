@@ -1,0 +1,43 @@
+input[type="range"] {
+  appearance: auto;
+}
+
+.action-bar-dropdown:hover > .action-bar-dropdown-list {
+  display: block;
+}
+
+.canvas-viewer-control-item {
+  color: var(--sidebar-menu-title-secondary-color) !important;
+}
+
+#canvasViewerContent_Header {
+  z-index: 65;
+  position: relative;
+  // background-color: var(--sidebar-menu-title-tertiary-color);
+}
+
+#canvasViewerContent_ActionBar_CanvasZoom_Input {
+  width: 200px;
+}
+
+#canvasViewerContent_ActionBar_Title_Unactive_Label {
+  color: var(--canvas-viewer-control-label-color) !important;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+#canvasViewerContent_ActionBar_Title_Active_Label {
+  color: var(--canvas-viewer-control-label-color) !important;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+#canvasViewerContent_ActionBar_Title_Active_Separator {
+  color: var(--canvas-viewer-control-label-color) !important;
+  font-size: x-large;
+}
+
+#canvasViewerContent_ActionBar_Title_Active_Name {
+  color: var(--app-main-color) !important;
+  font-size: x-large;
+}

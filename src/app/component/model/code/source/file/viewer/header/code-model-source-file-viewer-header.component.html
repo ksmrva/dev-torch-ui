@@ -1,0 +1,32 @@
+<div class="border-bottom pt-2 pb-1 ps-3 pe-2" id="canvasViewerContent_Header">
+  <!-- <div class="d-flex" id="canvasViewerContent_HeaderTop">
+        <button class="navbar-toggler" (click)="sidebarToggleClicked()" type="button" id="canvasViewerContent_SidebarToggle"
+                data-bs-toggle="collapse" data-bs-target="#canvasViewerSidebar">
+            <i class="bi bi-arrow-right-circle-fill h3" id="canvasViewerContent_SidebarToggle_Icon"></i>
+        </button>
+        <h1 class="text-center ms-4" *ngIf="canvasTitle" id="canvasViewerContent_Title">{{canvasTitle}}</h1>
+    </div> -->
+  <div id="canvasViewerContent_HeaderBottom">
+    <nav class="navbar navbar-expand-lg p-0 mb-1" id="canvasViewerContent_ActionBar" >
+      <div *ngIf="!canvasTitle" class="d-flex align-items-center" id="canvasViewerContent_ActionBar_Title_Unactive" >
+        <span class="navbar-brand pt-0" id="canvasViewerContent_ActionBar_Title_Unactive_Label" >code model</span >
+      </div>
+      <div *ngIf="canvasTitle" class="d-flex align-items-center" id="canvasViewerContent_ActionBar_Title_Active" >
+        <span class="navbar-brand pt-0" id="canvasViewerContent_ActionBar_Title_Active_Label" >view</span >
+        <span class="navbar-brand pt-0" id="canvasViewerContent_ActionBar_Title_Active_Separator" >|</span >
+        <span class="canvas-title navbar-brand pt-0" id="canvasViewerContent_ActionBar_Title_Active_Name" >{{ canvasTitle }}</span >
+      </div>
+      <div class="dropdown border-end action-bar-dropdown" id="canvasViewerContent_ActionBar_CanvasDropdown" >
+        <button class="dropdown-toggle btn canvas-viewer-control-item" type="button" id="canvasViewerContent_ActionBar_CanvasDropdown_Toggle" >
+          view
+        </button>
+        <ul class="dropdown-menu action-bar-dropdown-list" id="canvasViewerContent_ActionBar_CanvasDropdown_List" >
+          <li id="canvasViewerContent_ActionBar_CanvasDropdown_ListItem_Edit" >
+            <a class="dropdown-item" (click)="openEditModal()" id="canvasViewerContent_ActionBar_CanvasDropdown_ListItem_Edit_Link" >explorer</a >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <canvas-create-modal [baseHtmlId]="createCanvasModalBaseHtmlId" id="{{createCanvasModalBaseHtmlId}}"></canvas-create-modal>
+</div>

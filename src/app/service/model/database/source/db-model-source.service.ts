@@ -8,295 +8,332 @@ import { DbModelSourcePreset } from "../../../../entity/model/database/source/pr
 import { DbModelSourceSupportedDriver } from "../../../../entity/model/database/source/config/driver/db-model-source-supported-driver";
 import { DbModelSourceUrlSupportedProvider } from "../../../../entity/model/database/source/url/provider/db-model-source-url-supported-provider";
 import { DbModelSourceUrlSupportedScheme } from "../../../../entity/model/database/source/url/scheme/db-model-source-url-supported-scheme";
+import { DbModelSourceDataType } from "../../../../entity/model/database/source/type/db-model-source-data-type";
+import { StringUtil } from "../../../../entity/misc/string/util/string-util";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbModelSourceService extends BaseApiService {
 
-  private sourceUrls$: BehaviorSubject<DbModelSourceUrl[]>;
+  private dataTypes$: BehaviorSubject<DbModelSourceDataType[]>;
 
-  private sourceConfigs$: BehaviorSubject<DbModelSourceConfig[]>;
+  private urls$: BehaviorSubject<DbModelSourceUrl[]>;
 
-  private sourcePresets$: BehaviorSubject<DbModelSourcePreset[]>;
+  private configs$: BehaviorSubject<DbModelSourceConfig[]>;
 
-  private sourceSupportedDrivers$: BehaviorSubject<DbModelSourceSupportedDriver[]>;
+  private presets$: BehaviorSubject<DbModelSourcePreset[]>;
 
-  private sourceUrlSupportedSchemes$: BehaviorSubject<DbModelSourceUrlSupportedScheme[]>;
+  private configSupportedDrivers$: BehaviorSubject<DbModelSourceSupportedDriver[]>;
 
-  private sourceUrlSupportedProviders$: BehaviorSubject<DbModelSourceUrlSupportedProvider[]>;
+  private urlSupportedSchemes$: BehaviorSubject<DbModelSourceUrlSupportedScheme[]>;
+
+  private urlSupportedProviders$: BehaviorSubject<DbModelSourceUrlSupportedProvider[]>;
 
   constructor(
     private httpClient: HttpClient
   ) {
     super();
-    this.sourceUrls$ = new BehaviorSubject<DbModelSourceUrl[]>([]);
-    this.sourceConfigs$ = new BehaviorSubject<DbModelSourceConfig[]>([]);
-    this.sourcePresets$ = new BehaviorSubject<DbModelSourcePreset[]>([]);
-    this.sourceSupportedDrivers$ = new BehaviorSubject<DbModelSourceSupportedDriver[]>([]);
-    this.sourceUrlSupportedSchemes$ = new BehaviorSubject<DbModelSourceUrlSupportedScheme[]>([]);
-    this.sourceUrlSupportedProviders$ = new BehaviorSubject<DbModelSourceUrlSupportedProvider[]>([]);
+    this.dataTypes$ = new BehaviorSubject<DbModelSourceDataType[]>([]);
+    this.urls$ = new BehaviorSubject<DbModelSourceUrl[]>([]);
+    this.configs$ = new BehaviorSubject<DbModelSourceConfig[]>([]);
+    this.presets$ = new BehaviorSubject<DbModelSourcePreset[]>([]);
+    this.configSupportedDrivers$ = new BehaviorSubject<DbModelSourceSupportedDriver[]>([]);
+    this.urlSupportedSchemes$ = new BehaviorSubject<DbModelSourceUrlSupportedScheme[]>([]);
+    this.urlSupportedProviders$ = new BehaviorSubject<DbModelSourceUrlSupportedProvider[]>([]);
 
-    this.initSourceUrls();
-    this.initSourceConfigs();
-    this.initSourcePresets();
-    this.initSourceSupportedDrivers();
-    this.initSourceUrlSupportedSchemes();
-    this.initSourceUrlSupportedProviders();
+    this.initDataTypes();
+    this.initUrls();
+    this.initConfigs();
+    this.initPresets();
+    this.initConfigSupportedDrivers();
+    this.initUrlSupportedSchemes();
+    this.initUrlSupportedProviders();
   }
 
-  getSourceUrls(): Observable<DbModelSourceUrl[]> {
-    return this.sourceUrls$.asObservable();
-  }
-
-  getSourceConfigs(): Observable<DbModelSourceConfig[]> {
-    return this.sourceConfigs$.asObservable();
-  }
-
-  getSourcePresets(): Observable<DbModelSourcePreset[]> {
-    return this.sourcePresets$.asObservable();
-  }
-
-  getSourceSupportedDrivers(): Observable<DbModelSourceSupportedDriver[]> {
-    return this.sourceSupportedDrivers$.asObservable();
-  }
-
-  getSourceUrlSupportedSchemes(): Observable<DbModelSourceUrlSupportedScheme[]> {
-    return this.sourceUrlSupportedSchemes$.asObservable();
-  }
-
-  getSourceUrlSupportedProviders(): Observable<DbModelSourceUrlSupportedProvider[]> {
-    return this.sourceUrlSupportedProviders$.asObservable();
-  }
-
-  createSourceUrl( sourceUrlToCreate: DbModelSourceUrl ): Observable<DbModelSourceUrl | undefined> {
-    let createSourceUrlResult: Observable<DbModelSourceUrl | undefined>;
-    let sourceUrlAlreadyCreated = this.sourceUrls$.value.find((sourceUrl: DbModelSourceUrl) => {
-      return sourceUrl.isEqualTo(sourceUrlToCreate);
-    });
-
-    if (sourceUrlAlreadyCreated) {
-      console.log( "Not attempting to create Database Model Source URL since it was found to already exist" );
-      createSourceUrlResult = of(undefined);
-    } else {
-      createSourceUrlResult = this.createSourceUrlApiCall( sourceUrlToCreate );
-    }
-    return createSourceUrlResult;
-  }
-
-  createDbModelConfig( sourceConfigToCreate: DbModelSourceConfig ): Observable<DbModelSourceConfig | undefined> {
-    let createSourceConfigResult: Observable<DbModelSourceConfig | undefined>;
-    let sourceConfigAlreadyCreated = this.sourceConfigs$.value.find((sourceConfig: DbModelSourceConfig) => {
-      return sourceConfig.isEqualTo(sourceConfigToCreate);
-    });
-
-    if (sourceConfigAlreadyCreated) {
-      console.log( "Not attempting to create Database Model Source Config since it was found to already exist" );
-      createSourceConfigResult = of(undefined);
-    } else {
-      createSourceConfigResult = this.createSourceConfigApiCall(
-        sourceConfigToCreate
-      );
-    }
-    return createSourceConfigResult;
-  }
-
-  protected override getResourcePathForApiUrl(): string {
+  override getResourcePathForApiUrl(): string {
     return "/model/db/source";
   }
 
-  private initSourceUrls(): void {
-    this.getAllSourceUrlsApiCall().subscribe({
-                                        next: (sourceUrls: DbModelSourceUrl[] | undefined) => {
-                                          if (!sourceUrls) {
-                                            throw new Error("Failed to initialize the Database Model Source URLs");
-                                          }
-                                        },
-                                        error: (err: any) => {
-                                          throw new Error( "Failed to initialize the Database Model Source URLs due to [" + err + "]" );
-                                        },
-                                        complete: () => {
-                                          console.log("Finished initializing Database Model Source URLs");
-                                        }
-                                      });
+  getDataTypes(): Observable<DbModelSourceDataType[]> {
+    return this.dataTypes$.asObservable();
   }
 
-  private initSourceConfigs(): void {
-    this.getAllSourceConfigsApiCall().subscribe({
-                                          next: (sourceConfigs: DbModelSourceConfig[] | undefined) => {
-                                            if (!sourceConfigs) {
-                                              throw new Error("Failed to initialize the Database Model Source Configs");
-                                            }
-                                          },
-                                          error: (err: any) => {
-                                            throw new Error( "Failed to initialize the Database Model Source Configs due to [" + err + "]" );
-                                          },
-                                          complete: () => {
-                                            console.log("Finished initializing Database Model Source Configs");
-                                          }
-                                        });
+  getUrls(): Observable<DbModelSourceUrl[]> {
+    return this.urls$.asObservable();
   }
 
-  private initSourcePresets(): void {
-    this.getAllSourcePresetsApiCall().subscribe({
-                                          next: (sourcePresets: DbModelSourcePreset[] | undefined) => {
-                                            if (!sourcePresets) {
-                                              throw new Error("Failed to initialize the Database Model Source Presets");
-                                            }
-                                          },
-                                          error: (err: any) => {
-                                            throw new Error( "Failed to initialize the Database Model Source Presets due to [" + err + "]" );
-                                          },
-                                          complete: () => {
-                                            console.log("Finished initializing Database Model Source Presets");
-                                          }
-                                        });
+  getConfigs(): Observable<DbModelSourceConfig[]> {
+    return this.configs$.asObservable();
   }
 
+  getPresets(): Observable<DbModelSourcePreset[]> {
+    return this.presets$.asObservable();
+  }
 
-  private initSourceSupportedDrivers(): void {
-    this.getAllSourceSupportedDriversApiCall().subscribe({
-                                                    next: (sourceSupportedDrivers: DbModelSourceSupportedDriver[] | undefined) => {
-                                                      if (!sourceSupportedDrivers) {
-                                                        throw new Error("Failed to initialize the Database Model Source Supported Drivers");
+  getConfigSupportedDrivers(): Observable<DbModelSourceSupportedDriver[]> {
+    return this.configSupportedDrivers$.asObservable();
+  }
+
+  getUrlSupportedSchemes(): Observable<DbModelSourceUrlSupportedScheme[]> {
+    return this.urlSupportedSchemes$.asObservable();
+  }
+
+  getUrlSupportedProviders(): Observable<DbModelSourceUrlSupportedProvider[]> {
+    return this.urlSupportedProviders$.asObservable();
+  }
+
+  createUrl( urlToCreate: DbModelSourceUrl ): Observable<DbModelSourceUrl | undefined> {
+    let createUrlResult: Observable<DbModelSourceUrl | undefined>;
+    let urlAlreadyCreated = this.urls$.value.find((url: DbModelSourceUrl) => {
+      return url.isEqualTo(urlToCreate);
+    });
+
+    if (urlAlreadyCreated) {
+      console.log( "Not attempting to create Database Model Source URL since it was found to already exist, returning undefined" );
+      createUrlResult = of(undefined);
+    } else {
+      createUrlResult = this.createUrlApiCall(urlToCreate);
+    }
+    return createUrlResult;
+  }
+
+  createConfig( configToCreate: DbModelSourceConfig ): Observable<DbModelSourceConfig | undefined> {
+    let createConfigResult: Observable<DbModelSourceConfig | undefined>;
+    let configAlreadyCreated = this.configs$.value.find((config: DbModelSourceConfig) => {
+      return config.isEqualTo(configToCreate);
+    });
+
+    if (configAlreadyCreated) {
+      console.log( "Not attempting to create Database Model Source Config since it was found to already exist, returning undefined" );
+      createConfigResult = of(undefined);
+    } else {
+      createConfigResult = this.createConfigApiCall(configToCreate);
+    }
+    return createConfigResult;
+  }
+
+  private initDataTypes(): void {
+    this.getAllDataTypesApiCall().subscribe({
+                                    next: (dataTypes: DbModelSourceDataType[] | undefined) => {
+                                      if (!dataTypes) {
+                                        throw new Error("Failed to initialize the Database Model Source Data Types");
+                                      }
+                                    },
+                                    error: (err: any) => {
+                                      throw new Error("Failed to initialize the Database Model Source Data Types due to [" + err + "]");
+                                    },
+                                    complete: () => {
+                                      console.log("Finished initializing Database Model Source ");
+                                    }
+                                  });
+  }
+
+  private initUrls(): void {
+    this.getAllUrlsApiCall().subscribe({
+                                  next: (urls: DbModelSourceUrl[] | undefined) => {
+                                    if (!urls) {
+                                      throw new Error("Failed to initialize the Database Model Source URLs");
+                                    }
+                                  },
+                                  error: (err: any) => {
+                                    throw new Error( "Failed to initialize the Database Model Source URLs due to [" + err + "]" );
+                                  },
+                                  complete: () => {
+                                    console.log("Finished initializing Database Model Source URLs");
+                                  }
+                                });
+  }
+
+  private initConfigs(): void {
+    this.getAllConfigsApiCall().subscribe({
+                                    next: (configs: DbModelSourceConfig[] | undefined) => {
+                                      if (!configs) {
+                                        throw new Error("Failed to initialize the Database Model Source Configs");
+                                      }
+                                    },
+                                    error: (err: any) => {
+                                      throw new Error( "Failed to initialize the Database Model Source Configs due to [" + err + "]" );
+                                    },
+                                    complete: () => {
+                                      console.log("Finished initializing Database Model Source Configs");
+                                    }
+                                  });
+  }
+
+  private initPresets(): void {
+    this.getAllPresetsApiCall().subscribe({
+                                    next: (presets: DbModelSourcePreset[] | undefined) => {
+                                      if (!presets) {
+                                        throw new Error("Failed to initialize the Database Model Source Presets");
+                                      }
+                                    },
+                                    error: (err: any) => {
+                                      throw new Error( "Failed to initialize the Database Model Source Presets due to [" + err + "]" );
+                                    },
+                                    complete: () => {
+                                      console.log("Finished initializing Database Model Source Presets");
+                                    }
+                                  });
+  }
+
+  private initConfigSupportedDrivers(): void {
+    this.getAllConfigSupportedDriversApiCall().subscribe({
+                                                    next: (configSupportedDrivers: DbModelSourceSupportedDriver[] | undefined) => {
+                                                      if (!configSupportedDrivers) {
+                                                        throw new Error("Failed to initialize the Database Model Source Config Supported Drivers");
                                                       }
                                                     },
                                                     error: (err: any) => {
-                                                      throw new Error( "Failed to initialize the Database Model Source Supported Drivers due to [" + err + "]" );
+                                                      throw new Error( "Failed to initialize the Database Model Source Config Supported Drivers due to [" + err + "]" );
                                                     },
                                                     complete: () => {
-                                                      console.log("Finished initializing Database Model Source Supported Drivers");
+                                                      console.log("Finished initializing Database Model Source Config Supported Drivers");
                                                     }
                                                   });
   }
 
-  private initSourceUrlSupportedSchemes(): void {
-    this.getAllSourceUrlSupportedSchemesApiCall().subscribe({
-                                                      next: (sourceUrlSupportedSchemes: DbModelSourceUrlSupportedScheme[] | undefined) => {
-                                                        if (!sourceUrlSupportedSchemes) {
-                                                          throw new Error("Failed to initialize the Database Model Source URL Supported Schemes");
-                                                        }
-                                                      },
-                                                      error: (err: any) => {
-                                                        throw new Error( "Failed to initialize the Database Model Source URL Supported Schemes due to [" + err + "]" );
-                                                      },
-                                                      complete: () => {
-                                                        console.log("Finished initializing Database Model Source URL Supported Schemes");
-                                                      }
-                                                    });
+  private initUrlSupportedSchemes(): void {
+    this.getAllUrlSupportedSchemesApiCall().subscribe({
+                                                next: (urlSupportedSchemes: DbModelSourceUrlSupportedScheme[] | undefined) => {
+                                                  if (!urlSupportedSchemes) {
+                                                    throw new Error("Failed to initialize the Database Model Source URL Supported Schemes");
+                                                  }
+                                                },
+                                                error: (err: any) => {
+                                                  throw new Error( "Failed to initialize the Database Model Source URL Supported Schemes due to [" + err + "]" );
+                                                },
+                                                complete: () => {
+                                                  console.log("Finished initializing Database Model Source URL Supported Schemes");
+                                                }
+                                              });
   }
 
-  private initSourceUrlSupportedProviders(): void {
-    this.getAllSourceUrlSupportedProvidersApiCall().subscribe({
-                                                        next: (sourceUrlSupportedProviders: DbModelSourceUrlSupportedProvider[] | undefined) => {
-                                                          if (!sourceUrlSupportedProviders) {
-                                                            throw new Error("Failed to initialize the Database Model Source URL Supported Providers");
-                                                          }
-                                                        },
-                                                        error: (err: any) => {
-                                                          throw new Error( "Failed to initialize the Database Model Source URL Supported Providers due to [" + err + "]" );
-                                                        },
-                                                        complete: () => {
-                                                          console.log("Finished initializing Database Model Source URL Supported Providers");
-                                                        }
-                                                      });
+  private initUrlSupportedProviders(): void {
+    this.getAllUrlSupportedProvidersApiCall().subscribe({
+                                                  next: (urlSupportedProviders: DbModelSourceUrlSupportedProvider[] | undefined) => {
+                                                    if (!urlSupportedProviders) {
+                                                      throw new Error("Failed to initialize the Database Model Source URL Supported Providers");
+                                                    }
+                                                  },
+                                                  error: (err: any) => {
+                                                    throw new Error( "Failed to initialize the Database Model Source URL Supported Providers due to [" + err + "]" );
+                                                  },
+                                                  complete: () => {
+                                                    console.log("Finished initializing Database Model Source URL Supported Providers");
+                                                  }
+                                                });
   }
 
-  private addSourceUrl(sourceUrlToAdd: DbModelSourceUrl): void {
+  private addDbDataType(dataTypeToAdd: DbModelSourceDataType): void {
     if (
-      sourceUrlToAdd
-      && sourceUrlToAdd.id !== null
-      && sourceUrlToAdd.id !== undefined
+      dataTypeToAdd
+      && StringUtil.isNotEmpty(dataTypeToAdd.name)
     ) {
-      let sourceUrlAlreadyAdded = this.sourceUrls$.value.find((sourceUrl: DbModelSourceUrl) => {
-        return sourceUrl.isEqualTo(sourceUrlToAdd);
+      let dataTypeAlreadyAdded = this.dataTypes$.value.find((dataType: DbModelSourceDataType) => {
+        return dataType.isEqualTo(dataTypeToAdd);
       });
-      if (!sourceUrlAlreadyAdded) {
-        this.sourceUrls$.next([ ...this.sourceUrls$.value, sourceUrlToAdd ]);
+      if (!dataTypeAlreadyAdded) {
+        this.dataTypes$.next([...this.dataTypes$.value, dataTypeToAdd]);
       }
     }
   }
 
-  private addSourceConfig(sourceConfigToAdd: DbModelSourceConfig): void {
+  private addSourceUrl(urlToAdd: DbModelSourceUrl): void {
     if (
-      sourceConfigToAdd
-      && sourceConfigToAdd.id !== null
-      && sourceConfigToAdd.id !== undefined
+      urlToAdd
+      && urlToAdd.id !== null
+      && urlToAdd.id !== undefined
     ) {
-      let sourceConfigAlreadyAdded = this.sourceConfigs$.value.find((sourceConfig: DbModelSourceConfig) => {
-        return sourceConfig.isEqualTo(sourceConfigToAdd);
+      let urlAlreadyAdded = this.urls$.value.find((url: DbModelSourceUrl) => {
+        return url.isEqualTo(urlToAdd);
       });
-      if (!sourceConfigAlreadyAdded) {
-        this.sourceConfigs$.next([ ...this.sourceConfigs$.value, sourceConfigToAdd ]);
+      if (!urlAlreadyAdded) {
+        this.urls$.next([ ...this.urls$.value, urlToAdd ]);
       }
     }
   }
 
-  private addSourcePreset(sourcePresetToAdd: DbModelSourcePreset): void {
+  private addSourceConfig(configToAdd: DbModelSourceConfig): void {
     if (
-      sourcePresetToAdd
-      && sourcePresetToAdd.id !== null
-      && sourcePresetToAdd.id !== undefined
+      configToAdd
+      && configToAdd.id !== null
+      && configToAdd.id !== undefined
     ) {
-      let sourcePresetAlreadyAdded = this.sourcePresets$.value.find((sourcePreset: DbModelSourcePreset) => {
-        return sourcePreset.isEqualTo(sourcePresetToAdd);
+      let configAlreadyAdded = this.configs$.value.find((config: DbModelSourceConfig) => {
+        return config.isEqualTo(configToAdd);
       });
-      if (!sourcePresetAlreadyAdded) {
-        this.sourcePresets$.next([ ...this.sourcePresets$.value, sourcePresetToAdd ]);
+      if (!configAlreadyAdded) {
+        this.configs$.next([ ...this.configs$.value, configToAdd ]);
       }
     }
   }
 
-  private addSourceSupportedDriver(sourceSupportedDriverToAdd: DbModelSourceSupportedDriver): void {
+  private addSourcePreset(presetToAdd: DbModelSourcePreset): void {
     if (
-      sourceSupportedDriverToAdd
-      && sourceSupportedDriverToAdd.id !== null
-      && sourceSupportedDriverToAdd.id !== undefined
+      presetToAdd
+      && presetToAdd.id !== null
+      && presetToAdd.id !== undefined
     ) {
-      let sourceSupportedDriverAlreadyAdded = this.sourceSupportedDrivers$.value.find((sourceSupportedDriver: DbModelSourceSupportedDriver) => {
-        return sourceSupportedDriver.isEqualTo(sourceSupportedDriverToAdd);
+      let presetAlreadyAdded = this.presets$.value.find((preset: DbModelSourcePreset) => {
+        return preset.isEqualTo(presetToAdd);
       });
-      if (!sourceSupportedDriverAlreadyAdded) {
-        this.sourceSupportedDrivers$.next([ ...this.sourceSupportedDrivers$.value, sourceSupportedDriverToAdd ]);
+      if (!presetAlreadyAdded) {
+        this.presets$.next([ ...this.presets$.value, presetToAdd ]);
       }
     }
   }
 
-  private addSourceUrlSupportedScheme(sourceUrlSupportedSchemeToAdd: DbModelSourceUrlSupportedScheme): void {
+  private addSourceSupportedDriver(configSupportedDriverToAdd: DbModelSourceSupportedDriver): void {
     if (
-      sourceUrlSupportedSchemeToAdd
-      && sourceUrlSupportedSchemeToAdd.id !== null
-      && sourceUrlSupportedSchemeToAdd.id !== undefined
+      configSupportedDriverToAdd
+      && configSupportedDriverToAdd.id !== null
+      && configSupportedDriverToAdd.id !== undefined
     ) {
-      let sourceUrlSupportedSchemeAlreadyAdded = this.sourceUrlSupportedSchemes$.value.find((sourceUrlSupportedScheme: DbModelSourceUrlSupportedScheme) => {
-        return sourceUrlSupportedScheme.isEqualTo(sourceUrlSupportedSchemeToAdd);
+      let configSupportedDriverAlreadyAdded = this.configSupportedDrivers$.value.find((configSupportedDriver: DbModelSourceSupportedDriver) => {
+        return configSupportedDriver.isEqualTo(configSupportedDriverToAdd);
       });
-      if (!sourceUrlSupportedSchemeAlreadyAdded) {
-        this.sourceUrlSupportedSchemes$.next([ ...this.sourceUrlSupportedSchemes$.value, sourceUrlSupportedSchemeToAdd ]);
+      if (!configSupportedDriverAlreadyAdded) {
+        this.configSupportedDrivers$.next([ ...this.configSupportedDrivers$.value, configSupportedDriverToAdd ]);
       }
     }
   }
 
-  private addSourceUrlSupportedProvider(sourceUrlSupportedProviderToAdd: DbModelSourceUrlSupportedProvider): void {
+  private addUrlSupportedScheme(urlSupportedSchemeToAdd: DbModelSourceUrlSupportedScheme): void {
     if (
-      sourceUrlSupportedProviderToAdd
-      && sourceUrlSupportedProviderToAdd.id !== null
-      && sourceUrlSupportedProviderToAdd.id !== undefined
+      urlSupportedSchemeToAdd
+      && urlSupportedSchemeToAdd.id !== null
+      && urlSupportedSchemeToAdd.id !== undefined
     ) {
-      let sourceUrlSupportedProviderAlreadyAdded = this.sourceUrlSupportedProviders$.value.find((sourceUrlSupportedProvider: DbModelSourceUrlSupportedProvider) => {
-        return sourceUrlSupportedProvider.isEqualTo(sourceUrlSupportedProviderToAdd);
+      let urlSupportedSchemeAlreadyAdded = this.urlSupportedSchemes$.value.find((urlSupportedScheme: DbModelSourceUrlSupportedScheme) => {
+        return urlSupportedScheme.isEqualTo(urlSupportedSchemeToAdd);
       });
-      if (!sourceUrlSupportedProviderAlreadyAdded) {
-        this.sourceUrlSupportedProviders$.next([ ...this.sourceUrlSupportedProviders$.value, sourceUrlSupportedProviderToAdd ]);
+      if (!urlSupportedSchemeAlreadyAdded) {
+        this.urlSupportedSchemes$.next([ ...this.urlSupportedSchemes$.value, urlSupportedSchemeToAdd ]);
       }
     }
   }
 
-  private createSourceUrlApiCall( sourceUrl: DbModelSourceUrl ): Observable<DbModelSourceUrl | undefined> {
-    return this.httpClient.post<DbModelSourceUrl>(this.getApiUrlWithAddition("url"), sourceUrl)
+  private addUrlSupportedProvider(urlSupportedProviderToAdd: DbModelSourceUrlSupportedProvider): void {
+    if (
+      urlSupportedProviderToAdd
+      && urlSupportedProviderToAdd.id !== null
+      && urlSupportedProviderToAdd.id !== undefined
+    ) {
+      let urlSupportedProviderAlreadyAdded = this.urlSupportedProviders$.value.find((urlSupportedProvider: DbModelSourceUrlSupportedProvider) => {
+        return urlSupportedProvider.isEqualTo(urlSupportedProviderToAdd);
+      });
+      if (!urlSupportedProviderAlreadyAdded) {
+        this.urlSupportedProviders$.next([ ...this.urlSupportedProviders$.value, urlSupportedProviderToAdd ]);
+      }
+    }
+  }
+
+  private createUrlApiCall( urlToCreate: DbModelSourceUrl ): Observable<DbModelSourceUrl | undefined> {
+    return this.httpClient.post<DbModelSourceUrl>(this.getApiUrlWithAddition("url"), urlToCreate)
                           .pipe(
-                            map((createSourceUrlResult: DbModelSourceUrl) => {
-                              return new DbModelSourceUrl().deserialize(createSourceUrlResult);
+                            map((createUrlResult: DbModelSourceUrl) => {
+                              return new DbModelSourceUrl().deserialize(createUrlResult);
                             }),
                             catchError((error: any) => {
                               console.log( "Failed to create new Database Model Source URL due to [" + error + "]", error );
@@ -304,44 +341,71 @@ export class DbModelSourceService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((sourceUrl: DbModelSourceUrl | undefined) => {
-                              if (sourceUrl) {
-                                this.addSourceUrl(sourceUrl);
+                            tap((url: DbModelSourceUrl | undefined) => {
+                              if (url) {
+                                this.addSourceUrl(url);
                               }
                             })
                           );
   }
 
-  private createSourceConfigApiCall( sourceConfig: DbModelSourceConfig ): Observable<DbModelSourceConfig | undefined> {
-    return this.httpClient.post<DbModelSourceConfig>(this.getApiUrl(), sourceConfig)
-                                                      .pipe(
-                                                        map((createSourceConfigResult: DbModelSourceConfig) => {
-                                                          return new DbModelSourceConfig().deserialize( createSourceConfigResult );
-                                                        }),
-                                                        catchError((error) => {
-                                                          console.log( "Failed to create new Database Model Source Config due to [" + error + "]", error );
-                                                          return of(undefined);
-                                                        })
-                                                      )
-                                                      .pipe(
-                                                        tap((sourceConfig: DbModelSourceConfig | undefined) => {
-                                                          if (sourceConfig) {
-                                                            this.addSourceConfig(sourceConfig);
-                                                          }
-                                                        })
-                                                      );
+  private createConfigApiCall( config: DbModelSourceConfig ): Observable<DbModelSourceConfig | undefined> {
+    return this.httpClient.post<DbModelSourceConfig>(this.getApiUrl(), config)
+                          .pipe(
+                            map((createConfigResult: DbModelSourceConfig) => {
+                              return new DbModelSourceConfig().deserialize(createConfigResult);
+                            }),
+                            catchError((error) => {
+                              console.log( "Failed to create new Database Model Source Config due to [" + error + "]", error );
+                              return of(undefined);
+                            })
+                          )
+                          .pipe(
+                            tap((config: DbModelSourceConfig | undefined) => {
+                              if (config) {
+                                this.addSourceConfig(config);
+                              }
+                            })
+                          );
   }
 
-  private getAllSourceUrlsApiCall(): Observable< DbModelSourceUrl[] | undefined > {
+  private getAllDataTypesApiCall(): Observable<DbModelSourceDataType[] | undefined> {
+    return this.httpClient.get<DbModelSourceDataType[]>(this.getApiUrlWithAddition("data/type"))
+                          .pipe(
+                            map((getAllDataTypesResult: DbModelSourceDataType[]) => {
+                              let dataTypes: DbModelSourceDataType[] = [];
+                              getAllDataTypesResult.forEach((dataTypeResult: DbModelSourceDataType) => {
+                                let dataType = new DbModelSourceDataType().deserialize(dataTypeResult);
+                                dataTypes.push(dataType);
+                              });
+                              return dataTypes;
+                            }),
+                            catchError((error) => {
+                              console.log("Failed to get all Database Model Source Data Types due to [" + error + "]", error);
+                              return of(undefined);
+                            })
+                          )
+                          .pipe(
+                            tap((dataTypes: DbModelSourceDataType[] | undefined) => {
+                              if (dataTypes) {
+                                dataTypes.forEach((dataType: DbModelSourceDataType) => {
+                                  this.addDbDataType(dataType);
+                                });
+                              }
+                            })
+                          );
+  }
+
+  private getAllUrlsApiCall(): Observable< DbModelSourceUrl[] | undefined > {
     return this.httpClient.get<DbModelSourceUrl[]>(this.getApiUrlWithAddition("url"))
                           .pipe(
-                            map((getAllSourceUrlsResult: DbModelSourceUrl[]) => {
-                              let sourceUrls: DbModelSourceUrl[] = [];
-                              getAllSourceUrlsResult.forEach((sourceUrlResult: DbModelSourceUrl) => {
-                                let sourceUrl = new DbModelSourceUrl().deserialize( sourceUrlResult );
-                                sourceUrls.push(sourceUrl);
+                            map((getAllUrlsResult: DbModelSourceUrl[]) => {
+                              let urls: DbModelSourceUrl[] = [];
+                              getAllUrlsResult.forEach((urlResult: DbModelSourceUrl) => {
+                                let url = new DbModelSourceUrl().deserialize( urlResult );
+                                urls.push(url);
                               });
-                              return sourceUrls;
+                              return urls;
                             }),
                             catchError((error) => {
                               console.log( "Failed to get all Database Model Source URLs due to [" + error + "]", error );
@@ -349,26 +413,26 @@ export class DbModelSourceService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((sourceUrls: DbModelSourceUrl[] | undefined) => {
-                              if (sourceUrls) {
-                                sourceUrls.forEach((sourceUrl: DbModelSourceUrl) => {
-                                  this.addSourceUrl(sourceUrl);
+                            tap((urls: DbModelSourceUrl[] | undefined) => {
+                              if (urls) {
+                                urls.forEach((url: DbModelSourceUrl) => {
+                                  this.addSourceUrl(url);
                                 });
                               }
                             })
                           );
   }
 
-  private getAllSourceConfigsApiCall(): Observable< DbModelSourceConfig[] | undefined > {
+  private getAllConfigsApiCall(): Observable< DbModelSourceConfig[] | undefined > {
     return this.httpClient.get<DbModelSourceConfig[]>(this.getApiUrl())
                           .pipe(
-                            map((getAllSourceConfigsResult: DbModelSourceConfig[]) => {
-                              let sourceConfigs: DbModelSourceConfig[] = [];
-                              getAllSourceConfigsResult.forEach((sourceConfigResult: DbModelSourceConfig) => {
-                                let sourceConfig = new DbModelSourceConfig().deserialize( sourceConfigResult );
-                                sourceConfigs.push(sourceConfig);
+                            map((getAllConfigsResult: DbModelSourceConfig[]) => {
+                              let configs: DbModelSourceConfig[] = [];
+                              getAllConfigsResult.forEach((configResult: DbModelSourceConfig) => {
+                                let config = new DbModelSourceConfig().deserialize( configResult );
+                                configs.push(config);
                               });
-                              return sourceConfigs;
+                              return configs;
                             }),
                             catchError((error) => {
                               console.log( "Failed to get all Database Model Source Configs due to [" + error + "]", error );
@@ -376,26 +440,26 @@ export class DbModelSourceService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((sourceConfigs: DbModelSourceConfig[] | undefined) => {
-                              if (sourceConfigs) {
-                                sourceConfigs.forEach((sourceConfig: DbModelSourceConfig) => {
-                                  this.addSourceConfig(sourceConfig);
+                            tap((configs: DbModelSourceConfig[] | undefined) => {
+                              if (configs) {
+                                configs.forEach((config: DbModelSourceConfig) => {
+                                  this.addSourceConfig(config);
                                 });
                               }
                             })
                           );
   }
 
-  private getAllSourcePresetsApiCall(): Observable< DbModelSourcePreset[] | undefined > {
+  private getAllPresetsApiCall(): Observable< DbModelSourcePreset[] | undefined > {
     return this.httpClient.get<DbModelSourcePreset[]>(this.getApiUrlWithAddition("preset"))
                           .pipe(
-                            map((getAllSourcePresetsResult: DbModelSourcePreset[]) => {
-                              let sourcePresets: DbModelSourcePreset[] = [];
-                              getAllSourcePresetsResult.forEach((sourcePresetResult: DbModelSourcePreset) => {
-                                let sourcePreset = new DbModelSourcePreset().deserialize( sourcePresetResult );
-                                sourcePresets.push(sourcePreset);
+                            map((getAllPresetsResult: DbModelSourcePreset[]) => {
+                              let presets: DbModelSourcePreset[] = [];
+                              getAllPresetsResult.forEach((presetResult: DbModelSourcePreset) => {
+                                let preset = new DbModelSourcePreset().deserialize( presetResult );
+                                presets.push(preset);
                               });
-                              return sourcePresets;
+                              return presets;
                             }),
                             catchError((error) => {
                               console.log( "Failed to get all Database Model Source Presets due to [" + error + "]", error );
@@ -403,57 +467,57 @@ export class DbModelSourceService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((sourcePresets: DbModelSourcePreset[] | undefined) => {
-                              if (sourcePresets) {
-                                sourcePresets.forEach((sourcePreset: DbModelSourcePreset) => {
-                                  this.addSourcePreset(sourcePreset);
+                            tap((presets: DbModelSourcePreset[] | undefined) => {
+                              if (presets) {
+                                presets.forEach((preset: DbModelSourcePreset) => {
+                                  this.addSourcePreset(preset);
                                 });
                               }
                             })
                           );
   }
 
-  private getAllSourceSupportedDriversApiCall(): Observable< DbModelSourceSupportedDriver[] | undefined > {
+  private getAllConfigSupportedDriversApiCall(): Observable< DbModelSourceSupportedDriver[] | undefined > {
     return this.httpClient.get<DbModelSourceSupportedDriver[]>(this.getApiUrlWithAddition("driver"))
                           .pipe(
-                            map((getAllSourceSupportedDriversResult: DbModelSourceSupportedDriver[]) => {
-                              let sourceSupportedDrivers: DbModelSourceSupportedDriver[] = [];
-                              getAllSourceSupportedDriversResult.forEach((sourceSupportedDriverResult: DbModelSourceSupportedDriver) => {
-                                let sourceSupportedDriver = new DbModelSourceSupportedDriver().deserialize(
-                                  sourceSupportedDriverResult
+                            map((getAllConfigSupportedDriversResult: DbModelSourceSupportedDriver[]) => {
+                              let configSupportedDrivers: DbModelSourceSupportedDriver[] = [];
+                              getAllConfigSupportedDriversResult.forEach((configSupportedDriverResult: DbModelSourceSupportedDriver) => {
+                                let configSupportedDriver = new DbModelSourceSupportedDriver().deserialize(
+                                  configSupportedDriverResult
                                 );
-                                sourceSupportedDrivers.push(sourceSupportedDriver);
+                                configSupportedDrivers.push(configSupportedDriver);
                               });
-                              return sourceSupportedDrivers;
+                              return configSupportedDrivers;
                             }),
                             catchError((error) => {
-                              console.log( "Failed to get all Database Model Source Supported Drivers due to [" + error + "]", error );
+                              console.log( "Failed to get all Database Model Source Config Supported Drivers due to [" + error + "]", error );
                               return of(undefined);
                             })
                           )
                           .pipe(
-                            tap((sourceSupportedDriver: DbModelSourceSupportedDriver[] | undefined) => {
-                              if (sourceSupportedDriver) {
-                                sourceSupportedDriver.forEach((sourceSupportedDriver: DbModelSourceSupportedDriver) => {
-                                  this.addSourceSupportedDriver(sourceSupportedDriver);
+                            tap((configSupportedDriver: DbModelSourceSupportedDriver[] | undefined) => {
+                              if (configSupportedDriver) {
+                                configSupportedDriver.forEach((configSupportedDriver: DbModelSourceSupportedDriver) => {
+                                  this.addSourceSupportedDriver(configSupportedDriver);
                                 });
                               }
                             })
                           );
   }
 
-  private getAllSourceUrlSupportedSchemesApiCall(): Observable< DbModelSourceUrlSupportedScheme[] | undefined > {
+  private getAllUrlSupportedSchemesApiCall(): Observable< DbModelSourceUrlSupportedScheme[] | undefined > {
     return this.httpClient.get<DbModelSourceUrlSupportedScheme[]>(this.getApiUrlWithAddition("url/scheme"))
                           .pipe(
-                            map((getAllSourceUrlSupportedSchemesResult: DbModelSourceUrlSupportedScheme[]) => {
-                              let sourceUrlSupportedSchemes: DbModelSourceUrlSupportedScheme[] = [];
-                              getAllSourceUrlSupportedSchemesResult.forEach((sourceUrlSupportedSchemeResult: DbModelSourceUrlSupportedScheme) => {
-                                let sourceUrlSupportedScheme = new DbModelSourceUrlSupportedScheme().deserialize(
-                                  sourceUrlSupportedSchemeResult
+                            map((getAllUrlSupportedSchemesResult: DbModelSourceUrlSupportedScheme[]) => {
+                              let urlSupportedSchemes: DbModelSourceUrlSupportedScheme[] = [];
+                              getAllUrlSupportedSchemesResult.forEach((urlSupportedSchemeResult: DbModelSourceUrlSupportedScheme) => {
+                                let urlSupportedScheme = new DbModelSourceUrlSupportedScheme().deserialize(
+                                  urlSupportedSchemeResult
                                 );
-                                sourceUrlSupportedSchemes.push(sourceUrlSupportedScheme);
+                                urlSupportedSchemes.push(urlSupportedScheme);
                               });
-                              return sourceUrlSupportedSchemes;
+                              return urlSupportedSchemes;
                             }),
                             catchError((error) => {
                               console.log( "Failed to get all Database Model Source URL Supported Schemes due to [" + error + "]", error );
@@ -461,28 +525,28 @@ export class DbModelSourceService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((sourceUrlSupportedScheme: DbModelSourceUrlSupportedScheme[] | undefined) => {
-                              if (sourceUrlSupportedScheme) {
-                                sourceUrlSupportedScheme.forEach((sourceUrlSupportedScheme: DbModelSourceUrlSupportedScheme) => {
-                                  this.addSourceUrlSupportedScheme(sourceUrlSupportedScheme);
+                            tap((urlSupportedScheme: DbModelSourceUrlSupportedScheme[] | undefined) => {
+                              if (urlSupportedScheme) {
+                                urlSupportedScheme.forEach((urlSupportedScheme: DbModelSourceUrlSupportedScheme) => {
+                                  this.addUrlSupportedScheme(urlSupportedScheme);
                                 });
                               }
                             })
                           );
   }
 
-  private getAllSourceUrlSupportedProvidersApiCall(): Observable< DbModelSourceUrlSupportedProvider[] | undefined > {
+  private getAllUrlSupportedProvidersApiCall(): Observable< DbModelSourceUrlSupportedProvider[] | undefined > {
     return this.httpClient.get<DbModelSourceUrlSupportedProvider[]>(this.getApiUrlWithAddition("url/provider"))
                           .pipe(
-                            map((getAllSourceUrlSupportedProvidersResult: DbModelSourceUrlSupportedProvider[]) => {
-                              let sourceUrlSupportedProviders: DbModelSourceUrlSupportedProvider[] = [];
-                              getAllSourceUrlSupportedProvidersResult.forEach((sourceUrlSupportedProviderResult: DbModelSourceUrlSupportedProvider) => {
-                                let sourceUrlSupportedProvider = new DbModelSourceUrlSupportedProvider().deserialize(
-                                  sourceUrlSupportedProviderResult
+                            map((getAllUrlSupportedProvidersResult: DbModelSourceUrlSupportedProvider[]) => {
+                              let urlSupportedProviders: DbModelSourceUrlSupportedProvider[] = [];
+                              getAllUrlSupportedProvidersResult.forEach((urlSupportedProviderResult: DbModelSourceUrlSupportedProvider) => {
+                                let urlSupportedProvider = new DbModelSourceUrlSupportedProvider().deserialize(
+                                  urlSupportedProviderResult
                                 );
-                                sourceUrlSupportedProviders.push(sourceUrlSupportedProvider);
+                                urlSupportedProviders.push(urlSupportedProvider);
                               });
-                              return sourceUrlSupportedProviders;
+                              return urlSupportedProviders;
                             }),
                             catchError((error) => {
                               console.log( "Failed to get all Database Model Source URL Supported Providers due to [" + error + "]", error );
@@ -490,10 +554,10 @@ export class DbModelSourceService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((sourceUrlSupportedProvider: DbModelSourceUrlSupportedProvider[] | undefined) => {
-                              if (sourceUrlSupportedProvider) {
-                                sourceUrlSupportedProvider.forEach((sourceUrlSupportedProvider: DbModelSourceUrlSupportedProvider) => {
-                                  this.addSourceUrlSupportedProvider(sourceUrlSupportedProvider);
+                            tap((urlSupportedProvider: DbModelSourceUrlSupportedProvider[] | undefined) => {
+                              if (urlSupportedProvider) {
+                                urlSupportedProvider.forEach((urlSupportedProvider: DbModelSourceUrlSupportedProvider) => {
+                                  this.addUrlSupportedProvider(urlSupportedProvider);
                                 });
                               }
                             })

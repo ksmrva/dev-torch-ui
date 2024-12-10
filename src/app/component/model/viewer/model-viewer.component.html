@@ -1,0 +1,42 @@
+<div class="row m-0" id="modelViewer">
+  <div class="border-start border-end border-bottom border-1 p-0 collapse show" id="modelViewerSidebar" >
+    <div class="d-flex align-items-center justify-content-center model-viewer-sidebar-title-container">
+      <span class="model-viewer-sidebar-title">models</span>
+    </div>
+    <div class="model-viewer-sidebar-item-container">
+      <button class="btn model-viewer-sidebar-item-button p-0" [ngClass]="additionalCodeViewerButtonClasses" (click)="toggleCodeViewer()">
+        <div class="model-viewer-sidebar-item-icon-container pt-2 pb-2">
+          <i class="bi bi-code-slash h4 m-0" id=""></i>
+          <span style="font-weight:lighter">code</span>
+        </div>
+      </button>
+    </div>
+    <div class="model-viewer-sidebar-item-container">
+      <button class="btn model-viewer-sidebar-item-button p-0" [ngClass]="additionalDatabaseViewerButtonClasses" (click)="toggleDatabaseViewer()">
+        <div class="model-viewer-sidebar-item-icon-container pt-2 pb-2">
+          <i class="bi bi-database-fill h4 m-0" id=""></i>
+          <span style="font-weight:lighter">database</span>
+        </div>
+      </button>
+    </div>
+    <div class="model-viewer-sidebar-item-container">
+      <button class="btn model-viewer-sidebar-item-button p-0" [ngClass]="additionalJsonViewerButtonClasses" (click)="toggleJsonViewer()">
+        <div class="model-viewer-sidebar-item-icon-container pt-2 pb-2">
+          <i class="bi bi-braces h4 m-0" id=""></i>
+          <span style="font-weight:lighter">json</span>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="border-start border-end border-bottom p-0" [ngClass]="modelContentClass" id="modelViewerContent" >
+    <div *ngIf="!codeViewerIsClosed" id="modelViewerContent_CodeModelViewerHolder">
+      <code-model-source-file-viewer id="modelViewerContent_CodeModelViewer"></code-model-source-file-viewer>
+    </div>
+    <div *ngIf="!databaseViewerIsClosed" id="modelViewerContent_DatabaseModelViewerHolder">
+      <db-model-menu [menuContentIsClosed]="databaseMenuIsClosed" (menuContentToggleEvent)="toggleDatabaseMenu()" id="modelViewerContent_DatabaseModelViewer"></db-model-menu>
+    </div>
+    <div *ngIf="!jsonViewerIsClosed" id="modelViewerContent_JsonModelViewerHolder">
+      JSON
+    </div>
+  </div>
+</div>

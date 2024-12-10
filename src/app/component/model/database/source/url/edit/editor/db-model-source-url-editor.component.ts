@@ -6,7 +6,7 @@ import { BaseComponent } from '../../../../../../base.component';
 import { CommonModule } from '@angular/common';
 import { MenuSelectComponent } from '../../../../../../edit/menu/select/menu-select.component';
 import { DbModelSourceUrlEditFormComponent } from "../form/db-model-source-url-edit-form.component";
-import { StringUtil } from '../../../../../../../entity/helper/string/util/string-util';
+import { StringUtil } from '../../../../../../../entity/misc/string/util/string-util';
 
 @Component({
   selector: 'db-model-source-url-editor',
@@ -43,7 +43,7 @@ export class DbModelSourceUrlEditorComponent extends BaseComponent implements On
   }
 
   ngOnInit(): void {
-    let availableSourceUrlsSubscription = this.dbModelSourceService.getSourceUrls().subscribe({
+    let availableSourceUrlsSubscription = this.dbModelSourceService.getUrls().subscribe({
                                                                                         next: (sourceUrls: DbModelSourceUrl[] | undefined) => {
                                                                                           if (!sourceUrls) {
                                                                                             throw new Error("Failed to load the available Database Model Source URLs");

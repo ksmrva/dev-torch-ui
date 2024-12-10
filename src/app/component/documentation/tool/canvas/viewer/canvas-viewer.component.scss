@@ -1,0 +1,14 @@
+#canvasViewerContent {
+  height: 100%;
+}
+
+#canvasViewerContent_Canvas {
+  height: 100%;
+  // background-color: var(--bs-tertiary-color);
+  background-color: #807c72 !important;
+  // background-color: var(--bs-light-border-subtle);
+}
+
+#canvasViewerContent_Canvas_JointJs_Paper {
+  transform-origin: 0% 0% 0px;
+}

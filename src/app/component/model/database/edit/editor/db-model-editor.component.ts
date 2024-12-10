@@ -2,10 +2,10 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
-import { StringUtil } from "../../../../../entity/helper/string/util/string-util";
-import { DbModel } from "../../../../../entity/model/database/db-model";
-import { DbModelName } from "../../../../../entity/model/database/name/db-model-name";
-import { DbModelService } from "../../../../../service/model/database/db-model.service";
+import { StringUtil } from "../../../../../entity/misc/string/util/string-util";
+import { DbModel } from "../../../../../entity/model/database/component/db-model";
+import { DatabasePath } from "../../../../../entity/model/database/component/path/database-path";
+import { DbModelComponentService } from "../../../../../service/model/database/component/db-model-component.service";
 import { BaseComponent } from "../../../../base.component";
 import { DbModelEditFormComponent } from "../form/db-model-edit-form.component";
 import { MenuSelectComponent } from "../../../../edit/menu/select/menu-select.component";
@@ -26,7 +26,7 @@ export class DbModelEditorComponent extends BaseComponent implements OnInit {
 
   dbModelForEdit$: BehaviorSubject<DbModel | undefined>;
 
-  availableDbModelNames: DbModelName[];
+  availableDbModelNames: DatabasePath[];
 
   baseHtmlId: string;
 
@@ -35,7 +35,7 @@ export class DbModelEditorComponent extends BaseComponent implements OnInit {
   showSelect: boolean;
 
   constructor(
-    private dbModelService: DbModelService
+    private dbModelService: DbModelComponentService
   ) {
     super();
     this.dbModelForEdit$ = new BehaviorSubject<DbModel | undefined>( undefined );
@@ -46,8 +46,8 @@ export class DbModelEditorComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let availableDbModelNamesSubscription = this.dbModelService.getAvailableDbModelNames().subscribe({
-                                                                                                        next: (dbModelNames: DbModelName[] | undefined) => {
+    let availableDbModelNamesSubscription = this.dbModelService.getAvailableDatabasePaths().subscribe({
+                                                                                                        next: (dbModelNames: DatabasePath[] | undefined) => {
                                                                                                           if (!dbModelNames) {
                                                                                                             throw new Error("Failed to get the available Database Model Names");
                                                                                                           }
@@ -64,8 +64,8 @@ export class DbModelEditorComponent extends BaseComponent implements OnInit {
   }
 
   getAvailableDbModelKeys(): string[] {
-    return this.availableDbModelNames.map((dbModelName: DbModelName) => {
-      return dbModelName.getFullName();
+    return this.availableDbModelNames.map((dbModelName: DatabasePath) => {
+      return dbModelName.getFullPath();
     });
   }
 
@@ -77,7 +77,7 @@ export class DbModelEditorComponent extends BaseComponent implements OnInit {
   loadDbModelForEdit(fullDatabaseNameSelected: string): void {
     if (StringUtil.isNotEmpty(fullDatabaseNameSelected)) {
       let dbModelNameSelected = this.getDbModelNameFromFullName(fullDatabaseNameSelected);
-      this.dbModelService.getDbModel(dbModelNameSelected).subscribe({
+      this.dbModelService.getDatabase(dbModelNameSelected).subscribe({
                                                                       next: (loadedDbModel: DbModel | undefined) => {
                                                                         if (!loadedDbModel) {
                                                                           throw new Error( "Failed to load Database Model for editing using Name [" + fullDatabaseNameSelected + "]" );
@@ -106,9 +106,9 @@ export class DbModelEditorComponent extends BaseComponent implements OnInit {
     this.showSelect = false;
   }
 
-  private getDbModelNameFromFullName(dbModelFullName: string): DbModelName {
-    let dbModelNameFound = this.availableDbModelNames.find((availableDbModelName: DbModelName) => {
-      return availableDbModelName.getFullName() === dbModelFullName;
+  private getDbModelNameFromFullName(dbModelFullName: string): DatabasePath {
+    let dbModelNameFound = this.availableDbModelNames.find((availableDbModelName: DatabasePath) => {
+      return availableDbModelName.getFullPath() === dbModelFullName;
     });
     if(!dbModelNameFound) {
       this.resetDbModelEdit();

@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { StringUtil } from "../../../../entity/helper/string/util/string-util";
+import { StringUtil } from "../../../../entity/misc/string/util/string-util";
 import { BaseComponent } from "../../../base.component";
 
 @Component({
