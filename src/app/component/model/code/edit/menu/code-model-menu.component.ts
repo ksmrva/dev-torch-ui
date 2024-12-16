@@ -42,13 +42,4 @@ export class CodeModelMenuComponent extends BaseComponent {
     this.menuContentToggleEvent.emit(true);
   }
 
-  dbModelSourceMenuToggleClicked(): void {
-    if (this.sourceMenuIsClosed) {
-      this.sourceMenuIsClosed = false;
-
-    } else {
-      this.sourceMenuIsClosed = true;
-    }
-  }
-
 }

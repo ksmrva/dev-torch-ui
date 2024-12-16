@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { DbModelSourceService } from './db-model-source.service';
+import { DatabaseModelSourceService } from './db-model-source.service';
 
-describe('DbModelSourceService', () => {
-  let service: DbModelSourceService;
+describe('DatabaseModelSourceService', () => {
+  let service: DatabaseModelSourceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DbModelSourceService);
+    service = TestBed.inject(DatabaseModelSourceService);
   });
 
   it('should be created', () => {

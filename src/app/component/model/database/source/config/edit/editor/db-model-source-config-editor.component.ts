@@ -3,9 +3,8 @@ import { DbModelSourceConfigEditFormComponent } from "../form/db-model-source-co
 import { MenuSelectComponent } from "../../../../../../edit/menu/select/menu-select.component";
 import { BehaviorSubject } from 'rxjs';
 import { DbModelSourceConfig } from '../../../../../../../entity/model/database/source/config/db-model-source-config';
-import { DbModelSourceService } from '../../../../../../../service/model/database/source/db-model-source.service';
+import { DatabaseModelSourceService } from '../../../../../../../service/model/database/source/db-model-source.service';
 import { BaseComponent } from '../../../../../../base.component';
-import { StringUtil } from '../../../../../../../entity/misc/string/util/string-util';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -21,9 +20,9 @@ import { CommonModule } from '@angular/common';
 })
 export class DbModelSourceConfigEditorComponent extends BaseComponent implements OnInit {
 
-  sourceConfigForEdit$: BehaviorSubject<DbModelSourceConfig | undefined>;
+  configForEdit$: BehaviorSubject<DbModelSourceConfig | undefined>;
 
-  availableSourceConfigs: DbModelSourceConfig[];
+  availableConfigs: DbModelSourceConfig[];
 
   baseHtmlId: string;
 
@@ -32,23 +31,23 @@ export class DbModelSourceConfigEditorComponent extends BaseComponent implements
   showSelect: boolean;
 
   constructor(
-    private dbModelSourceService: DbModelSourceService
+    private databaseModelSourceService: DatabaseModelSourceService
   ) {
     super();
-    this.sourceConfigForEdit$ = new BehaviorSubject<DbModelSourceConfig | undefined>( undefined );
-    this.availableSourceConfigs = [];
+    this.configForEdit$ = new BehaviorSubject<DbModelSourceConfig | undefined>( undefined );
+    this.availableConfigs = [];
     this.showSelect = true;
     this.baseHtmlId = "dbModelSourceConfigEditor";
     this.menuSelectBaseHtmlId = this.baseHtmlId + "_Select";
   }
 
   ngOnInit(): void {
-    let availableSourceConfigsSubscription = this.dbModelSourceService.getConfigs().subscribe({
-                                                                                              next: (sourceConfigs: DbModelSourceConfig[] | undefined) => {
-                                                                                                if (!sourceConfigs) {
+    let availableConfigsSubscription = this.databaseModelSourceService.getConfigs().subscribe({
+                                                                                              next: (configs: DbModelSourceConfig[] | undefined) => {
+                                                                                                if (!configs) {
                                                                                                   throw new Error("Failed to load the available Database Model Source Configs");
                                                                                                 }
-                                                                                                this.availableSourceConfigs = sourceConfigs;
+                                                                                                this.availableConfigs = configs;
                                                                                               },
                                                                                               error: (err: any) => {
                                                                                                 throw new Error( "Failed to load the available Database Model Source Configs due to [" + err + "]" );
@@ -57,42 +56,42 @@ export class DbModelSourceConfigEditorComponent extends BaseComponent implements
                                                                                                 console.log("Finished loading the available Database Model Source Configs");
                                                                                               }
                                                                                             });
-    this.addLongLivingSubscription(availableSourceConfigsSubscription);
+    this.addLongLivingSubscription(availableConfigsSubscription);
   }
 
-  getAvailableSourceConfigKeys(): string[] {
-    return this.availableSourceConfigs.map((sourceConfig: DbModelSourceConfig) => {
-      return sourceConfig.id.toString();
+  getAvailableConfigKeys(): string[] {
+    return this.availableConfigs.map((config: DbModelSourceConfig) => {
+      return config.id.toString();
     });
   }
 
-  loadNewSourceConfigForEdit(): void {
-    this.setSourceConfigForEdit(new DbModelSourceConfig());
+  loadNewConfigForEdit(): void {
+    this.setConfigForEdit(new DbModelSourceConfig());
     this.showSelect = false;
   }
 
-  loadSourceConfigForEdit( configIdSelected: string ): void {
-    let sourceConfigSelected = this.getSourceConfigFromId(configIdSelected);
-    if(!sourceConfigSelected) {
-      this.resetSourceConfigEdit();
-      throw new Error("Unable to find the Database Model Source Config using the key [" + configIdSelected + "]");
+  loadConfigForEdit( configIdSelected: string ): void {
+    let configSelected = this.getConfigFromId(configIdSelected);
+    if(!configSelected) {
+      this.resetConfigEdit();
+      throw new Error("Unable to find the Database Model Source Config using the ID [" + configIdSelected + "]");
     }
-    this.setSourceConfigForEdit(sourceConfigSelected);
+    this.setConfigForEdit(configSelected);
   }
 
-  resetSourceConfigEdit(): void {
-    this.setSourceConfigForEdit(undefined);
+  resetConfigEdit(): void {
+    this.setConfigForEdit(undefined);
     this.showSelect = true;
   }
 
-  private setSourceConfigForEdit( sourceConfigForEdit: DbModelSourceConfig | undefined ): void {
-    this.sourceConfigForEdit$.next(sourceConfigForEdit);
+  private setConfigForEdit( configForEdit: DbModelSourceConfig | undefined ): void {
+    this.configForEdit$.next(configForEdit);
     this.showSelect = false;
   }
 
-  private getSourceConfigFromId( idToFind: string ): DbModelSourceConfig | undefined {
-    return this.availableSourceConfigs.find((availableSourceConfig: DbModelSourceConfig) => {
-      return availableSourceConfig.id.toString() === idToFind;
+  private getConfigFromId( configIdToFind: string ): DbModelSourceConfig | undefined {
+    return this.availableConfigs.find((availableConfig: DbModelSourceConfig) => {
+      return availableConfig.id.toString() === configIdToFind;
     });
   }
 

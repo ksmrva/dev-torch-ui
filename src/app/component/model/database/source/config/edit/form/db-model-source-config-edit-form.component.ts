@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl }
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { DbModelSourceConfig } from "../../../../../../../entity/model/database/source/config/db-model-source-config";
 import { DbModelSourcePreset } from "../../../../../../../entity/model/database/source/preset/db-model-source-preset";
-import { DbModelSourceService } from "../../../../../../../service/model/database/source/db-model-source.service";
+import { DatabaseModelSourceService } from "../../../../../../../service/model/database/source/db-model-source.service";
 import { BaseComponent } from "../../../../../../base.component";
 import { DbModelSourceUrl } from '../../../../../../../entity/model/database/source/url/db-model-source-url';
 import { DbModelSourceSupportedDriver } from "../../../../../../../entity/model/database/source/config/driver/db-model-source-supported-driver";
@@ -43,7 +43,7 @@ export class DbModelSourceConfigEditFormComponent extends BaseComponent implemen
   availableSupportedDrivers: DbModelSourceSupportedDriver[];
 
   constructor(
-    private dbModelSourceService: DbModelSourceService,
+    private dbModelSourceService: DatabaseModelSourceService,
     formBuilder: FormBuilder
   ) {
     super();

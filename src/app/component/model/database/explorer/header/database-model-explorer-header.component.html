@@ -1,0 +1,32 @@
+<div class="border-bottom pt-2 pb-1 ps-3 pe-2" id="databaseModelExplorer_Header">
+  <div id="databaseModelExplorer_Header_ActionContainer">
+    <nav class="navbar navbar-expand-lg p-0 mb-1" id="databaseModelExplorer_Header_ActionContainer_Navbar" >
+      <div class="d-flex align-items-center" id="databaseModelExplorer_Header_ActionContainer_Navbar_Title" >
+        <span class="navbar-brand pt-0" id="databaseModelExplorer_Header_ActionContainer_Navbar_Title_Name" >database model</span >
+      </div>
+      <div class="dropdown border-end explorer-dropdown" id="databaseModelExplorer_Header_ActionContainer_Navbar_SourceDropdown" >
+        <button class="dropdown-toggle btn explorer-dropdown-toggle" type="button" id="databaseModelExplorer_Header_ActionContainer_Navbar_SourceDropdown_ToggleButton" >
+          source
+        </button>
+        <ul class="dropdown-menu explorer-dropdown-list" id="databaseModelExplorer_Header_ActionContainer_Navbar_SourceDropdown_List" >
+          <li id="databaseModelExplorer_Header_ActionContainer_Navbar_SourceDropdown_List_ListItem_Url" >
+            <a class="dropdown-item" (click)="urlExplorerToggleClicked()" id="databaseModelExplorer_Header_ActionContainer_Navbar_SourceDropdown_List_ListItem_Url_Link" >url</a >
+          </li>
+          <li id="databaseModelExplorer_Header_ActionContainer_Navbar_SourceDropdown_List_Config" >
+            <a class="dropdown-item" (click)="configExplorerToggleClicked()" id="databaseModelExplorer_Header_ActionContainer_Navbar_SourceDropdown_List_Config_Link" >config</a >
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown explorer-dropdown" id="databaseModelExplorer_Header_ActionContainer_Navbar_ComponentDropdown" >
+        <button class="dropdown-toggle btn explorer-dropdown-toggle" type="button" id="databaseModelExplorer_Header_ActionContainer_Navbar_ComponentDropdown_ToggleButton" >
+          detail
+        </button>
+        <ul class="dropdown-menu explorer-dropdown-list" id="databaseModelExplorer_Header_ActionContainer_Navbar_ComponentDropdown_List" >
+          <li id="databaseModelExplorer_Header_ActionContainer_Navbar_ComponentDropdown_List_ListItem_Database" >
+            <a class="dropdown-item" (click)="databaseExplorerToggleClicked()" id="databaseModelExplorer_Header_ActionContainer_Navbar_ComponentDropdown_List_ListItem_Database_Link" >database</a >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>

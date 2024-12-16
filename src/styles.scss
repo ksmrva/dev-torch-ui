@@ -52,10 +52,10 @@
 
   --main-cancel-button-hover-bg-color: #884b42;
 
-  // --canvas-viewer-control-label-color: #f1ebdb;
-  --canvas-viewer-control-label-color: var(--app-tertiary-color);
+  // --canvas-explorer-control-label-color: #f1ebdb;
+  --canvas-explorer-control-label-color: var(--app-tertiary-color);
 
-  --canvas-viewer-control-item-label-color: #8ca5b8;
+  --canvas-explorer-control-item-label-color: #8ca5b8;
 }
 
 [data-bs-theme="light"] {
@@ -78,8 +78,8 @@
   --main-add-new-button-hover-color: #f1ebdb;
   --main-add-new-button-hover-bg-color: #728695;
 
-  --canvas-viewer-control-label-color: #8ca5b8;
-  --canvas-viewer-control-item-label-color: #8ca5b8;
+  --canvas-explorer-control-label-color: #8ca5b8;
+  --canvas-explorer-control-item-label-color: #8ca5b8;
 }
 
 header {

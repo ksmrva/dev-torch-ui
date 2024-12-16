@@ -1,0 +1,44 @@
+<div class="row m-0" id="modelMenu">
+  <div class="border-start border-end border-bottom border-1 p-0 collapse show" id="modelMenu_Sidebar" >
+    <div class="d-flex align-items-center justify-content-center model-menu-sidebar-title" id="modelMenu_Sidebar_Title">
+      <span class="model-menu-sidebar-title-name" id="modelMenu_Sidebar_Title_Name">models</span>
+    </div>
+    <div id="modelMenu_Sidebar_Options">
+      <div class="model-menu-sidebar-option-container" id="modelMenu_Sidebar_Options_CodeModel">
+        <button [ngClass]="additionalCodeExplorerButtonClasses" class="btn model-menu-sidebar-option-toggle-button p-0" (click)="toggleCodeExplorer()" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton">
+          <div class="model-menu-sidebar-option-label pt-2 pb-2" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton_Label">
+            <i class="bi bi-code-slash h4 m-0" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton_Label_Icon"></i>
+            <span style="font-weight:lighter" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton_Label_Name">code</span>
+          </div>
+        </button>
+      </div>
+      <div class="model-menu-sidebar-option-container" id="modelMenu_Sidebar_Options_DatabaseModel">
+        <button [ngClass]="additionalDatabaseExplorerButtonClasses" class="btn model-menu-sidebar-option-toggle-button p-0" (click)="toggleDatabaseExplorer()" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton">
+          <div class="model-menu-sidebar-option-label pt-2 pb-2" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton_Label">
+            <i class="bi bi-database-fill h4 m-0" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton_Label_Icon"></i>
+            <span style="font-weight:lighter" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton_Label_Name">database</span>
+          </div>
+        </button>
+      </div>
+      <div class="model-menu-sidebar-option-container" id="modelMenu_Sidebar_Options_JsonModel">
+        <button [ngClass]="additionalJsonExplorerButtonClasses" class="btn model-menu-sidebar-option-toggle-button p-0" (click)="toggleJsonExplorer()" id="modelMenu_Sidebar_Options_JsonModel_ToggleButton">
+          <div class="model-menu-sidebar-option-label pt-2 pb-2" id="modelMenu_Sidebar_Options_JsonModel_ToggleButton_Label">
+            <i class="bi bi-braces h4 m-0" id="modelMenu_Sidebar_Options_JsonModel_ToggleButton_Label_Icon"></i>
+            <span style="font-weight:lighter" id="modelMenu_Sidebar_Options_JsonModel_ToggleButton_Label_Name">json</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div [ngClass]="modelContentClass" class="border-start border-end border-bottom p-0" id="modelMenu_Content" >
+    <div *ngIf="!codeExplorerIsClosed" id="modelMenu_Content_CodeModelExplorerHolder">
+      <code-model-explorer id="modelMenu_Content_CodeModelExplorer"></code-model-explorer>
+    </div>
+    <div *ngIf="!databaseExplorerIsClosed" id="modelMenu_Content_DatabaseModelExplorerHolder">
+      <database-model-explorer id="modelMenu_Content_DatabaseModelExplorer"></database-model-explorer>
+    </div>
+    <div *ngIf="!jsonExplorerIsClosed" id="modelMenu_Content_JsonModelExplorerHolder">
+      JSON
+    </div>
+  </div>
+</div>

@@ -73,7 +73,7 @@ export abstract class CanvasCell extends ApiEntity {
   static getInitialJointCellId(jointCell: dia.Cell): number {
     return JointValueAccessor.getInitialValue( CELL_ID_JOINT_KEY, jointCell );
   }
-  static getInitialJointCellName(jointCell: dia.Cell): string {
+  static getInitialJointCellGlobalName(jointCell: dia.Cell): string {
     return JointValueAccessor.getInitialValue( CELL_GLOBAL_NAME_JOINT_KEY, jointCell );
   }
   static getInitialJointCellLocalName(jointCell: dia.Cell): string {
@@ -84,7 +84,7 @@ export abstract class CanvasCell extends ApiEntity {
   static getCurrentJointCellId(jointCell: dia.Cell): number {
     return JointValueAccessor.getCurrentValue( CELL_ID_JOINT_KEY, jointCell );
   }
-  static getCurrentJointCellName(jointCell: dia.Cell): string {
+  static getCurrentJointCellGlobalName(jointCell: dia.Cell): string {
     return JointValueAccessor.getCurrentValue( CELL_GLOBAL_NAME_JOINT_KEY, jointCell );
   }
   static getCurrentJointCellLocalName(jointCell: dia.Cell): string {

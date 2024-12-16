@@ -3,18 +3,18 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { RegexMatcher } from "../../../../../entity/misc/regex/matcher/regex-matcher";
-import { DbColumnCategory } from "../../../../../entity/model/database/component/column/category/db-column-category";
-import { DatabaseComponentCreateArgs } from "../../../../../entity/model/database/component/create/database-component-create-args";
-import { DbModel } from "../../../../../entity/model/database/component/db-model";
-import { DatabasePath } from "../../../../../entity/model/database/component/path/database-path";
-import { DbTableCategory } from "../../../../../entity/model/database/component/table/category/db-table-category";
+import { DbCollectionCategory } from "../../../../../entity/model/database/detail/category/collection/db-collection-category";
+import { DbFieldCategory } from "../../../../../entity/model/database/detail/category/field/db-field-category";
+import { SqlDatabaseDetailCreateArgs } from "../../../../../entity/model/database/detail/sql/create/sql-database-detail-create-args";
+import { SqlDatabaseDetailPath } from "../../../../../entity/model/database/detail/sql/path/sql-database-path";
+import { SqlDatabaseDetail } from "../../../../../entity/model/database/detail/sql/sql-database-detail";
 import { DbModelSourceConfig } from "../../../../../entity/model/database/source/config/db-model-source-config";
-import { DbModelComponentService } from "../../../../../service/model/database/component/db-model-component.service";
-import { DbModelSourceService } from "../../../../../service/model/database/source/db-model-source.service";
+import { SqlModelDetailService } from "../../../../../service/model/database/detail/sql/sql-model-detail.service";
+import { DatabaseModelSourceService } from "../../../../../service/model/database/source/db-model-source.service";
 import { BaseComponent } from "../../../../base.component";
-import { DbColumnCategoryMatcherEditorComponent } from "../../component/column/category/matcher/edit/editor/db-column-category-matcher-editor.component";
-import { DbTableCategoryMatcherEditorComponent } from "../../component/table/category/matcher/edit/editor/db-table-category-matcher-editor.component";
-import { DbTableModelEditorComponent } from "../../component/table/edit/editor/db-table-model-editor.component";
+import { SqlColumnCategoryMatcherEditorComponent } from "../../detail/sql/column/category/matcher/edit/editor/sql-column-category-matcher-editor.component";
+import { SqlTableCategoryMatcherEditorComponent } from "../../detail/sql/table/category/matcher/edit/editor/sql-table-category-matcher-editor.component";
+import { SqlTableModelDetailEditorComponent } from "../../detail/sql/table/edit/editor/sql-table-model-detail-editor.component";
 
 @Component({
   selector: "db-model-edit-form",
@@ -23,207 +23,207 @@ import { DbTableModelEditorComponent } from "../../component/table/edit/editor/d
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    DbColumnCategoryMatcherEditorComponent,
-    DbTableCategoryMatcherEditorComponent,
-    DbTableModelEditorComponent
+    SqlColumnCategoryMatcherEditorComponent,
+    SqlTableCategoryMatcherEditorComponent,
+    SqlTableModelDetailEditorComponent
   ],
   templateUrl: "./db-model-edit-form.component.html",
   styleUrl: "./db-model-edit-form.component.scss"
 })
 export class DbModelEditFormComponent extends BaseComponent implements OnInit {
 
-  @Input() dbModelForEditObservable: Observable< DbModel | undefined >;
+  @Input() databaseForEditObservable: Observable< SqlDatabaseDetail | undefined >;
 
-  @Output() dbModelWasUpdated: EventEmitter<boolean>;
+  @Output() databaseWasUpdated: EventEmitter<boolean>;
 
   @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
-  dbModelEditForm: FormGroup;
+  databaseEditForm: FormGroup;
 
-  dbModelForEdit: DbModel | undefined;
+  databaseForEdit: SqlDatabaseDetail | undefined;
 
-  dbModelForEdit$: BehaviorSubject<DbModel | undefined>;
+  databaseForEdit$: BehaviorSubject<SqlDatabaseDetail | undefined>;
 
-  tableCategoryMatchersForNewModel: RegexMatcher<DbTableCategory>[];
+  tableCategoryMatchersForNewModel: RegexMatcher<DbCollectionCategory>[];
 
-  columnCategoryMatchersForNewModel: RegexMatcher<DbColumnCategory>[];
+  columnCategoryMatchersForNewModel: RegexMatcher<DbFieldCategory>[];
 
   availableSourceConfigs: DbModelSourceConfig[];
 
   constructor(
-    private dbModelService: DbModelComponentService,
-    private dbModelSourceService: DbModelSourceService,
+    private sqlModelDetailService: SqlModelDetailService,
+    private databaseModelSourceService: DatabaseModelSourceService,
     formBuilder: FormBuilder
   ) {
     super();
-    this.dbModelForEditObservable = of(undefined);
-    this.dbModelWasUpdated = new EventEmitter<boolean>();
+    this.databaseForEditObservable = of(undefined);
+    this.databaseWasUpdated = new EventEmitter<boolean>();
     this.resetEditButtonClicked = new EventEmitter<boolean>();
 
-    this.dbModelEditForm = formBuilder.group({
+    this.databaseEditForm = formBuilder.group({
       sourceConfigId: new FormControl(-1),
       databaseName: new FormControl(""),
       schemaName: new FormControl(""),
       description: new FormControl("")
     });
 
-    this.dbModelForEdit = undefined;
-    this.dbModelForEdit$ = new BehaviorSubject<DbModel | undefined>( undefined );
+    this.databaseForEdit = undefined;
+    this.databaseForEdit$ = new BehaviorSubject<SqlDatabaseDetail | undefined>( undefined );
     this.tableCategoryMatchersForNewModel = [];
     this.columnCategoryMatchersForNewModel = [];
     this.availableSourceConfigs = [];
   }
 
   ngOnInit(): void {
-    let availableSourceConfigsSubscription = this.dbModelSourceService.getConfigs().subscribe({
-                                                                                                      next: (sourceConfigs: DbModelSourceConfig[] | undefined) => {
-                                                                                                        if (!sourceConfigs) {
-                                                                                                          throw new Error("Failed to load the available Database Model Source Configs");
-                                                                                                        }
-                                                                                                        this.availableSourceConfigs = sourceConfigs;
-                                                                                                      },
-                                                                                                      error: (err: any) => {
-                                                                                                        throw new Error( "Failed to load the available Database Model Source Configs due to [" + err + "]" );
-                                                                                                      },
-                                                                                                      complete: () => {
-                                                                                                        console.log("Finished loading the available Database Model Source Configs");
-                                                                                                      }
-                                                                                                    });
+    let availableSourceConfigsSubscription = this.databaseModelSourceService.getConfigs().subscribe({
+                                                                                              next: (sourceConfigs: DbModelSourceConfig[] | undefined) => {
+                                                                                                if (!sourceConfigs) {
+                                                                                                  throw new Error("Failed to load the available Database Model Source Configs");
+                                                                                                }
+                                                                                                this.availableSourceConfigs = sourceConfigs;
+                                                                                              },
+                                                                                              error: (err: any) => {
+                                                                                                throw new Error( "Failed to load the available Database Model Source Configs due to [" + err + "]" );
+                                                                                              },
+                                                                                              complete: () => {
+                                                                                                console.log("Finished loading the available Database Model Source Configs");
+                                                                                              }
+                                                                                            });
     this.addLongLivingSubscription(availableSourceConfigsSubscription);
 
-    let dbModelToEditSubscription = this.dbModelForEditObservable.subscribe({
-                                                                              next: (dbModel: DbModel | undefined) => {
-                                                                                this.setDbModelForEdit(dbModel);
-                                                                              },
-                                                                              error: (err: any) => {
-                                                                                throw new Error( "Failed to load the Database Model for editing due to [" + err + "]" );
-                                                                              },
-                                                                              complete: () => {
-                                                                                console.log("Finished loading the Database Model for edit");
-                                                                              }
-                                                                            });
-    this.addLongLivingSubscription(dbModelToEditSubscription);
+    let databaseToEditSubscription = this.databaseForEditObservable.subscribe({
+                                                                        next: (databaseForEdit: SqlDatabaseDetail | undefined) => {
+                                                                          this.setDatabaseForEdit(databaseForEdit);
+                                                                        },
+                                                                        error: (err: any) => {
+                                                                          throw new Error( "Failed to load the SQL Database Detail for editing due to [" + err + "]" );
+                                                                        },
+                                                                        complete: () => {
+                                                                          console.log("Finished loading the SQL Database Detail for edit");
+                                                                        }
+                                                                      });
+    this.addLongLivingSubscription(databaseToEditSubscription);
   }
 
-  saveDbModel(): void {
+  saveDatabase(): void {
     if (
-      !this.dbModelEditForm
-      || !this.dbModelEditForm.value
-      || !this.dbModelEditForm.valid
+      !this.databaseEditForm
+      || !this.databaseEditForm.value
+      || !this.databaseEditForm.valid
     ) {
       // TODO: handle error
     }
-    if (this.dbModelForEdit) {
+    if (this.databaseForEdit) {
       if (
-        this.dbModelForEdit.id !== null
-        && this.dbModelForEdit.id !== undefined
-        && this.dbModelForEdit.id >= 0
+        this.databaseForEdit.id !== null
+        && this.databaseForEdit.id !== undefined
+        && this.databaseForEdit.id >= 0
       ) {
-        let dbModelForUpdate = new DbModel();
-        dbModelForUpdate.id = this.dbModelForEdit.id;
-        dbModelForUpdate.name = this.dbModelEditForm.value.name;
-        dbModelForUpdate.description = this.dbModelEditForm.value.description;
+        let databaseForUpdate = new SqlDatabaseDetail();
+        databaseForUpdate.id = this.databaseForEdit.id;
+        databaseForUpdate.name = this.databaseEditForm.value.name;
+        databaseForUpdate.description = this.databaseEditForm.value.description;
 
-        // Don"t attempt to save any Table Models with this call, they have their own form
-        dbModelForUpdate.tables = [];
+        // Don"t attempt to save any Tables with this call, they have their own form
+        databaseForUpdate.tables = [];
 
-        this.dbModelService.updateDatabase(dbModelForUpdate).subscribe({
-                                                                        next: (updatedDbModel: DbModel | undefined) => {
-                                                                          if (updatedDbModel) {
-                                                                            this.resetDbModelEditAfterSave();
+        this.sqlModelDetailService.updateDatabase(databaseForUpdate).subscribe({
+                                                                        next: (updatedDatabase: SqlDatabaseDetail | undefined) => {
+                                                                          if (updatedDatabase) {
+                                                                            this.resetDatabaseEditAfterSave();
                                                                           } else {
-                                                                            throw new Error("Failed to update the Database Model");
+                                                                            throw new Error("Failed to update the SQL Database Detail");
                                                                           }
                                                                         },
                                                                         error: (err: any) => {
-                                                                          throw new Error( "Failed to update the Database Model due to [" + err + "]" );
+                                                                          throw new Error( "Failed to update the SQL Database Detail due to [" + err + "]" );
                                                                         },
                                                                         complete: () => {
-                                                                          console.log("Finished updating the Database Model");
+                                                                          console.log("Finished updating the SQL Database Detail");
                                                                         }
                                                                       });
       } else {
-        let dbModelCreateArgs = new DatabaseComponentCreateArgs();
-        dbModelCreateArgs.sourceConfigId = this.dbModelEditForm.value.sourceConfigId;
+        let databaseCreateArgs = new SqlDatabaseDetailCreateArgs();
+        databaseCreateArgs.sourceConfigId = this.databaseEditForm.value.sourceConfigId;
 
-        let dbModelName = new DatabasePath();
-        dbModelName.databaseName = this.dbModelEditForm.value.databaseName;
-        dbModelName.schemaName = this.dbModelEditForm.value.schemaName;
+        let databasePath = new SqlDatabaseDetailPath();
+        databasePath.databaseName = this.databaseEditForm.value.databaseName;
+        databasePath.schemaName = this.databaseEditForm.value.schemaName;
 
-        dbModelCreateArgs.path = dbModelName;
-        dbModelCreateArgs.tableCategoryMatchers = this.tableCategoryMatchersForNewModel;
-        dbModelCreateArgs.columnCategoryMatchers = this.columnCategoryMatchersForNewModel;
+        databaseCreateArgs.path = databasePath;
+        databaseCreateArgs.tableCategoryMatchers = this.tableCategoryMatchersForNewModel;
+        databaseCreateArgs.columnCategoryMatchers = this.columnCategoryMatchersForNewModel;
 
-        this.dbModelService.createDatabase(dbModelCreateArgs).subscribe({
-                                                                  next: (createdDbModel: DbModel | undefined) => {
-                                                                    if (createdDbModel) {
-                                                                      this.resetDbModelEditAfterSave();
-                                                                    } else {
-                                                                      throw new Error("Failed to create the Database Model");
-                                                                    }
-                                                                  },
-                                                                  error: (err: any) => {
-                                                                    throw new Error( "Failed to create the Database Model due to [" + err + "]" );
-                                                                  },
-                                                                  complete: () => {
-                                                                    console.log("Finished create the Database Model");
-                                                                  }
-                                                                });
+        this.sqlModelDetailService.createDatabase(databaseCreateArgs).subscribe({
+                                                                        next: (createdDatabase: SqlDatabaseDetail | undefined) => {
+                                                                          if (createdDatabase) {
+                                                                            this.resetDatabaseEditAfterSave();
+                                                                          } else {
+                                                                            throw new Error("Failed to create the SQL Database Detail");
+                                                                          }
+                                                                        },
+                                                                        error: (err: any) => {
+                                                                          throw new Error( "Failed to create the SQL Database Detail due to [" + err + "]" );
+                                                                        },
+                                                                        complete: () => {
+                                                                          console.log("Finished create the SQL Database Detail");
+                                                                        }
+                                                                      });
       }
     }
   }
 
-  isDbModelNew(dbModel: DbModel | undefined): boolean {
-    let isDbModelNew = false;
-    if (dbModel && dbModel.isNewEntity()) {
-      isDbModelNew = true;
+  isDatabaseNew(databaseToCheck: SqlDatabaseDetail | undefined): boolean {
+    let isDatbaseNew = false;
+    if (databaseToCheck) {
+      isDatbaseNew = databaseToCheck.isNewEntity();
     }
-    return isDbModelNew;
+    return isDatbaseNew;
   }
 
-  resetDbModelEditForms(): void {
+  resetDatabaseEditForms(): void {
     this.tableCategoryMatchersForNewModel = [];
     this.columnCategoryMatchersForNewModel = [];
 
-    this.dbModelEditForm.reset();
-    this.dbModelForEdit = undefined;
+    this.databaseEditForm.reset();
+    this.databaseForEdit = undefined;
   }
 
-  resetDbModelEditAfterSave(): void {
-    this.resetDbModelEditForms();
+  resetDatabaseEditAfterSave(): void {
+    this.resetDatabaseEditForms();
 
-    this.dbModelWasUpdated.emit(true);
+    this.databaseWasUpdated.emit(true);
   }
 
-  resetDbModelEdit(): void {
-    this.resetDbModelEditForms();
+  resetDatabaseEdit(): void {
+    this.resetDatabaseEditForms();
 
     this.resetEditButtonClicked.emit(true);
   }
 
-  private setDbModelForEdit( dbModelForEdit: DbModel | undefined ): void {
-    if (dbModelForEdit) {
-      this.dbModelForEdit = dbModelForEdit;
+  private setDatabaseForEdit( databaseForEdit: SqlDatabaseDetail | undefined ): void {
+    if (databaseForEdit) {
+      this.databaseForEdit = databaseForEdit;
 
-      this.setFormValues(this.dbModelForEdit);
-      this.dbModelForEdit$.next(this.dbModelForEdit);
+      this.setFormValues(this.databaseForEdit);
+      this.databaseForEdit$.next(this.databaseForEdit);
     }
   }
 
-  private setFormValues(dbModelForEdit: DbModel): void {
+  private setFormValues(databaseForEdit: SqlDatabaseDetail): void {
     let databaseName = "";
     let schemaName = "";
-    let dbModelName = dbModelForEdit.name;
-    if (dbModelName) {
-      databaseName = dbModelName.databaseName;
-      schemaName = dbModelName.schemaName;
+    let databasePath = databaseForEdit.name;
+    if (databasePath) {
+      databaseName = databasePath.databaseName;
+      schemaName = databasePath.schemaName;
     }
 
-    this.dbModelEditForm.setValue({
+    this.databaseEditForm.setValue({
       sourceConfigId: -1,
       databaseName: databaseName,
       schemaName: schemaName,
-      description: dbModelForEdit.description
+      description: databaseForEdit.description
     });
   }
 

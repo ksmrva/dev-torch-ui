@@ -14,7 +14,7 @@ import { StringUtil } from "../../../../entity/misc/string/util/string-util";
 @Injectable({
   providedIn: 'root'
 })
-export class DbModelSourceService extends BaseApiService {
+export class DatabaseModelSourceService extends BaseApiService {
 
   private dataTypes$: BehaviorSubject<DbModelSourceDataType[]>;
 

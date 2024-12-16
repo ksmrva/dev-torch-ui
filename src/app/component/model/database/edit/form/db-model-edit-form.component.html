@@ -1,10 +1,10 @@
 <div class="ps-1 pe-1 pt-3 pb-2" id="dbModelEditForm_Title">
   <h5 class="sidebar-menu-form-title h5" id="dbModelEditForm_Title_Name" >
-    {{ isDbModelNew(dbModelForEdit) ? "add new" : "edit" }}
+    {{ isDatabaseNew(databaseForEdit) ? "add new" : "edit" }}
   </h5>
 </div>
-<form class="m-2" [formGroup]="dbModelEditForm" (ngSubmit)="saveDbModel()" id="dbModelEditForm_Form" >
-  <div *ngIf="isDbModelNew(dbModelForEdit)" class="mb-3" id="dbModelEditForm_Form_SourceConfigSection" >
+<form class="m-2" [formGroup]="databaseEditForm" (ngSubmit)="saveDatabase()" id="dbModelEditForm_Form" >
+  <div *ngIf="isDatabaseNew(databaseForEdit)" class="mb-3" id="dbModelEditForm_Form_SourceConfigSection" >
     <label class="form-label sidebar-menu-label-primary" for="dbModelEditForm_Form_SourceConfigSection_Select" id="dbModelEditForm_Form_SourceConfigSection_Label" >db model source config</label >
     <select class="form-control form-select form-select-sm" formControlName="sourceConfigId" id="dbModelEditForm_Form_SourceConfigSection_Select" >
       <option *ngFor="let availableSourceConfig of availableSourceConfigs" [value]="availableSourceConfig.id" id="dbModelEditForm_Form_SourceConfigSection_Select_Option_{{ availableSourceConfig.id }}" >
@@ -20,27 +20,27 @@
     <label class="form-label sidebar-menu-label-primary" for="dbModelEditForm_Form_SchemaNameSection_Input" id="dbModelEditForm_Form_SchemaNameSection_Label" >schema name</label >
     <input class="form-control form-control-sm" formControlName="schemaName" type="text" id="dbModelEditForm_Form_SchemaNameSection_Input" />
   </div>
-  <div *ngIf="!isDbModelNew(dbModelForEdit)" class="mb-3" id="dbModelEditForm_Form_DescriptionSection" >
+  <div *ngIf="!isDatabaseNew(databaseForEdit)" class="mb-3" id="dbModelEditForm_Form_DescriptionSection" >
     <label class="form-label sidebar-menu-label-primary" for="dbModelEditForm_Form_DescriptionSection_Input" id="dbModelEditForm_Form_DescriptionSection_Label" >description</label >
     <input class="form-control form-control-sm" formControlName="description" type="text" id="dbModelEditForm_Form_DescriptionSection_Input" />
   </div>
-  <div *ngIf="isDbModelNew(dbModelForEdit)" class="mb-3" id="dbModelEditForm_Form_CategoryMatcherSection" >
+  <div *ngIf="isDatabaseNew(databaseForEdit)" class="mb-3" id="dbModelEditForm_Form_CategoryMatcherSection" >
     <div class="mb-3" id="dbModelEditForm_Form_CategoryMatcherSection_TableCategoryMatcher" >
-      <db-table-category-matcher-editor [tableCategoryMatchers]="tableCategoryMatchersForNewModel" id="dbModelEditForm_Form_CategoryMatcherSection_TableCategoryMatcher_Editor"></db-table-category-matcher-editor>
+      <sql-table-category-matcher-editor [tableCategoryMatchers]="tableCategoryMatchersForNewModel" id="dbModelEditForm_Form_CategoryMatcherSection_TableCategoryMatcher_Editor"></sql-table-category-matcher-editor>
     </div>
     <div id="dbModelEditForm_Form_CategoryMatcherSection_ColumnCategoryMatcher" >
-      <db-column-category-matcher-editor [columnCategoryMatchers]="tableCategoryMatchersForNewModel" id="dbModelEditForm_Form_CategoryMatcherSection_ColumnCategoryMatcher_Editor"></db-column-category-matcher-editor>
+      <sql-column-category-matcher-editor [columnCategoryMatchers]="tableCategoryMatchersForNewModel" id="dbModelEditForm_Form_CategoryMatcherSection_ColumnCategoryMatcher_Editor"></sql-column-category-matcher-editor>
     </div>
   </div>
-  <div *ngIf="!isDbModelNew(dbModelForEdit)" class="mb-3" id="dbModelEditForm_Form_TablesSection" >
-    <db-table-model-editor [dbModelForEditObservable]="dbModelForEdit$.asObservable()" id="dbModelEditForm_Form_TablesSection_Editor"
-                        (tableModelWasUpdated)="resetDbModelEditAfterSave()" ></db-table-model-editor>
+  <div *ngIf="!isDatabaseNew(databaseForEdit)" class="mb-3" id="dbModelEditForm_Form_TablesSection" >
+    <sql-table-model-detail-editor [databaseForEditObservable]="databaseForEdit$.asObservable()" id="dbModelEditForm_Form_TablesSection_Editor"
+                        (tableModelWasUpdated)="resetDatabaseEditAfterSave()" ></sql-table-model-detail-editor>
   </div>
   <div class="d-flex justify-content-end ps-1 pe-1 pt-3 pb-1" id="dbModelEditForm_Form_Controls" >
     <button class="btn btn-sm main-action-button m-2" type="submit" id="dbModelEditForm_Form_Controls_SaveButton" >
       save
     </button>
-    <button class="btn btn-sm main-cancel-button m-2" type="button" (click)="resetDbModelEdit()" id="dbModelEditForm_Form_Controls_CancelButton" >
+    <button class="btn btn-sm main-cancel-button m-2" type="button" (click)="resetDatabaseEdit()" id="dbModelEditForm_Form_Controls_CancelButton" >
       cancel
     </button>
   </div>

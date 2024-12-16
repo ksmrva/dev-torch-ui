@@ -31,7 +31,7 @@ export class DbModelMenuComponent extends BaseComponent {
 
   constructor() {
     super();
-    this.menuContentIsClosed = true;
+    this.menuContentIsClosed = false;
     this.menuContentToggleEvent = new EventEmitter<boolean>();
 
     this.menuTitle = "database";

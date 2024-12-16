@@ -1,9 +1,9 @@
 import { Routes } from "@angular/router";
-import { DocumentationViewerComponent } from "./component/documentation/viewer/documentation-viewer.component";
-import { ModelViewerComponent } from "./component/model/viewer/model-viewer.component";
+import { ModelMenuComponent } from "./component/model/menu/model-menu.component";
+import { DocumentationMenuComponent } from "./component/documentation/menu/documentation-menu.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "code", pathMatch: "full" },
-  { path: "documentation", component: DocumentationViewerComponent },
-  { path: "model", component: ModelViewerComponent }
+  { path: "documentation", component: DocumentationMenuComponent },
+  { path: "model", component: ModelMenuComponent }
 ];

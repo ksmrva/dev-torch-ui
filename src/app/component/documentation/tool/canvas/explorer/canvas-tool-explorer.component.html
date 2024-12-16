@@ -1,0 +1,18 @@
+<div class="border-start border-end border-bottom p-0" [ngClass]="canvasContentClass" id="canvasToolExplorer" >
+  <canvas-tool-explorer-header
+    [canvasTitle]="getCanvasTitle()"
+    [sidebarOpenInitialValue]="defaultSidebarOpen"
+    [zoomSettingInitialValue]="defaultZoomSetting"
+    [zoomSettingMaxValue]="maxZoomSetting"
+    [availableCanvasNames]="getAvailableCanvasNames()"
+    [availableDatabasePaths]="availableDatabasePaths"
+    (zoomSettingEvent)="updateCanvasZoom($event)"
+    (sidebarToggleEvent)="onToggleCanvasSidebar()"
+    (loadSelectedCanvasEvent)="loadSelectedCanvas($event)"
+    (addCellsFromDatabaseEvent)="addCellsFromDatabase($event)"
+    (saveAllChangesButtonClickEvent)="saveAllChanges()"
+    (undoAllChangesButtonClickEvent)="undoAllChanges()" id="canvasToolExplorer_Header" ></canvas-tool-explorer-header>
+  <div id="canvasToolExplorer_JointJsCanvas">
+    <div [ngStyle]="{ transform: jointJsPaperTransformScale }" id="canvasToolExplorer_JointJsPaper" ></div>
+  </div>
+</div>

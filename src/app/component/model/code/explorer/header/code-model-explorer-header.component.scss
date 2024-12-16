@@ -1,0 +1,14 @@
+#codeModelExplorer_Header_ActionContainer_Navbar_Title_Name {
+  color: var(--canvas-explorer-control-label-color) !important;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+
+.explorer-dropdown:hover > .explorer-dropdown-list {
+  display: block;
+}
+
+.explorer-dropdown-toggle {
+  color: var(--sidebar-menu-title-secondary-color) !important;
+}

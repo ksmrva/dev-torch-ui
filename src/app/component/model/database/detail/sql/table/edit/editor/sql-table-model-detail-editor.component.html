@@ -1,0 +1,8 @@
+<simple-menu-select *ngIf="!tableNameSelectedForEdit" id="{{ this.baseHtmlId }}_SimpleMenuSelect"
+                    [baseHtmlId]="simpleMenuSelectBaseHtmlId" [labelName]="simpleMenuSelectLabelName"
+                    [availableKeys]="getAvailableTableNames()" (keyWasSelected)="loadTableForEdit($event)">
+</simple-menu-select>
+<sql-table-model-detail-edit-form *ngIf="tableNameSelectedForEdit"  id="{{ this.baseHtmlId }}_Form"
+                       [tableForEditObservable]="tableForEdit$.asObservable()"
+                       (resetEditButtonClicked)="resetEdit()" (tableModelWasUpdated)="resetAfterUpdate()" >
+</sql-table-model-detail-edit-form>

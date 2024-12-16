@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl }
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { DbModelSourcePreset } from "../../../../../../../entity/model/database/source/preset/db-model-source-preset";
 import { DbModelSourceUrl } from "../../../../../../../entity/model/database/source/url/db-model-source-url";
-import { DbModelSourceService } from "../../../../../../../service/model/database/source/db-model-source.service";
+import { DatabaseModelSourceService } from "../../../../../../../service/model/database/source/db-model-source.service";
 import { BaseComponent } from "../../../../../../base.component";
 import { DbModelSourceUrlSupportedProvider } from "../../../../../../../entity/model/database/source/url/provider/db-model-source-url-supported-provider";
 import { DbModelSourceUrlSupportedScheme } from "../../../../../../../entity/model/database/source/url/scheme/db-model-source-url-supported-scheme";
@@ -22,34 +22,34 @@ import { DbModelSourceUrlSupportedScheme } from "../../../../../../../entity/mod
 })
 export class DbModelSourceUrlEditFormComponent extends BaseComponent implements OnInit {
 
-  @Input() sourceUrlForEditObservable: Observable< DbModelSourceUrl | undefined >;
+  @Input() urlForEditObservable: Observable< DbModelSourceUrl | undefined >;
 
-  @Output() sourceUrlWasUpdated: EventEmitter<boolean>;
+  @Output() urlWasUpdated: EventEmitter<boolean>;
 
   @Output() resetEditButtonClicked: EventEmitter<boolean>;
 
-  sourceUrlEditForm: FormGroup;
+  urlEditForm: FormGroup;
 
-  sourceUrlForEdit: DbModelSourceUrl | undefined;
+  urlForEdit: DbModelSourceUrl | undefined;
 
-  sourceUrlForEdit$: BehaviorSubject<DbModelSourceUrl | undefined>;
+  urlForEdit$: BehaviorSubject<DbModelSourceUrl | undefined>;
 
-  availableSourcePresets: DbModelSourcePreset[];
+  availablePresets: DbModelSourcePreset[];
 
-  availableSourceUrlSupportedSchemes: DbModelSourceUrlSupportedScheme[];
+  availableUrlSupportedSchemes: DbModelSourceUrlSupportedScheme[];
 
-  availableSourceUrlSupportedProviders: DbModelSourceUrlSupportedProvider[];
+  availableUrlSupportedProviders: DbModelSourceUrlSupportedProvider[];
 
   constructor(
-    private dbModelSourceService: DbModelSourceService,
+    private databaseModelSourceService: DatabaseModelSourceService,
     formBuilder: FormBuilder
   ) {
     super();
-    this.sourceUrlForEditObservable = of(undefined);
-    this.sourceUrlWasUpdated = new EventEmitter<boolean>();
+    this.urlForEditObservable = of(undefined);
+    this.urlWasUpdated = new EventEmitter<boolean>();
     this.resetEditButtonClicked = new EventEmitter<boolean>();
 
-    this.sourceUrlEditForm = formBuilder.group({
+    this.urlEditForm = formBuilder.group({
       scheme: new FormControl(),
       provider: new FormControl(),
       hostname: new FormControl(),
@@ -57,113 +57,113 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
       adminDatabaseName: new FormControl()
     });
 
-    this.sourceUrlForEdit = undefined;
-    this.sourceUrlForEdit$ = new BehaviorSubject<DbModelSourceUrl | undefined>( undefined );
-    this.availableSourcePresets = [];
-    this.availableSourceUrlSupportedSchemes = [];
-    this.availableSourceUrlSupportedProviders = [];
+    this.urlForEdit = undefined;
+    this.urlForEdit$ = new BehaviorSubject<DbModelSourceUrl | undefined>( undefined );
+    this.availablePresets = [];
+    this.availableUrlSupportedSchemes = [];
+    this.availableUrlSupportedProviders = [];
   }
 
   ngOnInit(): void {
-    let sourceUrlForEditSubscription = this.sourceUrlForEditObservable.subscribe({
-                                                                              next: (sourceUrl: DbModelSourceUrl | undefined) => {
-                                                                                this.setSourceUrlForEdit(sourceUrl);
-                                                                              },
-                                                                              error: (err: any) => {
-                                                                                throw new Error( "Failed to load the Database Model Source URL for editing due to [" + err + "]" );
-                                                                              },
-                                                                              complete: () => {
-                                                                                console.log("Finished loading the Database Model Source URL for edit");
-                                                                              }
-                                                                            });
-    this.addLongLivingSubscription(sourceUrlForEditSubscription);
+    let urlForEditSubscription = this.urlForEditObservable.subscribe({
+                                                                next: (url: DbModelSourceUrl | undefined) => {
+                                                                  this.setUrlForEdit(url);
+                                                                },
+                                                                error: (err: any) => {
+                                                                  throw new Error( "Failed to load the Database Model Source URL for editing due to [" + err + "]" );
+                                                                },
+                                                                complete: () => {
+                                                                  console.log("Finished loading the Database Model Source URL for edit");
+                                                                }
+                                                              });
+    this.addLongLivingSubscription(urlForEditSubscription);
 
-    let availableSourcePresetsSubscription = this.dbModelSourceService.getPresets().subscribe({
-                                                                                              next: (sourcePresets: DbModelSourcePreset[] | undefined) => {
-                                                                                                if (!sourcePresets) {
-                                                                                                  throw new Error("Failed to load the available Database Model Source Presets");
-                                                                                                }
-                                                                                                this.availableSourcePresets = sourcePresets;
-                                                                                              },
-                                                                                              error: (err: any) => {
-                                                                                                throw new Error( "Failed to load the available Database Model Source Presets due to [" + err + "]" );
-                                                                                              },
-                                                                                              complete: () => {
-                                                                                                console.log("Finished loading the available Database Model Source Presets");
-                                                                                              }
-                                                                                            });
-    this.addLongLivingSubscription(availableSourcePresetsSubscription);
+    let availablePresetsSubscription = this.databaseModelSourceService.getPresets().subscribe({
+                                                                                        next: (presets: DbModelSourcePreset[] | undefined) => {
+                                                                                          if (!presets) {
+                                                                                            throw new Error("Failed to load the available Database Model Source Presets");
+                                                                                          }
+                                                                                          this.availablePresets = presets;
+                                                                                        },
+                                                                                        error: (err: any) => {
+                                                                                          throw new Error( "Failed to load the available Database Model Source Presets due to [" + err + "]" );
+                                                                                        },
+                                                                                        complete: () => {
+                                                                                          console.log("Finished loading the available Database Model Source Presets");
+                                                                                        }
+                                                                                      });
+    this.addLongLivingSubscription(availablePresetsSubscription);
 
-    let availableSourceUrlSupportedSchemesSubscription = this.dbModelSourceService.getUrlSupportedSchemes().subscribe({
-                                                                                                                      next: (sourceUrlSupportedSchemes: DbModelSourceUrlSupportedScheme[] | undefined) => {
-                                                                                                                        if (!sourceUrlSupportedSchemes) {
-                                                                                                                          throw new Error("Failed to load the available Database Model Source URL Supported Schemes");
-                                                                                                                        }
-                                                                                                                        this.availableSourceUrlSupportedSchemes = sourceUrlSupportedSchemes;
-                                                                                                                      },
-                                                                                                                      error: (err: any) => {
-                                                                                                                        throw new Error( "Failed to load the available Database Model Source URL Supported Schemes due to [" + err + "]" );
-                                                                                                                      },
-                                                                                                                      complete: () => {
-                                                                                                                        console.log("Finished loading the available Database Model Source URL Supported Schemes");
+    let availableUrlSupportedSchemesSubscription = this.databaseModelSourceService.getUrlSupportedSchemes().subscribe({
+                                                                                                                next: (sourceSupportedSchemes: DbModelSourceUrlSupportedScheme[] | undefined) => {
+                                                                                                                  if (!sourceSupportedSchemes) {
+                                                                                                                    throw new Error("Failed to load the available Database Model Source URL Supported Schemes");
+                                                                                                                  }
+                                                                                                                  this.availableUrlSupportedSchemes = sourceSupportedSchemes;
+                                                                                                                },
+                                                                                                                error: (err: any) => {
+                                                                                                                  throw new Error( "Failed to load the available Database Model Source URL Supported Schemes due to [" + err + "]" );
+                                                                                                                },
+                                                                                                                complete: () => {
+                                                                                                                  console.log("Finished loading the available Database Model Source URL Supported Schemes");
+                                                                                                                }
+                                                                                                              });
+    this.addLongLivingSubscription(availableUrlSupportedSchemesSubscription);
+
+    let availableUrlSupportedProvidersSubscription = this.databaseModelSourceService.getUrlSupportedProviders().subscribe({
+                                                                                                                    next: (urlSupportedProviders: DbModelSourceUrlSupportedProvider[] | undefined) => {
+                                                                                                                      if (!urlSupportedProviders) {
+                                                                                                                        throw new Error("Failed to load the available Database Model Source URL Supported Providers");
                                                                                                                       }
-                                                                                                                    });
-    this.addLongLivingSubscription(availableSourceUrlSupportedSchemesSubscription);
-
-    let availableSourceUrlSupportedProvidersSubscription = this.dbModelSourceService.getUrlSupportedProviders().subscribe({
-                                                                                                                            next: (sourceUrlSupportedProviders: DbModelSourceUrlSupportedProvider[] | undefined) => {
-                                                                                                                              if (!sourceUrlSupportedProviders) {
-                                                                                                                                throw new Error("Failed to load the available Database Model Source URL Supported Providers");
-                                                                                                                              }
-                                                                                                                              this.availableSourceUrlSupportedProviders = sourceUrlSupportedProviders;
-                                                                                                                            },
-                                                                                                                            error: (err: any) => {
-                                                                                                                              throw new Error( "Failed to load the available Database Model Source URL Supported Providers due to [" + err + "]" );
-                                                                                                                            },
-                                                                                                                            complete: () => {
-                                                                                                                              console.log("Finished loading the available Database Model Source URL Supported Providers");
-                                                                                                                            }
-                                                                                                                          });
-    this.addLongLivingSubscription(availableSourceUrlSupportedProvidersSubscription);
+                                                                                                                      this.availableUrlSupportedProviders = urlSupportedProviders;
+                                                                                                                    },
+                                                                                                                    error: (err: any) => {
+                                                                                                                      throw new Error( "Failed to load the available Database Model Source URL Supported Providers due to [" + err + "]" );
+                                                                                                                    },
+                                                                                                                    complete: () => {
+                                                                                                                      console.log("Finished loading the available Database Model Source URL Supported Providers");
+                                                                                                                    }
+                                                                                                                  });
+    this.addLongLivingSubscription(availableUrlSupportedProvidersSubscription);
   }
 
   saveSourceUrl(): void {
     if (
-      !this.sourceUrlEditForm
-      || !this.sourceUrlEditForm.value
-      || !this.sourceUrlEditForm.valid
+      !this.urlEditForm
+      || !this.urlEditForm.value
+      || !this.urlEditForm.valid
     ) {
       // TODO: handle error
     }
 
-    if (this.sourceUrlForEdit) {
+    if (this.urlForEdit) {
       if (
-        this.sourceUrlForEdit.id !== null
-        && this.sourceUrlForEdit.id !== undefined
-        && this.sourceUrlForEdit.id >= 0
+        this.urlForEdit.id !== null
+        && this.urlForEdit.id !== undefined
+        && this.urlForEdit.id >= 0
       ) {
         // TODO: Update Source URL
 
       } else {
-        let scheme = this.sourceUrlEditForm.value.scheme;
-        let provider = this.sourceUrlEditForm.value.provider;
-        let hostname = this.sourceUrlEditForm.value.hostname;
-        let port = this.sourceUrlEditForm.value.port;
-        let adminDatabaseName = this.sourceUrlEditForm.value.adminDatabaseName;
+        let scheme = this.urlEditForm.value.scheme;
+        let provider = this.urlEditForm.value.provider;
+        let hostname = this.urlEditForm.value.hostname;
+        let port = this.urlEditForm.value.port;
+        let adminDatabaseName = this.urlEditForm.value.adminDatabaseName;
 
-        let sourceUrlForCreate: DbModelSourceUrl = new DbModelSourceUrl();
-        sourceUrlForCreate.scheme = scheme;
-        sourceUrlForCreate.hostname = hostname;
-        sourceUrlForCreate.port = port;
-        sourceUrlForCreate.provider = provider;
-        sourceUrlForCreate.adminDatabaseName = adminDatabaseName;
+        let urlForCreate: DbModelSourceUrl = new DbModelSourceUrl();
+        urlForCreate.scheme = scheme;
+        urlForCreate.hostname = hostname;
+        urlForCreate.port = port;
+        urlForCreate.provider = provider;
+        urlForCreate.adminDatabaseName = adminDatabaseName;
 
-        this.dbModelSourceService.createUrl(sourceUrlForCreate).subscribe({
-                                                                    next: (createdSourceUrl: DbModelSourceUrl | undefined) => {
-                                                                      if (!createdSourceUrl) {
+        this.databaseModelSourceService.createUrl(urlForCreate).subscribe({
+                                                                    next: (createdUrl: DbModelSourceUrl | undefined) => {
+                                                                      if (!createdUrl) {
                                                                         throw new Error("Failed to create the Database Model Source URL");
                                                                       } else {
-                                                                        this.sourceUrlEditForm.reset();
+                                                                        this.urlEditForm.reset();
                                                                       }
                                                                     },
                                                                     error: (error: any) => {
@@ -177,18 +177,18 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
     }
   }
 
-  isSourceUrlNew(sourceUrl: DbModelSourceUrl | undefined): boolean {
-    let isSourceUrlNew = false;
-    if (sourceUrl && sourceUrl.isNewEntity()) {
-      isSourceUrlNew = true;
+  isSourceUrlNew(url: DbModelSourceUrl | undefined): boolean {
+    let isUrlNew = false;
+    if (url && url.isNewEntity()) {
+      isUrlNew = true;
     }
-    return isSourceUrlNew;
+    return isUrlNew;
   }
 
   getSchemeTextPreview(): string {
     let schemeTextPreview;
-    if(this.sourceUrlEditForm.value.scheme) {
-      schemeTextPreview = this.sourceUrlEditForm.value.scheme;
+    if(this.urlEditForm.value.scheme) {
+      schemeTextPreview = this.urlEditForm.value.scheme;
     } else {
       schemeTextPreview = "{scheme}";
     }
@@ -197,8 +197,8 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
 
   getProviderTextPreview(): string {
     let providerTextPreview;
-    if(this.sourceUrlEditForm.value.provider) {
-      providerTextPreview = this.sourceUrlEditForm.value.provider;
+    if(this.urlEditForm.value.provider) {
+      providerTextPreview = this.urlEditForm.value.provider;
     } else {
       providerTextPreview = "{provider}";
     }
@@ -207,8 +207,8 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
 
   getHostnameTextPreview(): string {
     let hostnameTextPreview;
-    if(this.sourceUrlEditForm.value.hostname) {
-      hostnameTextPreview = this.sourceUrlEditForm.value.hostname;
+    if(this.urlEditForm.value.hostname) {
+      hostnameTextPreview = this.urlEditForm.value.hostname;
     } else {
       hostnameTextPreview = "{hostname}";
     }
@@ -217,8 +217,8 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
 
   getPortTextPreview(): string {
     let portTextPreview;
-    if(this.sourceUrlEditForm.value.port) {
-      portTextPreview = this.sourceUrlEditForm.value.port;
+    if(this.urlEditForm.value.port) {
+      portTextPreview = this.urlEditForm.value.port;
     } else {
       portTextPreview = "{port}";
     }
@@ -227,47 +227,47 @@ export class DbModelSourceUrlEditFormComponent extends BaseComponent implements 
 
   getAdminDatabaseNameTextPreview(): string {
     let adminDatabaseNameTextPreview;
-    if(this.sourceUrlEditForm.value.adminDatabaseName) {
-      adminDatabaseNameTextPreview = this.sourceUrlEditForm.value.adminDatabaseName;
+    if(this.urlEditForm.value.adminDatabaseName) {
+      adminDatabaseNameTextPreview = this.urlEditForm.value.adminDatabaseName;
     } else {
       adminDatabaseNameTextPreview = "{admin_db_name}";
     }
     return adminDatabaseNameTextPreview;
   }
 
-  resetSourceUrlEditForms(): void {
-    this.sourceUrlEditForm.reset();
-    this.sourceUrlForEdit = undefined;
+  resetUrlEditForms(): void {
+    this.urlEditForm.reset();
+    this.urlForEdit = undefined;
   }
 
-  resetSourceUrlEditAfterSave(): void {
-    this.resetSourceUrlEditForms();
+  resetUrlEditAfterSave(): void {
+    this.resetUrlEditForms();
 
-    this.sourceUrlWasUpdated.emit(true);
+    this.urlWasUpdated.emit(true);
   }
 
-  resetSourceUrlEdit(): void {
-    this.resetSourceUrlEditForms();
+  resetUrlEdit(): void {
+    this.resetUrlEditForms();
 
     this.resetEditButtonClicked.emit(true);
   }
 
-  private setSourceUrlForEdit( sourceUrlForEdit: DbModelSourceUrl | undefined ): void {
-    if (sourceUrlForEdit) {
-      this.sourceUrlForEdit = sourceUrlForEdit;
+  private setUrlForEdit( urlForEdit: DbModelSourceUrl | undefined ): void {
+    if (urlForEdit) {
+      this.urlForEdit = urlForEdit;
 
-      this.setFormValues(this.sourceUrlForEdit);
-      this.sourceUrlForEdit$.next(this.sourceUrlForEdit);
+      this.setFormValues(this.urlForEdit);
+      this.urlForEdit$.next(this.urlForEdit);
     }
   }
 
-  private setFormValues(sourceUrlForEdit: DbModelSourceUrl): void {
-    this.sourceUrlEditForm.setValue({
-      scheme: sourceUrlForEdit.scheme,
-      provider: sourceUrlForEdit.provider,
-      hostname: sourceUrlForEdit.hostname,
-      port: sourceUrlForEdit.port,
-      adminDatabaseName: sourceUrlForEdit.adminDatabaseName
+  private setFormValues(urlForEdit: DbModelSourceUrl): void {
+    this.urlEditForm.setValue({
+      scheme: urlForEdit.scheme,
+      provider: urlForEdit.provider,
+      hostname: urlForEdit.hostname,
+      port: urlForEdit.port,
+      adminDatabaseName: urlForEdit.adminDatabaseName
     });
   }
 

@@ -1,0 +1,6 @@
+<div class="m-0" id="codeModelExplorer">
+  <code-model-explorer-header (projectExplorerToggleEvent)="toggleProjectExplorer()" id="codeModelExplorer_Header"></code-model-explorer-header>
+  <div *ngIf="!projectExplorerIsClosed" class="border-end ps-0 pe-0" id="codeModelExplorer_ProjectExplorerPanel">
+    <code-model-source-project-explorer id="codeModelExplorer_ProjectExplorer"></code-model-source-project-explorer>
+  </div>
+</div>

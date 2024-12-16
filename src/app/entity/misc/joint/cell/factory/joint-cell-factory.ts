@@ -259,7 +259,7 @@ export class JointCellFactory {
       if (relativePosition) {
         if (relativePosition !== updatedPositionRelativeToLinkedCell) {
           let idInit = CanvasCell.getCurrentJointCellId(cellLink);
-          let nameInit = CanvasCell.getCurrentJointCellName(cellLink);
+          let nameInit = CanvasCell.getCurrentJointCellGlobalName(cellLink);
           let localNameInit = CanvasCell.getCurrentJointCellLocalName(cellLink);
           let sourceCellNameInit = CanvasLinkCell.getCurrentJointSourceCellName(cellLink);
           let targetCellNameInit = CanvasLinkCell.getCurrentJointTargetCellName(cellLink);

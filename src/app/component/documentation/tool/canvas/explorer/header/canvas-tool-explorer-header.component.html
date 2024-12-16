@@ -1,0 +1,82 @@
+<div class="pt-2 pb-1 ps-3 pe-2" id="canvasToolExplorerHeader">
+  <nav class="navbar navbar-expand-lg p-0 mb-1" id="canvasToolExplorerHeader_Navbar" >
+    <div *ngIf="!canvasTitle" class="d-flex align-items-center" id="canvasToolExplorerHeader_Navbar_Title_Unactive" >
+      <span class="navbar-brand pt-0" id="canvasToolExplorerHeader_Navbar_Title_Unactive_Label" >canvas</span >
+    </div>
+    <div *ngIf="canvasTitle" class="d-flex align-items-center" id="canvasToolExplorerHeader_Navbar_Title_Active" >
+      <span class="navbar-brand pt-0" id="canvasToolExplorerHeader_Navbar_Title_Active_Label" >canvas</span >
+      <span class="navbar-brand pt-0" id="canvasToolExplorerHeader_Navbar_Title_Active_Separator" >|</span >
+      <span class="canvas-title navbar-brand pt-0" id="canvasToolExplorerHeader_Navbar_Title_Active_Name" >{{ canvasTitle }}</span >
+    </div>
+    <div class="dropdown border-end explorer-dropdown" id="canvasToolExplorerHeader_Navbar_CanvasDropdown" >
+      <button class="dropdown-toggle btn explorer-dropdown-toggle" type="button" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_ToggleButton" >
+        canvas
+      </button>
+      <ul class="dropdown-menu explorer-dropdown-list" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List" >
+        <li id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Load" >
+          <div class="dropdown-item dropend" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Load_Dropend" >
+            <a class="dropdown-item dropdown-toggle" type="button" data-bs-toggle="dropdown" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Load_Dropend_Toggle" >load</a >
+            <ul class="dropdown-menu" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Load_Dropend_List" >
+              <li *ngFor="let canvasName of availableCanvasNames" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Load_Dropend_List_ListItem_{{ canvasName }}" >
+                <a class="dropdown-item" (click)="loadSelectedCanvas(canvasName)" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Load_Dropend_List_ListItem_{{ canvasName }}_Link" >
+                  {{ canvasName }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Divider" >
+          <hr class="dropdown-divider" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Divider_Hr" />
+        </li>
+        <li id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Edit" >
+          <a class="dropdown-item" (click)="openEditModal()" id="canvasToolExplorerHeader_Navbar_CanvasDropdown_List_ListItem_Edit_Link" >edit</a >
+        </li>
+      </ul>
+    </div>
+    <div class="dropdown border-end explorer-dropdown" id="canvasToolExplorerHeader_Navbar_CellDropdown" >
+      <button class="dropdown-toggle btn explorer-dropdown-toggle" type="button" id="canvasToolExplorerHeader_Navbar_CellDropdown_ToggleButton" >
+        cell
+      </button>
+      <ul class="dropdown-menu explorer-dropdown-list" id="canvasToolExplorerHeader_Navbar_CellDropdown_List" >
+        <li id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddToggle" >
+          <a class="dropdown-item" id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddToggle_Link" >add</a >
+        </li>
+        <li id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_Divider" >
+          <hr class="dropdown-divider" id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_Divider_Hr" />
+        </li>
+        <li id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddOptions" >
+          <div class="dropdown-item dropend" id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddOptions_Dropend" >
+            <a class="dropdown-item dropdown-toggle" type="button" data-bs-toggle="dropdown" id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddOptions_Dropend_ToggleButton" >
+              add from database model
+            </a>
+            <ul class="dropdown-menu" id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddOptions_Dropend_List" >
+              <li *ngFor="let databasePath of availableDatabasePaths" id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddOptions_Dropend_List_ListItem_{{ databasePath.databaseName }}{{ databasePath.schemaName }}" >
+                <a class="dropdown-item" (click)="addCellsFromDatabase(databasePath)" id="canvasToolExplorerHeader_Navbar_CellDropdown_List_ListItem_AddOptions_Dropend_List_ListItem_{{ databasePath.databaseName }}{{ databasePath.schemaName }}_Link" >
+                  {{ databasePath.databaseName }}.{{ databasePath.schemaName }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex justify-content-between explorer-navbar-item ps-3 pe-3" id="canvasToolExplorerHeader_Navbar_CanvasZoom" >
+      <label class="form-label m-0" for="canvasToolExplorerHeader_Navbar_CanvasZoom_Input" id="canvasToolExplorerHeader_Navbar_CanvasZoom_Label" >canvas zoom</label >
+      <span class="pe-1" id="canvasToolExplorerHeader_Navbar_CanvasZoom_LabelInputSeparator" >:</span >
+      <input class="form-range" id="canvasToolExplorerHeader_Navbar_CanvasZoom_Input"
+             [(ngModel)]="zoomSetting" (ngModelChange)="updateCanvasZoom()"
+             type="range" step="1" min="1" max="{{ zoomSettingMaxValue }}" value="{{ zoomSettingInitialValue }}" />
+    </div>
+    <div class="p-2" id="canvasToolExplorerHeader_Navbar_SaveAllChanges">
+      <button class="btn btn-sm main-action-button" (click)="saveAllChanges()" type="button" id="canvasToolExplorerHeader_Navbar_SaveAllChanges_Button" >
+        save all changes
+      </button>
+    </div>
+    <div class="p-2" id="canvasToolExplorerHeader_Navbar_UndoAllChanges">
+      <button class="btn btn-sm main-cancel-button" (click)="undoAllChanges()" type="button" id="canvasToolExplorerHeader_Navbar_UndoAllChanges_Button" >
+        undo all changes
+      </button>
+    </div>
+  </nav>
+  <canvas-create-modal [baseHtmlId]="createCanvasModalBaseHtmlId" id="{{createCanvasModalBaseHtmlId}}"></canvas-create-modal>
+</div>

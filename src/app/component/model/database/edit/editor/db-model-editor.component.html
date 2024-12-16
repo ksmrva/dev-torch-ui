@@ -1,9 +1,9 @@
 <div class="sidebar-menu-form ps-2 pe-2 pb-4" id="{{ this.baseHtmlId }}_Container">
-  <menu-select *ngIf="showSelect" [baseHtmlId]="menuSelectBaseHtmlId" [availableKeys]="getAvailableDbModelKeys()" id="{{ baseHtmlId }}_MenuSelect"
-            (keyWasSelected)="loadDbModelForEdit($event)" (addNewButtonClicked)="loadNewDbModelForEdit()">
+  <menu-select *ngIf="showSelect" [baseHtmlId]="menuSelectBaseHtmlId" [availableKeys]="getAvailableDatabasePaths()" id="{{ baseHtmlId }}_MenuSelect"
+            (keyWasSelected)="loadDatabaseForEdit($event)" (addNewButtonClicked)="loadNewDatabaseForEdit()">
   </menu-select>
-  <db-model-edit-form *ngIf="!showSelect" [dbModelForEditObservable]="dbModelForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
-                            (dbModelWasUpdated)="resetDbModelEdit()" (resetEditButtonClicked)="resetDbModelEdit()" >
+  <db-model-edit-form *ngIf="!showSelect" [databaseForEditObservable]="databaseForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
+                            (databaseWasUpdated)="resetDatabaseEdit()" (resetEditButtonClicked)="resetDatabaseEdit()" >
   </db-model-edit-form>
 </div>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DbModelSourceUrl } from '../../../../../../../entity/model/database/source/url/db-model-source-url';
-import { DbModelSourceService } from '../../../../../../../service/model/database/source/db-model-source.service';
+import { DatabaseModelSourceService } from '../../../../../../../service/model/database/source/db-model-source.service';
 import { BaseComponent } from '../../../../../../base.component';
 import { CommonModule } from '@angular/common';
 import { MenuSelectComponent } from '../../../../../../edit/menu/select/menu-select.component';
@@ -21,9 +21,9 @@ import { StringUtil } from '../../../../../../../entity/misc/string/util/string-
 })
 export class DbModelSourceUrlEditorComponent extends BaseComponent implements OnInit {
 
-  sourceUrlForEdit$: BehaviorSubject<DbModelSourceUrl | undefined>;
+  urlForEdit$: BehaviorSubject<DbModelSourceUrl | undefined>;
 
-  availableSourceUrls: DbModelSourceUrl[];
+  availableUrls: DbModelSourceUrl[];
 
   baseHtmlId: string;
 
@@ -32,71 +32,71 @@ export class DbModelSourceUrlEditorComponent extends BaseComponent implements On
   showSelect: boolean;
 
   constructor(
-    private dbModelSourceService: DbModelSourceService
+    private dbModelSourceService: DatabaseModelSourceService
   ) {
     super();
-    this.sourceUrlForEdit$ = new BehaviorSubject<DbModelSourceUrl | undefined>( undefined );
-    this.availableSourceUrls = [];
+    this.urlForEdit$ = new BehaviorSubject<DbModelSourceUrl | undefined>( undefined );
+    this.availableUrls = [];
     this.showSelect = true;
     this.baseHtmlId = "dbModelSourceUrlEditor";
     this.menuSelectBaseHtmlId = this.baseHtmlId + "_Select";
   }
 
   ngOnInit(): void {
-    let availableSourceUrlsSubscription = this.dbModelSourceService.getUrls().subscribe({
-                                                                                        next: (sourceUrls: DbModelSourceUrl[] | undefined) => {
-                                                                                          if (!sourceUrls) {
-                                                                                            throw new Error("Failed to load the available Database Model Source URLs");
-                                                                                          }
-                                                                                          this.availableSourceUrls = sourceUrls;
-                                                                                        },
-                                                                                        error: (err: any) => {
-                                                                                          throw new Error( "Failed to load the available Database Model Source URLs due to [" + err + "]" );
-                                                                                        },
-                                                                                        complete: () => {
-                                                                                          console.log("Finished loading the available Database Model Source URLs");
-                                                                                        }
-                                                                                      });
-    this.addLongLivingSubscription(availableSourceUrlsSubscription);
+    let availableUrlsSubscription = this.dbModelSourceService.getUrls().subscribe({
+                                                                            next: (urls: DbModelSourceUrl[] | undefined) => {
+                                                                              if (!urls) {
+                                                                                throw new Error("Failed to load the available Database Model Source URLs");
+                                                                              }
+                                                                              this.availableUrls = urls;
+                                                                            },
+                                                                            error: (err: any) => {
+                                                                              throw new Error( "Failed to load the available Database Model Source URLs due to [" + err + "]" );
+                                                                            },
+                                                                            complete: () => {
+                                                                              console.log("Finished loading the available Database Model Source URLs");
+                                                                            }
+                                                                          });
+    this.addLongLivingSubscription(availableUrlsSubscription);
   }
 
-  getAvailableSourceUrlKeys(): string[] {
-    return this.availableSourceUrls.map((sourceUrl: DbModelSourceUrl) => {
-      return sourceUrl.toString();
+  getAvailableUrlKeys(): string[] {
+    return this.availableUrls.map((url: DbModelSourceUrl) => {
+      return url.toString();
     });
   }
 
-  loadNewSourceUrlForEdit(): void {
-    this.setSourceUrlForEdit(new DbModelSourceUrl());
+  loadNewUrlForEdit(): void {
+    this.setUrlForEdit(new DbModelSourceUrl());
     this.showSelect = false;
   }
 
-  loadSourceUrlForEdit(fullUrlSelected: string): void {
+  loadUrlForEdit(fullUrlSelected: string): void {
     if (StringUtil.isNotEmpty(fullUrlSelected)) {
-      let sourceUrlSelected = this.getSourceUrlFromFullUrl(fullUrlSelected);
-      if(!sourceUrlSelected) {
-        this.resetSourceUrlEdit();
+      let urlSelected = this.getUrlFromFullUrl(fullUrlSelected);
+      if(!urlSelected) {
+        this.resetUrlEdit();
         throw new Error("Unable to find the Database Model Source URL using the Full URL [" + fullUrlSelected + "]");
       }
-      this.setSourceUrlForEdit(sourceUrlSelected);
+      this.setUrlForEdit(urlSelected);
 
     } else {
       console.error( "No Database Model Source URL was selected, unable to load for editing" );
     }
   }
 
-  resetSourceUrlEdit(): void {
-    this.setSourceUrlForEdit(undefined);
+  resetUrlEdit(): void {
+    this.setUrlForEdit(undefined);
     this.showSelect = true;
   }
 
-  private setSourceUrlForEdit( sourceUrlForEdit: DbModelSourceUrl | undefined ): void {
-    this.sourceUrlForEdit$.next(sourceUrlForEdit);
+  private setUrlForEdit( sourceUrlForEdit: DbModelSourceUrl | undefined ): void {
+    this.urlForEdit$.next(sourceUrlForEdit);
     this.showSelect = false;
   }
 
-  private getSourceUrlFromFullUrl( fullUrl: string ): DbModelSourceUrl | undefined {
-    return this.availableSourceUrls.find((availableSourceUrl: DbModelSourceUrl) => {
+  private getUrlFromFullUrl( fullUrl: string ): DbModelSourceUrl | undefined {
+    return this.availableUrls.find((availableSourceUrl: DbModelSourceUrl) => {
       return availableSourceUrl.toString() === fullUrl;
     });
   }

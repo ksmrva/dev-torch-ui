@@ -102,7 +102,7 @@ export class CanvasLinkCell extends CanvasCell {
 
   createFromJointCell( jointCell: dia.Cell, canvasId: number ): CanvasLinkCell {
     let id = CanvasCell.getCurrentJointCellId(jointCell);
-    let cellName = CanvasCell.getCurrentJointCellName(jointCell);
+    let cellName = CanvasCell.getCurrentJointCellGlobalName(jointCell);
     let cellLocalName = CanvasCell.getCurrentJointCellLocalName(jointCell);
 
     let sourceCellName = CanvasLinkCell.getCurrentJointSourceCellName(jointCell);

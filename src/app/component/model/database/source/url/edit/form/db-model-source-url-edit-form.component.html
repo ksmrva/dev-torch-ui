@@ -1,9 +1,9 @@
 <div class="ps-1 pe-1 pt-3 pb-2" id="dbModelSourceUrlEditForm_Title">
   <h5 class="sidebar-menu-form-title h5" id="dbModelSourceUrlEditForm_Title_Name" >
-    {{ isSourceUrlNew(sourceUrlForEdit) ? "add new" : "edit" }}
+    {{ isSourceUrlNew(urlForEdit) ? "add new" : "edit" }}
   </h5>
 </div>
-<form class="m-2" [formGroup]="sourceUrlEditForm" (ngSubmit)="saveSourceUrl()" id="dbModelSourceUrlEditForm_Form" >
+<form class="m-2" [formGroup]="urlEditForm" (ngSubmit)="saveSourceUrl()" id="dbModelSourceUrlEditForm_Form" >
   <div class="mb-3" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix">
     <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label" >
       <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label_Scheme">scheme</span>
@@ -12,13 +12,13 @@
     </div>
     <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input" >
       <select class="form-control form-control-sm form-select form-select-sm" formControlName="scheme" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Scheme_Select" >
-        <option *ngFor="let availableSourceUrlSupportedScheme of availableSourceUrlSupportedSchemes" [value]="availableSourceUrlSupportedScheme.scheme" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Scheme_Select_Option_{{ availableSourceUrlSupportedScheme.scheme }}" >
+        <option *ngFor="let availableSourceUrlSupportedScheme of availableUrlSupportedSchemes" [value]="availableSourceUrlSupportedScheme.scheme" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Scheme_Select_Option_{{ availableSourceUrlSupportedScheme.scheme }}" >
           {{ availableSourceUrlSupportedScheme.scheme }}
         </option>
       </select>
       <span class="input-group-text sidebar-menu-label-primary" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Separator">:</span>
       <select class="form-control form-control-sm form-select form-select-sm" formControlName="provider" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Provider_Select" >
-        <option *ngFor="let availableSourceUrlSupportedProvider of availableSourceUrlSupportedProviders" [value]="availableSourceUrlSupportedProvider.provider" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Provider_Select_Option_{{ availableSourceUrlSupportedProvider.provider }}" >
+        <option *ngFor="let availableSourceUrlSupportedProvider of availableUrlSupportedProviders" [value]="availableSourceUrlSupportedProvider.provider" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Provider_Select_Option_{{ availableSourceUrlSupportedProvider.provider }}" >
           {{ availableSourceUrlSupportedProvider.provider }}
         </option>
       </select>
@@ -56,7 +56,7 @@
     <button class="btn btn-sm main-action-button m-2" type="submit" id="dbModelSourceUrlEditForm_FormControls_SaveButton" >
       save
     </button>
-    <button class="btn btn-sm main-cancel-button m-2" type="button" (click)="resetSourceUrlEdit()" id="dbModelSourceUrlEditForm_FormControls_CancelButton" >
+    <button class="btn btn-sm main-cancel-button m-2" type="button" (click)="resetUrlEdit()" id="dbModelSourceUrlEditForm_FormControls_CancelButton" >
       cancel
     </button>
   </div>

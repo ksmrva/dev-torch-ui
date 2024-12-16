@@ -1,9 +1,0 @@
-<simple-menu-select *ngIf="!columnModelNameSelectedForEdit" id="{{ this.baseHtmlId }}_SimpleMenuSelect"
-                    [baseHtmlId]="simpleMenuSelectBaseHtmlId" [labelName]="simpleMenuSelectLabelName"
-                    [availableKeys]="getAvailableColumnModelKeys()" (keyWasSelected)="loadColumnModelForEdit($event)">
-</simple-menu-select>
-<db-column-model-edit-form *ngIf="columnModelNameSelectedForEdit" id="tableModelEditForm_Form_ColumnsSection_ColumnEdit_Form"
-                        [columnModelForEditObservable]="columnModelForEdit$.asObservable()" [tableModelId]="tableModelId"
-                        (resetEditButtonClicked)="resetEdit()" (columnModelWasUpdated)="resetAfterUpdate()" >
-</db-column-model-edit-form>
-

@@ -2,12 +2,12 @@ import { dia, shapes } from "@joint/core";
 import { PRIMARY_KEY_ICON_PATH, FOREIGN_KEY_ICON_PATH, CANVAS_DATABASE_TABLE_DEFAULT_HEADER_HEIGHT, CANVAS_DATABASE_TABLE_DEFAULT_HEADER_BORDER_HEIGHT, CANVAS_DATABASE_TABLE_DEFAULT_COLUMN_HEIGHT } from "../../../../../../app.constants";
 import { ObjectGrid } from "../../../../../misc/grid/object-grid";
 import { StringUtil } from "../../../../../misc/string/util/string-util";
-import { DbColumnModel } from "../../../../../model/database/component/column/db-column-model";
-import { DbForeignKeyModel } from "../../../../../model/database/component/constraint/key/foreign/db-foreign-key-model";
-import { DbPrimaryKeyColumnModel } from "../../../../../model/database/component/constraint/key/primary/column/db-primary-key-column-model";
-import { DbPrimaryKeyModel } from "../../../../../model/database/component/constraint/key/primary/db-primary-key-model";
-import { DbModel } from "../../../../../model/database/component/db-model";
-import { DbTableModel } from "../../../../../model/database/component/table/db-table-model";
+import { SqlColumnDetail } from "../../../../../model/database/detail/sql/column/sql-column-detail";
+import { SqlForeignKeyDetail } from "../../../../../model/database/detail/sql/constraint/key/foreign/sql-foreign-key-detail";
+import { SqlPrimaryKeyColumnDetail } from "../../../../../model/database/detail/sql/constraint/key/primary/column/sql-primary-key-column-detail";
+import { SqlPrimaryKeyDetail } from "../../../../../model/database/detail/sql/constraint/key/primary/sql-primary-key-detail";
+import { SqlDatabaseDetail } from "../../../../../model/database/detail/sql/sql-database-detail";
+import { SqlTableDetail } from "../../../../../model/database/detail/sql/table/sql-table-detail";
 import { Canvas } from "../../canvas";
 import { CanvasCell } from "../canvas-cell";
 import { CanvasCustomCell } from "../custom/canvas-custom-cell";
@@ -40,7 +40,7 @@ export class CanvasCellFactory {
 
   static createCanvasLinkCellFromJointCell(jointLink: dia.Cell, canvasId: number): CanvasLinkCell {
     let id = CanvasCell.getCurrentJointCellId(jointLink);
-    let cellName = CanvasCell.getCurrentJointCellName(jointLink);
+    let cellName = CanvasCell.getCurrentJointCellGlobalName(jointLink);
     let cellLocalName = CanvasCell.getCurrentJointCellLocalName(jointLink);
 
     let sourceCellName = CanvasLinkCell.getCurrentJointSourceCellName(jointLink);
@@ -68,7 +68,7 @@ export class CanvasCellFactory {
 
   static createCanvasCustomCellFromJointCell(jointCell: dia.Cell, canvasId: number): CanvasCustomCell {
     let id = CanvasCell.getCurrentJointCellId(jointCell);
-    let cellName = CanvasCell.getCurrentJointCellName(jointCell);
+    let cellName = CanvasCell.getCurrentJointCellGlobalName(jointCell);
     let cellLocalName = CanvasCell.getCurrentJointCellLocalName(jointCell);
     let cellHtml = CanvasCustomCell.getCurrentJointCellHtml(jointCell);
 
@@ -106,21 +106,21 @@ export class CanvasCellFactory {
     }
   }
 
-  static createLinkCellsForDatabaseTable(canvas: Canvas, dbModel: DbModel, tableModel: DbTableModel, columnHeight: number, headerHeight: number, headerBorderHeight: number, canvasCellsByTableModel: Map<DbTableModel, CanvasCell>): CanvasLinkCell[] {
+  static createLinkCellsForDatabaseTable(canvas: Canvas, database: SqlDatabaseDetail, table: SqlTableDetail, columnHeight: number, headerHeight: number, headerBorderHeight: number, canvasCellsByTable: Map<SqlTableDetail, CanvasCell>): CanvasLinkCell[] {
     let canvasLinkCells: CanvasLinkCell[] = [];
 
-    let foreignKeyModels = tableModel.foreignKeys ? tableModel.foreignKeys : [];
+    let foreignKeyModels = table.foreignKeys ? table.foreignKeys : [];
 
-    foreignKeyModels.forEach((foreignKeyModel: DbForeignKeyModel) => {
+    foreignKeyModels.forEach((foreignKeyModel: SqlForeignKeyDetail) => {
       let foreignKeyLink = CanvasCellFactory.createCanvasLinkCellForForeignKey(
                                                                                 canvas,
                                                                                 foreignKeyModel,
-                                                                                dbModel,
-                                                                                tableModel,
+                                                                                database,
+                                                                                table,
                                                                                 columnHeight,
                                                                                 headerHeight,
                                                                                 headerBorderHeight,
-                                                                                canvasCellsByTableModel
+                                                                                canvasCellsByTable
                                                                               );
       canvasLinkCells.push(foreignKeyLink);
     });
@@ -128,14 +128,14 @@ export class CanvasCellFactory {
     return canvasLinkCells;
   }
 
-  static createCanvasLinkCellForForeignKey(canvas: Canvas, foreignKeyModel: DbForeignKeyModel, dbModel: DbModel, localTableModel: DbTableModel, columnHeight: number, headerHeight: number, headerBorderHeight: number, canvasCellsByTableModel: Map<DbTableModel, CanvasCell>): CanvasLinkCell {
+  static createCanvasLinkCellForForeignKey(canvas: Canvas, foreignKeyModel: SqlForeignKeyDetail, database: SqlDatabaseDetail, localTableModel: SqlTableDetail, columnHeight: number, headerHeight: number, headerBorderHeight: number, canvasCellsByTableModel: Map<SqlTableDetail, CanvasCell>): CanvasLinkCell {
     let referencedTableModelId = foreignKeyModel.referencedTableId;
     let referencedColumnModelId = foreignKeyModel.referencedColumnId;
     let localColumnModelId = foreignKeyModel.localColumnId;
 
     let localTableColumnModels = localTableModel.columns;
 
-    let localColumnModel = <DbColumnModel>(localTableColumnModels.find((columnModel: DbColumnModel) => {
+    let localColumnModel = <SqlColumnDetail>(localTableColumnModels.find((columnModel: SqlColumnDetail) => {
       return columnModel.id === localColumnModelId;
     }));
     if (!localColumnModel) {
@@ -147,13 +147,13 @@ export class CanvasCellFactory {
     let linkSourceDy = headerHeight + headerBorderHeight + columnHeight * (localColumnModelIndex - 1) + columnHeight / 2;
     let linkSourceDx = 0;
 
-    let referencedTableModel = dbModel.tables.find((tableModel: DbTableModel) => {
+    let referencedTableModel = database.tables.find((tableModel: SqlTableDetail) => {
       return tableModel.id === referencedTableModelId;
     });
     if (!referencedTableModel) {
       throw new Error("Failed to find the Foreign Object Target's table model using Id [" + referencedTableModelId + "]");
     }
-    let referencedColumnModel = <DbColumnModel>(referencedTableModel.columns.find((columnModel: DbColumnModel) => {
+    let referencedColumnModel = <SqlColumnDetail>(referencedTableModel.columns.find((columnModel: SqlColumnDetail) => {
       return columnModel.id === referencedColumnModelId;
     }));
     if (!referencedColumnModel) {
@@ -173,7 +173,7 @@ export class CanvasCellFactory {
 
     let linkCellNameInit = CanvasCellFactory.getUniqueComponentForCellName();
     let linkCellLocalNameInit = CanvasCellFactory.createDatabaseTableForeignKeyLocalName(
-                                                      dbModel,
+                                                      database,
                                                       localTableModel,
                                                       localColumnModel,
                                                       referencedTableModel,
@@ -206,13 +206,13 @@ export class CanvasCellFactory {
     );
   }
 
-  static createCanvasCustomCellsFromTableGrid(tableLayoutGrid: ObjectGrid<DbTableModel>, canvas: Canvas, dbModel: DbModel): Map<DbTableModel, CanvasCell> {
-    let canvasCellsByTableModel: Map<DbTableModel, CanvasCell> = new Map<DbTableModel, CanvasCell>();
+  static createCanvasCustomCellsFromTableGrid(tableLayoutGrid: ObjectGrid<SqlTableDetail>, canvas: Canvas, database: SqlDatabaseDetail): Map<SqlTableDetail, CanvasCell> {
+    let canvasCellsByTable: Map<SqlTableDetail, CanvasCell> = new Map<SqlTableDetail, CanvasCell>();
     let previousTableEndPositionX = 0;
     let currentLayoutRowIndex = 0;
     let currentRowLargestY = 0;
     let createdCustomCellsGrid: ObjectGrid<CanvasCustomCell> = new ObjectGrid<CanvasCustomCell>(tableLayoutGrid.objectsPerRow);
-    tableLayoutGrid.grid.forEach((tableLayoutRow: (DbTableModel | null)[]) => {
+    tableLayoutGrid.grid.forEach((tableLayoutRow: (SqlTableDetail | null)[]) => {
       let currentLayoutColumnIndex = 0;
 
       let previousRowLargestY = 0;
@@ -221,7 +221,7 @@ export class CanvasCellFactory {
       }
       currentRowLargestY = 0;
 
-      tableLayoutRow.forEach((tableModel: DbTableModel | null) => {
+      tableLayoutRow.forEach((tableModel: SqlTableDetail | null) => {
         if (tableModel === null) {
           // Add null to mirror the TableModel grid
           createdCustomCellsGrid.add(null);
@@ -257,12 +257,12 @@ export class CanvasCellFactory {
 
           let canvasCustomCell = CanvasCellFactory.createCustomCellForDatabaseTable(
                                                     canvas,
-                                                    dbModel,
+                                                    database,
                                                     tableModel,
                                                     canvasPositionX,
                                                     canvasPositionY
                                                   );
-          canvasCellsByTableModel.set(tableModel, canvasCustomCell);
+          canvasCellsByTable.set(tableModel, canvasCustomCell);
 
           let customCellLargestY = canvasCustomCell.canvasPositionY + canvasCustomCell.height;
           if (customCellLargestY > currentRowLargestY) {
@@ -275,7 +275,7 @@ export class CanvasCellFactory {
       });
       currentLayoutRowIndex++;
     });
-    return canvasCellsByTableModel;
+    return canvasCellsByTable;
   }
 
   static isDisplayVisible(currentDisplayValue: string): boolean {
@@ -290,13 +290,13 @@ export class CanvasCellFactory {
     return isDisplayVisible;
   }
 
-  static createGridLayoutForTables(dbModel: DbModel, tablesPerCanvasRow: number): ObjectGrid<DbTableModel> {
-    let tableLayoutGrid: ObjectGrid<DbTableModel> = new ObjectGrid<DbTableModel>( tablesPerCanvasRow );
+  static createGridLayoutForTables(database: SqlDatabaseDetail, tablesPerCanvasRow: number): ObjectGrid<SqlTableDetail> {
+    let tableLayoutGrid: ObjectGrid<SqlTableDetail> = new ObjectGrid<SqlTableDetail>( tablesPerCanvasRow );
 
     let linkCountsByTableId: Map<number, CanvasCellLinkCount> = new Map<number,CanvasCellLinkCount>();
-    let tablesById: Map<number, DbTableModel> = new Map<number, DbTableModel>();
+    let tablesById: Map<number, SqlTableDetail> = new Map<number, SqlTableDetail>();
 
-    dbModel.tables.forEach((tableModel: DbTableModel) => {
+    database.tables.forEach((tableModel: SqlTableDetail) => {
       tablesById.set(tableModel.id, tableModel);
 
       let linkCount = new CanvasCellLinkCount();
@@ -305,9 +305,9 @@ export class CanvasCellFactory {
       linkCountsByTableId.set(tableModel.id, linkCount);
     });
 
-    dbModel.tables.forEach((tableModel: DbTableModel) => {
-      tableModel.foreignKeys.forEach((foreignKeyModel: DbForeignKeyModel) => {
-        let referencedTableModelId = foreignKeyModel.referencedTableId;
+    database.tables.forEach((table: SqlTableDetail) => {
+      table.foreignKeys.forEach((foreignKey: SqlForeignKeyDetail) => {
+        let referencedTableModelId = foreignKey.referencedTableId;
         let currentCountsForReferencedTable = linkCountsByTableId.get(referencedTableModelId);
         if (!currentCountsForReferencedTable) {
           console.log("Table Model ID [" + referencedTableModelId + "] did not have an entry in the Link Count Map");
@@ -317,34 +317,34 @@ export class CanvasCellFactory {
       });
     });
 
-    let tableModelsByReferenceCount: Map<number, DbTableModel[]> = new Map<number, DbTableModel[]>();
+    let tablesByReferenceCount: Map<number, SqlTableDetail[]> = new Map<number, SqlTableDetail[]>();
     linkCountsByTableId.forEach((linkCounts: CanvasCellLinkCount, tableId: number) => {
       let tableModel = tablesById.get(tableId);
       if (tableModel) {
-        let tableModelsForReferenceCount: DbTableModel[] = [];
+        let tablesForReferenceCount: SqlTableDetail[] = [];
         let linkTargetCountForTable = linkCounts.linkTargetCount;
-        let tableModelByReferenceCountEntry = tableModelsByReferenceCount.get(linkTargetCountForTable);
-        if (tableModelByReferenceCountEntry) {
-          tableModelsForReferenceCount = tableModelByReferenceCountEntry;
+        let tableByReferenceCountEntry = tablesByReferenceCount.get(linkTargetCountForTable);
+        if (tableByReferenceCountEntry) {
+          tablesForReferenceCount = tableByReferenceCountEntry;
         } else {
-          tableModelsByReferenceCount.set(
+          tablesByReferenceCount.set(
             linkTargetCountForTable,
-            tableModelsForReferenceCount
+            tablesForReferenceCount
           );
         }
-        tableModelsForReferenceCount.push(tableModel);
+        tablesForReferenceCount.push(tableModel);
       } else {
         console.log("Unable to find Table with ID [" + tableId + "]");
       }
     });
 
-    let referenceCounts = Array.from(tableModelsByReferenceCount.keys())
+    let referenceCounts = Array.from(tablesByReferenceCount.keys())
                                .sort();
     referenceCounts.forEach((referenceCount: number) => {
-      let tableModelsForReferenceCount = tableModelsByReferenceCount.get(referenceCount);
-      if (tableModelsForReferenceCount) {
-        let tablesByForeignKeyCount: Map<number, DbTableModel[]> = new Map<number, DbTableModel[]>();
-        tableModelsForReferenceCount.forEach((tableModelForReferenceCount: DbTableModel) => {
+      let tablesForReferenceCount = tablesByReferenceCount.get(referenceCount);
+      if (tablesForReferenceCount) {
+        let tablesByForeignKeyCount: Map<number, SqlTableDetail[]> = new Map<number, SqlTableDetail[]>();
+        tablesForReferenceCount.forEach((tableModelForReferenceCount: SqlTableDetail) => {
           let foreignKeyCountForTable = tableModelForReferenceCount.foreignKeys.length;
           let currentTablesForForeignKeyCount = tablesByForeignKeyCount.get(foreignKeyCountForTable);
           if (!currentTablesForForeignKeyCount) {
@@ -362,7 +362,7 @@ export class CanvasCellFactory {
         foreignKeyCounts.forEach((foreignKeyCount: number) => {
           let tablesForForeignKeyCount = tablesByForeignKeyCount.get(foreignKeyCount);
           if (tablesForForeignKeyCount) {
-            tablesForForeignKeyCount.forEach((tableForForeignKeyCount: DbTableModel) => {
+            tablesForForeignKeyCount.forEach((tableForForeignKeyCount: SqlTableDetail) => {
               tableLayoutGrid.add(tableForForeignKeyCount);
             });
           } else {
@@ -384,14 +384,14 @@ export class CanvasCellFactory {
     return link.attr("./display");
   }
 
-  static createDatabaseTableForeignKeyLocalName(dbModel: DbModel, tableModel: DbTableModel, columnModel: DbColumnModel, referencedTableModel: DbTableModel, referencedColumnModel: DbColumnModel): string {
+  static createDatabaseTableForeignKeyLocalName(database: SqlDatabaseDetail, table: SqlTableDetail, column: SqlColumnDetail, referencedTableModel: SqlTableDetail, referencedColumnModel: SqlColumnDetail): string {
     return (
       "FK-" +
-      dbModel.name.getFullPath() +
+      database.name.getFullPath() +
       "." +
-      tableModel.name +
+      table.name +
       "." +
-      columnModel.name +
+      column.name +
       "-to-" +
       referencedTableModel.name +
       "." +
@@ -399,20 +399,20 @@ export class CanvasCellFactory {
     );
   }
 
-  static createDatabaseTableLocalName(dbModel: DbModel, tableModel: DbTableModel): string {
-    return "Table-" + dbModel.name.getFullPath() + "." + tableModel.name;
+  static createDatabaseTableLocalName(database: SqlDatabaseDetail, tableModel: SqlTableDetail): string {
+    return "Table-" + database.name.getFullPath() + "." + tableModel.name;
   }
 
-  static createDatabaseLocalName(dbModel: DbModel): string {
-    return "DB-" + dbModel.name.getFullPath();
+  static createDatabaseLocalName(database: SqlDatabaseDetail): string {
+    return "DB-" + database.name.getFullPath();
   }
 
-  private static createCustomCellForDatabaseTable(canvas: Canvas, dbModel: DbModel, tableModel: DbTableModel, canvasPositionX: number, canvasPositionY: number): CanvasCustomCell {
-    let heightOfTable =CanvasCellFactory.getCustomCellHeightForDatabaseTable(tableModel);
-    let widthOfTable =CanvasCellFactory.getCustomCellWidthForDatabaseTable(tableModel);
+  private static createCustomCellForDatabaseTable(canvas: Canvas, database: SqlDatabaseDetail, table: SqlTableDetail, canvasPositionX: number, canvasPositionY: number): CanvasCustomCell {
+    let heightOfTable =CanvasCellFactory.getCustomCellHeightForDatabaseTable(table);
+    let widthOfTable =CanvasCellFactory.getCustomCellWidthForDatabaseTable(table);
     let customCellName = CanvasCellFactory.getUniqueComponentForCellName();
-    let customCellLocalName = CanvasCellFactory.createDatabaseTableLocalName(dbModel, tableModel);
-    let customCellHtml = CanvasCellFactory.createHtmlForDatabaseTable(customCellName, tableModel, canvas, dbModel);
+    let customCellLocalName = CanvasCellFactory.createDatabaseTableLocalName(database, table);
+    let customCellHtml = CanvasCellFactory.createHtmlForDatabaseTable(customCellName, table, canvas, database);
 
     return new CanvasCustomCell().initialize(
       -1,
@@ -428,10 +428,10 @@ export class CanvasCellFactory {
   }
 
   // HTML
-  private static createHtmlForDatabaseTable(customCellName: string, tableModel: DbTableModel, canvas: Canvas, dbModel: DbModel): string {
-    let tableName = tableModel.name;
+  private static createHtmlForDatabaseTable(customCellName: string, table: SqlTableDetail, canvas: Canvas, database: SqlDatabaseDetail): string {
+    let tableName = table.name;
 
-    let databaseTableComponentForHtmlId =dbModel.createHtmlTableIdForDatabaseTable(tableModel);
+    let databaseTableComponentForHtmlId =database.createHtmlTableIdForDatabaseTable(table);
     let canvasCustomCellHtmlId = canvas.createHtmlIdForCanvasCustomCell(customCellName);
     canvasCustomCellHtmlId = canvasCustomCellHtmlId + HTML_ID_COMPONENT_DELIMITER + databaseTableComponentForHtmlId;
 
@@ -440,7 +440,7 @@ export class CanvasCellFactory {
     let htmlTableBodyBaseId = htmlTableBaseId + "_Body";
 
     let tableHeaderRows = CanvasCellFactory.createHtmlTableHeader( tableName, htmlTableHeaderBaseId );
-    let tableRows = CanvasCellFactory.createHtmlForAllDatabaseTableColumns( tableModel, htmlTableBodyBaseId );
+    let tableRows = CanvasCellFactory.createHtmlForAllDatabaseTableColumns( table, htmlTableBodyBaseId );
 
     let tableHeaderHtml =
     `
@@ -471,7 +471,7 @@ export class CanvasCellFactory {
     return tableHeaderHtml;
   }
 
-  private static createHtmlForAllDatabaseTableColumns(tableModel: DbTableModel, baseHtmlId: string): string {
+  private static createHtmlForAllDatabaseTableColumns(tableModel: SqlTableDetail, baseHtmlId: string): string {
     let htmlForAllTableRows = "";
     let tableName = tableModel.name;
     let columnModels = tableModel.columns ? tableModel.columns : [];
@@ -485,7 +485,7 @@ export class CanvasCellFactory {
     let foreignKeyColumnNames = CanvasCellFactory.extractColumnNamesForForeignKeyModels( foreignKeyModels, columnModels );
 
     columnModels.sort(CanvasCellFactory.sortColumnModelsByColumnIndex);
-    columnModels.forEach((columnModel: DbColumnModel) => {
+    columnModels.forEach((columnModel: SqlColumnDetail) => {
       let htmlForTableRow = CanvasCellFactory.createHtmlForDatabaseTableColumn(
                                                                                   tableName,
                                                                                   columnModel,
@@ -499,7 +499,7 @@ export class CanvasCellFactory {
     return htmlForAllTableRows;
   }
 
-  private static createHtmlForDatabaseTableColumn(tableName: string, columnModel: DbColumnModel, primaryKeyColumnNames: string[], foreignKeyColumnNames: string[], baseHtmlId: string): string {
+  private static createHtmlForDatabaseTableColumn(tableName: string, columnModel: SqlColumnDetail, primaryKeyColumnNames: string[], foreignKeyColumnNames: string[], baseHtmlId: string): string {
     let columnName = columnModel.name;
     let tableDataRowId = baseHtmlId + "_TableDataRow." + columnName;
     let tableDataId = tableDataRowId + "_TableData";
@@ -545,11 +545,11 @@ export class CanvasCellFactory {
     return tableRow;
   }
 
-  private static extractColumnNamesForPrimaryKeyModel(primaryKeyModel: DbPrimaryKeyModel, columnModels: DbColumnModel[]): string[] {
+  private static extractColumnNamesForPrimaryKeyModel(primaryKeyModel: SqlPrimaryKeyDetail, columnModels: SqlColumnDetail[]): string[] {
     let primaryKeyColumnNames: string[] = [];
     let primaryKeyModelColumns = primaryKeyModel.primaryKeyColumns;
-    primaryKeyModelColumns.forEach((primaryKeyModelColumn: DbPrimaryKeyColumnModel) => {
-      let columnModel = columnModels.find((columnModel: DbColumnModel) => {
+    primaryKeyModelColumns.forEach((primaryKeyModelColumn: SqlPrimaryKeyColumnDetail) => {
+      let columnModel = columnModels.find((columnModel: SqlColumnDetail) => {
         columnModel.id === primaryKeyModelColumn.columnId
       });
       if (!columnModel) {
@@ -561,10 +561,10 @@ export class CanvasCellFactory {
     return primaryKeyColumnNames;
   }
 
-  private static extractColumnNamesForForeignKeyModels(foreignKeyModels: DbForeignKeyModel[], columnModels: DbColumnModel[]): string[] {
+  private static extractColumnNamesForForeignKeyModels(foreignKeyModels: SqlForeignKeyDetail[], columnModels: SqlColumnDetail[]): string[] {
     let foreignKeyColumnNames: string[] = [];
-    foreignKeyModels.forEach((foreignKeyModel: DbForeignKeyModel) => {
-      let columnModel = columnModels.find((columnModel: DbColumnModel) => {
+    foreignKeyModels.forEach((foreignKeyModel: SqlForeignKeyDetail) => {
+      let columnModel = columnModels.find((columnModel: SqlColumnDetail) => {
         return columnModel.id === foreignKeyModel.localColumnId;
       });
       if (!columnModel) {
@@ -576,7 +576,7 @@ export class CanvasCellFactory {
     return foreignKeyColumnNames;
   }
 
-  private static getCustomCellWidthForDatabaseTable(tableModel: DbTableModel): number {
+  private static getCustomCellWidthForDatabaseTable(tableModel: SqlTableDetail): number {
     let longestColumnName = CanvasCellFactory.getLongestNameForDatabaseTableModel(tableModel);
 
     return CanvasCellFactory.getTextWidth(
@@ -585,7 +585,7 @@ export class CanvasCellFactory {
     );
   }
 
-  private static getCustomCellHeightForDatabaseTable(tableModel: DbTableModel): number {
+  private static getCustomCellHeightForDatabaseTable(tableModel: SqlTableDetail): number {
     let numberOfColumns = tableModel.columns.length;
     let fullHtmlTableHeight = CANVAS_DATABASE_TABLE_DEFAULT_HEADER_HEIGHT + CANVAS_DATABASE_TABLE_DEFAULT_HEADER_BORDER_HEIGHT;
     let heightOfTable = numberOfColumns * CANVAS_DATABASE_TABLE_DEFAULT_COLUMN_HEIGHT + fullHtmlTableHeight;
@@ -593,7 +593,7 @@ export class CanvasCellFactory {
     return heightOfTable;
   }
 
-  private static getLongestNameForDatabaseTableModel(tableModel: DbTableModel) {
+  private static getLongestNameForDatabaseTableModel(tableModel: SqlTableDetail) {
     let longestName = "";
 
     // Check the name of the Table itself first
@@ -604,7 +604,7 @@ export class CanvasCellFactory {
     }
 
     // Then compare against all of the Column names within the Table, including the Data Type postfix
-    tableModel.columns.forEach((columnModel: DbColumnModel) => {
+    tableModel.columns.forEach((columnModel: SqlColumnDetail) => {
       let columnNameWithDataType = columnModel.name + " (" + columnModel.dataType + ")";
       if (columnNameWithDataType.length > longestName.length) {
         longestName = columnNameWithDataType;
@@ -615,7 +615,7 @@ export class CanvasCellFactory {
 
   // Canvas Cells
 
-  private static sortTableModelsByForeignKeyCount(tableModelA: DbTableModel, tableModelB: DbTableModel): number {
+  private static sortTableModelsByForeignKeyCount(tableModelA: SqlTableDetail, tableModelB: SqlTableDetail): number {
     let sortValue;
     let numberOfForeignKeysA = tableModelA.foreignKeys.length;
     let numberOfForeignKeysB = tableModelB.foreignKeys.length;
@@ -629,7 +629,7 @@ export class CanvasCellFactory {
     return sortValue;
   }
 
-  private static sortColumnModelsByColumnIndex(columnModelA: DbColumnModel, columnModelB: DbColumnModel): number {
+  private static sortColumnModelsByColumnIndex(columnModelA: SqlColumnDetail, columnModelB: SqlColumnDetail): number {
     let sortValue;
     let aIndex = columnModelA.columnIndex;
     let bIndex = columnModelB.columnIndex;

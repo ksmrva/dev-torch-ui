@@ -1,0 +1,69 @@
+#modelMenu {
+  height: 100%;
+}
+
+#modelMenu_Content {
+  height: 100%;
+}
+
+#modelMenu_Content_CodeModelExplorerHolder {
+  height: 100%;
+}
+
+#modelMenu_Content_CodeModelExplorer {
+  height: 100%;
+}
+
+#modelMenu_Sidebar {
+  position: relative;
+  width: 5%;
+  // background-color: var(--header-primary-bg-color) !important;
+  // background-color: #2b3035 !important;
+  background-color: #25282a !important;
+}
+
+#modelMenu_Content {
+  position: relative;
+  overflow: scroll;
+  height: 100%;
+  width: 95%;
+}
+
+.model-menu-sidebar-title {
+  height: 30px;
+  overflow: hidden;
+  // background-color: var(--sidebar-menu-title-tertiary-color) !important;
+  background-color: #585e63 !important;
+}
+
+.model-menu-sidebar-title-name {
+  font-weight: bolder;
+  // color: var(--app-title-name-end-color) !important;
+  color: var(--canvas-explorer-control-label-color) !important;
+}
+
+.model-menu-sidebar-option-container {
+  height: 75px;
+  overflow: hidden;
+}
+
+.model-menu-sidebar-option-label {
+  display: grid;
+}
+
+.btn:active {
+  border-color: var(--app-title-name-end-color) !important;
+}
+
+.model-menu-sidebar-option-toggle-button {
+  height: 100%;
+  width: 100%;
+}
+
+.model-menu-sidebar-option-toggle-button-selected {
+  border-top: .5px solid var(--bs-btn-border-color) !important;
+  border-bottom: .5px solid var(--bs-btn-border-color) !important;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: var(--app-title-name-end-color) !important;
+}
