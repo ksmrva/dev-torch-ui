@@ -1,0 +1,8 @@
+<nav-option-group [baseHtmlId]="baseHtmlId" [groupTitle]="groupTitle" id="{{ baseHtmlId }}"
+                  [closeAllOptionsObservable]="closeAllOptionsObservable"
+                  (toggleOptionsEvent)="handleToggleOptionsEvent($event)">
+  <database-model-source-url-nav-option-item [closeOptionItem]="closeUrlOptionItem$.asObservable()" (keySelectedEvent)="urlSelected($event)" id="{{ baseHtmlId }}_UrlOptionItem"
+                                             (optionItemOpenEvent)="handleUrlOptionOpen($event)"></database-model-source-url-nav-option-item>
+  <database-model-source-config-nav-option-item [closeOptionItem]="closeConfigOptionItem$.asObservable()" (keySelectedEvent)="configSelected($event)" id="{{ baseHtmlId }}_ConfigOptionItem"
+                                                (optionItemOpenEvent)="handleConfigOptionOpen($event)"></database-model-source-config-nav-option-item>
+</nav-option-group>

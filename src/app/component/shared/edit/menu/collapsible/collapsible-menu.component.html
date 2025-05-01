@@ -1,0 +1,18 @@
+<div [ngClass]="containerClasses" id="{{ baseHtmlId }}_Container">
+  <div [ngClass]="additionalTitleClasses" class="menu-title" id="{{ baseHtmlId }}_Title">
+    <button class="navbar-toggler p-1 w-100" type="button" (click)="menuToggleClicked()" id="{{ baseHtmlId }}_ContentToggle">
+      <div [ngClass]="additionalLabelClasses" class="d-flex" id="{{ baseHtmlId }}_ContentToggle_Label">
+        <div *ngIf="!isSubMenu" id="{{ baseHtmlId }}_ContentToggle_LabelFillerDivLeft"></div>
+        <span [ngClass]="additionalLabelNameClasses" id="{{ baseHtmlId }}_ContentToggle_LabelName">
+          {{ menuTitle }}
+        </span>
+        <div class="d-flex align-items-center" id="{{ baseHtmlId }}_ContentToggle_LabelIconHolder">
+          <i [ngClass]="additionalLabelIconClasses" class="bi" id="{{ baseHtmlId }}_ContentToggle_LabelIcon"></i>
+        </div>
+      </div>
+    </button>
+  </div>
+  <div [ngClass]="additionalContentHolderClasses" class="edit-form-menu-content collapse show" id="{{ this.menuContentHolderHtmlId }}">
+    <ng-content id="{{ this.menuContentHtmlId }}"></ng-content>
+  </div>
+</div>

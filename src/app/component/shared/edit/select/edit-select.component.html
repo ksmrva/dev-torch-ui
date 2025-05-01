@@ -1,0 +1,20 @@
+<div class="d-flex align-items-center" id="{{ baseHtmlId }}" >
+  <div *ngIf="showTitle" class="pe-4" id="{{ baseHtmlId }}_Title" >
+    <span class="edit-select-title-name" id="{{ baseHtmlId }}_Title_Name" >
+      select
+    </span>
+  </div>
+  <div class="input-group input-group-sm" id="{{ baseHtmlId }}_InputGroup" >
+    <button class="btn btn-sm add-new-button" type="button" title="Add New" (click)="handleAddNewButtonClick()" id="{{ baseHtmlId }}_InputGroup_AddNewButton" >
+      <i class="bi bi-plus h6" id="{{ baseHtmlId }}_InputGroup_AddNewButton_Icon" ></i>
+    </button>
+    <select class="form-select form-select-sm edit-select-option" [(ngModel)]="selectedKey" (ngModelChange)="selectKey()" type="text" id="{{ baseHtmlId }}_InputGroup_LoadExisting_Select" >
+      <option *ngFor="let availableKey of availableKeys" [ngValue]="availableKey" id="{{ baseHtmlId }}_InputGroup_LoadExisting_Select_Option_{{ availableKey }}" >
+        {{ availableKey }}
+      </option>
+    </select>
+    <button *ngIf="isKeySelected()" class="btn btn-sm edit-button" (click)="handleEditButtonClick()" type="button" title="Edit" id="{{ baseHtmlId }}_InputGroup_EditButton" >
+      <i class="bi bi-wrench small-icon" id="{{ baseHtmlId }}_InputGroup_EditButton_Icon" ></i>
+    </button>
+  </div>
+</div>

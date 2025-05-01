@@ -1,7 +1,7 @@
-<simple-menu-select *ngIf="!cellNameSelectedForEdit" id="{{ this.baseHtmlId }}_SimpleMenuSelect"
+<simple-edit-select *ngIf="!cellNameSelectedForEdit" id="{{ this.baseHtmlId }}_SimpleMenuSelect"
                     [baseHtmlId]="simpleMenuSelectBaseHtmlId" [labelName]="simpleMenuSelectLabelName"
                     [availableKeys]="getAvailableCellKeys()" (keyWasSelected)="loadCellForEdit($event)">
-</simple-menu-select>
+</simple-edit-select>
 <canvas-custom-cell-edit-form *ngIf="showCustomCellEditForm" id="{{ this.baseHtmlId }}_CustomCellEditForm"
                                   [customCellToEditObservable]="customCellForEdit$.asObservable()"
                                   (customCellWasUpdated)="cellUpdated()" (resetEditButtonClicked)="resetEdit()" ></canvas-custom-cell-edit-form>

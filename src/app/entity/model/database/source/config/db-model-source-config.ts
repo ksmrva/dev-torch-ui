@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../api-entity";
+import { ApiEntity } from "../../../../shared/api-entity";
 import { DbModelSourceUrl } from "../url/db-model-source-url";
 
 export class DbModelSourceConfig extends ApiEntity {

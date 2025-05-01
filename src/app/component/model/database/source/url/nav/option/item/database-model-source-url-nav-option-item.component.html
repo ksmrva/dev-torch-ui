@@ -1,0 +1,5 @@
+<nav-option-item [availableKeys]="getAvailableUrlNames()" [selectButtonTitle]="selectButtonTitle" id="{{ baseHtmlId }}"
+                 [parentHtmlId]="baseHtmlId" [closeOptionItem]="closeOptionItem"
+                 (optionItemOpenEvent)="handleOptionItemOpenEvent($event)" (keySelectedEvent)="urlSelected($event)"
+                 (addNewButtonClickedEvent)="loadNewUrlForEdit()" (editButtonClickedEvent)="loadSelectedUrlForEdit()" ></nav-option-item>
+<database-model-source-url-edit-modal [baseHtmlId]="editModalBaseHtmlId" [urlForEditObservable]="urlForEdit$.asObservable()" id="{{ editModalBaseHtmlId }}"></database-model-source-url-edit-modal>

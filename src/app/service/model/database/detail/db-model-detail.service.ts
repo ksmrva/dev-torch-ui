@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of, map, catchError, tap } from "rxjs";
-import { StringUtil } from "../../../../entity/misc/string/util/string-util";
+import { StringUtil } from "../../../../entity/shared/string/util/string-util";
 import { DbFieldCategory } from "../../../../entity/model/database/detail/category/field/db-field-category";
 import { DbCollectionCategory } from "../../../../entity/model/database/detail/category/collection/db-collection-category";
-import { BaseApiService } from "../../../base.api.service";
+import { BaseApiService } from "../../../shared/base.api.service";
 
 @Injectable({
   providedIn: "root"

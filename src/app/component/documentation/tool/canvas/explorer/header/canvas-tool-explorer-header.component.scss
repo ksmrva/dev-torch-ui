@@ -1,47 +1,27 @@
-input[type="range"] {
-  appearance: auto;
-}
 
-#canvasToolExplorerHeader {
-  z-index: 65;
-  position: relative;
-  // background-color: var(--sidebar-menu-title-tertiary-color);
-}
-
-#canvasToolExplorerHeader_Navbar_CanvasZoom_Input {
-  width: 200px;
+.canvas-zoom-input {
+  width: 200px !important;
+  margin-top: .125rem !important;
 }
 
 #canvasToolExplorerHeader_Navbar_Title_Unactive_Label {
-  color: var(--canvas-explorer-control-label-color) !important;
+  color: var(--explorer-control-label-color) !important;
   font-size: x-large;
   font-weight: bold;
 }
 
 #canvasToolExplorerHeader_Navbar_Title_Active_Label {
-  color: var(--canvas-explorer-control-label-color) !important;
+  color: var(--explorer-control-label-color) !important;
   font-size: x-large;
   font-weight: bold;
 }
 
 #canvasToolExplorerHeader_Navbar_Title_Active_Separator {
-  color: var(--canvas-explorer-control-label-color) !important;
+  color: var(--explorer-control-label-color) !important;
   font-size: x-large;
 }
 
 #canvasToolExplorerHeader_Navbar_Title_Active_Name {
   color: var(--app-main-color) !important;
   font-size: x-large;
-}
-
-.explorer-dropdown:hover > .explorer-dropdown-list {
-  display: block;
-}
-
-.explorer-dropdown-toggle {
-  color: var(--sidebar-menu-title-secondary-color) !important;
-}
-
-.explorer-navbar-item {
-  color: var(--sidebar-menu-title-secondary-color) !important;
 }

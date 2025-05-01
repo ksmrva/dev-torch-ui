@@ -1,4 +1,5 @@
-import { ApiEntity } from "../../../../../../api-entity";
+import { ApiEntity } from "../../../../../../shared/api-entity";
+import { ExplorerPanelListEntry } from "../../../../../../shared/explorer/panel/list/entry/explorer-panel-list-entry";
 
 export class CodeModelSourceFileTreeNode extends ApiEntity {
 
@@ -8,12 +9,19 @@ export class CodeModelSourceFileTreeNode extends ApiEntity {
 
   hasChildren: boolean;
 
+  explorerPanelListEntry: ExplorerPanelListEntry;
+
   constructor() {
     super();
 
     this.name = "";
     this.fileId = -1;
     this.hasChildren = false;
+    this.explorerPanelListEntry = new ExplorerPanelListEntry();
+  }
+
+  hasSubEntries(): boolean {
+    return this.hasChildren;
   }
 
   override deserialize(json: any): CodeModelSourceFileTreeNode {
@@ -22,6 +30,7 @@ export class CodeModelSourceFileTreeNode extends ApiEntity {
       this.name = json.name;
       this.fileId = json.fileId;
       this.hasChildren = json.hasChildren;
+      this.explorerPanelListEntry = json.explorerPanelListEntry;
     }
     return this;
   }

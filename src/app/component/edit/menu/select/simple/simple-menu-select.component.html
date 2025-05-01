@@ -1,8 +1,0 @@
-<div id="{{ baseHtmlId }}_SimpleMenuSelect" >
-    <label class="form-label sidebar-menu-label-primary" for="{{ baseHtmlId }}_SimpleMenuSelect_Select" id="{{ baseHtmlId }}_SimpleMenuSelect_Label" >{{ labelName }}</label>
-    <select class="form-control form-select form-select-sm" [(ngModel)]="selectedKey" (ngModelChange)="selectKey()" id="{{ baseHtmlId }}_SimpleMenuSelect_Select" >
-        <option *ngFor="let availableKey of availableKeys" [ngValue]="availableKey" id="{{ baseHtmlId }}_SimpleMenuSelect_Select_Option_{{ availableKey }}" >
-            {{ availableKey }}
-        </option>
-    </select>
-</div>

@@ -1,0 +1,8 @@
+<div id="{{ baseHtmlId }}_SimpleEditSelect" >
+    <!-- <label class="form-label simple-edit-select-label" for="{{ baseHtmlId }}_SimpleEditSelect_Select" id="{{ baseHtmlId }}_SimpleEditSelect_Label" >{{ labelName }}</label> -->
+    <select class="form-select form-select-sm simple-edit-form-select" [(ngModel)]="selectedKey" (ngModelChange)="selectKey()" id="{{ baseHtmlId }}_SimpleEditSelect_Select" >
+        <option *ngFor="let availableKey of availableKeys" [ngValue]="availableKey" id="{{ baseHtmlId }}_SimpleEditSelect_Select_Option_{{ availableKey }}" >
+            {{ availableKey }}
+        </option>
+    </select>
+</div>

@@ -3,12 +3,12 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 import { Canvas } from "../../../../../../entity/documentation/tool/canvas/canvas";
-import { StringUtil } from "../../../../../../entity/misc/string/util/string-util";
+import { StringUtil } from "../../../../../../entity/shared/string/util/string-util";
 import { CanvasService } from "../../../../../../service/documentation/tool/canvas/canvas.service";
-import { MenuSelectComponent } from "../../../../../edit/menu/select/menu-select.component";
-import { ModalComponent } from "../../../../../modal/modal.component";
+import { EditSelectComponent } from "../../../../../shared/edit/select/edit-select.component";
+import { ModalComponent } from "../../../../../shared/modal/modal.component";
 import { CanvasEditFormComponent } from "../form/canvas-edit-form.component";
-import { BaseComponent } from "../../../../../base.component";
+import { BaseComponent } from "../../../../../shared/base/base.component";
 
 
 @Component({
@@ -18,7 +18,7 @@ import { BaseComponent } from "../../../../../base.component";
     CommonModule,
     FormsModule,
     CanvasEditFormComponent,
-    MenuSelectComponent,
+    EditSelectComponent,
     CanvasEditFormComponent,
     ModalComponent
 ],

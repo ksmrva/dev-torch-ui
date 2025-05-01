@@ -1,0 +1,4 @@
+<nav-option-item [availableKeys]="availableProjectNames" [selectButtonTitle]="selectButtonTitle" [parentHtmlId]="navOptionBaseHtmlId" id="{{ navOptionBaseHtmlId }}"
+                 (optionItemOpenEvent)="handleOptionItemOpenEvent($event)" (keySelectedEvent)="projectSelected($event)"
+                 (addNewButtonClickedEvent)="loadNewProjectForEdit()" (editButtonClickedEvent)="loadSelectedProjectForEdit()" ></nav-option-item>
+<code-model-source-project-edit-modal [baseHtmlId]="editModalBaseHtmlId" [projectForEditObservable]="projectForEdit$.asObservable()" id="{{ editModalBaseHtmlId }}"></code-model-source-project-edit-modal>

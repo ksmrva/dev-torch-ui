@@ -1,0 +1,5 @@
+<modal [baseHtmlId]="baseHtmlId" [modalTitle]="modalTitle" id="{{ baseHtmlId }}_Modal">
+  <sql-database-detail-edit-form [detailForEditObservable]="detailForEditObservable" id="{{ baseHtmlId }}_Modal_EditForm"
+                                  (detailWasSavedEvent)="closeModal()" (cancelButtonClickedEvent)="closeModal()">
+  </sql-database-detail-edit-form>
+</modal>

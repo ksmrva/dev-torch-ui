@@ -1,29 +1,29 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of, map, catchError, tap } from "rxjs";
-import { StringUtil } from "../../../../../entity/misc/string/util/string-util";
+import { StringUtil } from "../../../../../entity/shared/string/util/string-util";
 import { SqlColumnDetail } from "../../../../../entity/model/database/detail/sql/column/sql-column-detail";
 import { SqlDatabaseDetailCreateArgs } from "../../../../../entity/model/database/detail/sql/create/sql-database-detail-create-args";
 import { SqlDatabaseDetailPath } from "../../../../../entity/model/database/detail/sql/path/sql-database-path";
 import { SqlDatabaseDetail } from "../../../../../entity/model/database/detail/sql/sql-database-detail";
 import { SqlTableDetail } from "../../../../../entity/model/database/detail/sql/table/sql-table-detail";
-import { BaseApiService } from "../../../../base.api.service";
+import { BaseApiService } from "../../../../shared/base.api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SqlModelDetailService extends BaseApiService {
 
-  private databases$: BehaviorSubject<SqlDatabaseDetail[]>;
+  private databaseDetails$: BehaviorSubject<SqlDatabaseDetail[]>;
 
-  private availableDatabasePaths$: BehaviorSubject<SqlDatabaseDetailPath[]>;
+  private availableDatabaseDetailPaths$: BehaviorSubject<SqlDatabaseDetailPath[]>;
 
   constructor(
     private httpClient: HttpClient
   ) {
     super();
-    this.databases$ = new BehaviorSubject<SqlDatabaseDetail[]>([]);
-    this.availableDatabasePaths$ = new BehaviorSubject<SqlDatabaseDetailPath[]>([]);
+    this.databaseDetails$ = new BehaviorSubject<SqlDatabaseDetail[]>([]);
+    this.availableDatabaseDetailPaths$ = new BehaviorSubject<SqlDatabaseDetailPath[]>([]);
 
     this.initDatabasePaths();
   }
@@ -32,42 +32,42 @@ export class SqlModelDetailService extends BaseApiService {
     return "/model/db/detail/sql";
   }
 
-  getDatabases(): Observable<SqlDatabaseDetail[]> {
-    return this.databases$.asObservable();
+  getDatabaseDetails(): Observable<SqlDatabaseDetail[]> {
+    return this.databaseDetails$.asObservable();
   }
 
-  getAvailableDatabasePaths(): Observable<SqlDatabaseDetailPath[]> {
-    return this.availableDatabasePaths$.asObservable();
+  getAvailableDatabaseDetailPaths(): Observable<SqlDatabaseDetailPath[]> {
+    return this.availableDatabaseDetailPaths$.asObservable();
   }
 
-  createDatabase(databaseCreateArgs: SqlDatabaseDetailCreateArgs): Observable<SqlDatabaseDetail | undefined> {
-    let createDatabaseResult: Observable<SqlDatabaseDetail | undefined>;
-    let databasePath = databaseCreateArgs.path;
-    let databaseAlreadyCreated = this.availableDatabasePaths$.value.find((availableDatabasePath: SqlDatabaseDetailPath) => {
-      return availableDatabasePath.isEqualTo(databasePath);
+  createDatabaseDetail(databaseDetailCreateArgs: SqlDatabaseDetailCreateArgs): Observable<SqlDatabaseDetail | undefined> {
+    let createDatabaseDetailResult: Observable<SqlDatabaseDetail | undefined>;
+    let databaseDetailPath = databaseDetailCreateArgs.path;
+    let databaseDetailAlreadyCreated = this.availableDatabaseDetailPaths$.value.find((availableDatabasePath: SqlDatabaseDetailPath) => {
+      return availableDatabasePath.isEqualTo(databaseDetailPath);
     });
 
-    if (databaseAlreadyCreated) {
-      console.log("Not attempting to create SQL Database Detail with Path [" + databaseCreateArgs.path.getFullPath() + "] since it was found to already exist");
-      createDatabaseResult = of(undefined);
+    if (databaseDetailAlreadyCreated) {
+      console.log("Not attempting to create SQL Database Detail with Path [" + databaseDetailCreateArgs.path.getFullPath() + "] since it was found to already exist");
+      createDatabaseDetailResult = of(undefined);
     } else {
-      createDatabaseResult = this.createDatabaseApiCall(databaseCreateArgs);
+      createDatabaseDetailResult = this.createDatabaseDetailApiCall(databaseDetailCreateArgs);
     }
-    return createDatabaseResult;
+    return createDatabaseDetailResult;
   }
 
-  getDatabase(databasePathToGet: SqlDatabaseDetailPath): Observable<SqlDatabaseDetail | undefined> {
-    let databaseResult: Observable<SqlDatabaseDetail | undefined>;
-    let loadedDatabase = this.getDatabaseFromCache(databasePathToGet);
-    if (loadedDatabase) {
-      databaseResult = of(loadedDatabase);
+  getDatabaseDetail(databaseDetailPathToGet: SqlDatabaseDetailPath): Observable<SqlDatabaseDetail | undefined> {
+    let databaseDetailResult: Observable<SqlDatabaseDetail | undefined>;
+    let loadedDatabaseDetail = this.getDatabaseDetailFromCache(databaseDetailPathToGet);
+    if (loadedDatabaseDetail) {
+      databaseDetailResult = of(loadedDatabaseDetail);
 
     } else {
-      console.info("SQL Database Detail with Path [" + databasePathToGet.getFullPath() + "] not found within the Loaded SQL Database Details Map");
-      databaseResult = this.getDatabaseApiCall(databasePathToGet);
+      console.info("SQL Database Detail with Path [" + databaseDetailPathToGet.getFullPath() + "] not found within the Loaded SQL Database Details Map");
+      databaseDetailResult = this.getDatabaseDetailApiCall(databaseDetailPathToGet);
 
     }
-    return databaseResult;
+    return databaseDetailResult;
   }
 
   updateDatabase(databaseForUpdate: SqlDatabaseDetail): Observable<SqlDatabaseDetail | undefined> {
@@ -79,73 +79,73 @@ export class SqlModelDetailService extends BaseApiService {
   }
 
   updateColumn(columnForUpdate: SqlColumnDetail): Observable<SqlColumnDetail | undefined> {
-    return this.updateColumnApiCall(columnForUpdate);
+    return this.updateColumnDetailApiCall(columnForUpdate);
   }
 
   private initDatabasePaths(): void {
-    this.getAllDatabasePathsApiCall().subscribe({
-                                            next: (databasePaths: SqlDatabaseDetailPath[] | undefined) => {
-                                              if (!databasePaths) {
-                                                throw new Error("Failed to initialize the SQL Database Model Detail Paths");
+    this.getAllDatabaseDetailPathsApiCall().subscribe({
+                                            next: (databaseDetailPaths: SqlDatabaseDetailPath[] | undefined) => {
+                                              if (!databaseDetailPaths) {
+                                                throw new Error("Failed to initialize the SQL Database Detail Paths");
                                               }
                                             },
                                             error: (err: any) => {
-                                              throw new Error("Failed to initialize the SQL Database Model Detail Paths due to [" + err + "]");
+                                              throw new Error("Failed to initialize the SQL Database Detail Paths due to [" + err + "]");
                                             },
                                             complete: () => {
-                                              console.log("Finished initializing SQL Database Model Detail Paths");
+                                              console.log("Finished initializing SQL Database Detail Paths");
                                             }
                                           });
   }
 
-  private getDatabaseFromCache(databasePathToCheck: SqlDatabaseDetailPath): SqlDatabaseDetail | undefined {
-    return this.databases$.value.find((database: SqlDatabaseDetail) => {
-      return database.name.isEqualTo(databasePathToCheck);
+  private getDatabaseDetailFromCache(databaseDetailPathToCheck: SqlDatabaseDetailPath): SqlDatabaseDetail | undefined {
+    return this.databaseDetails$.value.find((databaseDetail: SqlDatabaseDetail) => {
+      return databaseDetail.path.isEqualTo(databaseDetailPathToCheck);
     });
   }
 
-  private addDatabase(databaseToAdd: SqlDatabaseDetail): void {
-    if (databaseToAdd) {
-      let databasePathToAdd = databaseToAdd.name;
-      if (databasePathToAdd
-        && StringUtil.isNotEmpty(databasePathToAdd.databaseName)
-        && StringUtil.isNotEmpty(databasePathToAdd.schemaName)
+  private addDatabaseDetail(databaseDetailToAdd: SqlDatabaseDetail): void {
+    if (databaseDetailToAdd) {
+      let databaseDetailPathToAdd = databaseDetailToAdd.path;
+      if (databaseDetailPathToAdd
+        && StringUtil.isNotEmpty(databaseDetailPathToAdd.databaseName)
+        && StringUtil.isNotEmpty(databaseDetailPathToAdd.schemaName)
       ) {
-        if (!this.getDatabaseFromCache(databasePathToAdd)) {
-          this.databases$.next([...this.databases$.value, databaseToAdd]);
+        if (!this.getDatabaseDetailFromCache(databaseDetailPathToAdd)) {
+          this.databaseDetails$.next([...this.databaseDetails$.value, databaseDetailToAdd]);
         }
-        this.addAvailableDatabasePath(databasePathToAdd);
+        this.addDatabaseDetailPath(databaseDetailPathToAdd);
       }
     } else {
-      console.warn("Null or undefined SQL Database Model Detail Path was provided to add, ignoring");
+      console.warn("Null or undefined SQL Database Detail Path was provided to add, ignoring");
     }
   }
 
-  private addAvailableDatabasePath(databasePathToAdd: SqlDatabaseDetailPath): void {
+  private addDatabaseDetailPath(databaseDetailPathToAdd: SqlDatabaseDetailPath): void {
     if (
-      databasePathToAdd
-      && StringUtil.isNotEmpty(databasePathToAdd.databaseName)
-      && StringUtil.isNotEmpty(databasePathToAdd.schemaName)
+      databaseDetailPathToAdd
+      && StringUtil.isNotEmpty(databaseDetailPathToAdd.databaseName)
+      && StringUtil.isNotEmpty(databaseDetailPathToAdd.schemaName)
     ) {
-      let databasePathAlreadyLoaded = this.availableDatabasePaths$.value.find((databasePath: SqlDatabaseDetailPath) => {
-        return databasePath.isEqualTo(databasePathToAdd);
+      let databaseDetailPathAlreadyLoaded = this.availableDatabaseDetailPaths$.value.find((databaseDetailPath: SqlDatabaseDetailPath) => {
+        return databaseDetailPath.isEqualTo(databaseDetailPathToAdd);
       });
-      if (!databasePathAlreadyLoaded) {
-        this.availableDatabasePaths$.next([...this.availableDatabasePaths$.value, databasePathToAdd]);
+      if (!databaseDetailPathAlreadyLoaded) {
+        this.availableDatabaseDetailPaths$.next([...this.availableDatabaseDetailPaths$.value, databaseDetailPathToAdd]);
       }
     }
   }
 
-  private removeDatabaseById(databaseIdToRemove: number): void {
+  private removeDatabaseDetailById(databaseDetailIdToRemove: number): void {
     // TODO: Implement real splice from BehaviorSubject
-    this.databases$.next([]);
+    this.databaseDetails$.next([]);
   }
 
-  private createDatabaseApiCall(databaseCreateArgs: SqlDatabaseDetailCreateArgs): Observable<SqlDatabaseDetail | undefined> {
-    return this.httpClient.post<SqlDatabaseDetail>(this.getApiUrl(), databaseCreateArgs)
+  private createDatabaseDetailApiCall(databaseDetailCreateArgs: SqlDatabaseDetailCreateArgs): Observable<SqlDatabaseDetail | undefined> {
+    return this.httpClient.post<SqlDatabaseDetail>(this.getApiUrl(), databaseDetailCreateArgs)
                           .pipe(
-                            map((createDatabaseResult: SqlDatabaseDetail) => {
-                              return new SqlDatabaseDetail().deserialize(createDatabaseResult);
+                            map((createDatabaseDetailResult: SqlDatabaseDetail) => {
+                              return new SqlDatabaseDetail().deserialize(createDatabaseDetailResult);
                             }),
                             catchError((error) => {
                               console.error("Failed to create new SQL Database Detail due to [" + error + "]", error);
@@ -153,19 +153,19 @@ export class SqlModelDetailService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((database: SqlDatabaseDetail | undefined) => {
-                              if (database) {
-                                this.addDatabase(database);
+                            tap((databaseDetail: SqlDatabaseDetail | undefined) => {
+                              if (databaseDetail) {
+                                this.addDatabaseDetail(databaseDetail);
                               }
                             })
                           );
   }
 
-  private getDatabaseApiCall(databasePath: SqlDatabaseDetailPath): Observable<SqlDatabaseDetail | undefined> {
-    return this.httpClient.get<SqlDatabaseDetail>(this.getApiUrlWithAddition(databasePath.databaseName + "/" + databasePath.schemaName))
+  private getDatabaseDetailApiCall(databaseDetailPath: SqlDatabaseDetailPath): Observable<SqlDatabaseDetail | undefined> {
+    return this.httpClient.get<SqlDatabaseDetail>(this.getApiUrlWithAddition(databaseDetailPath.databaseName + "/" + databaseDetailPath.schemaName))
                           .pipe(
-                            map((getDatabaseResult: SqlDatabaseDetail) => {
-                              return new SqlDatabaseDetail().deserialize(getDatabaseResult);
+                            map((getDatabaseDetailResult: SqlDatabaseDetail) => {
+                              return new SqlDatabaseDetail().deserialize(getDatabaseDetailResult);
                             }),
                             catchError((error) => {
                               console.log("Failed to create new SQL Database Detail due to [" + error + "]", error);
@@ -173,26 +173,24 @@ export class SqlModelDetailService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((database: SqlDatabaseDetail | undefined) => {
-                              if (database) {
-                                this.addDatabase(database);
+                            tap((databaseDetail: SqlDatabaseDetail | undefined) => {
+                              if (databaseDetail) {
+                                this.addDatabaseDetail(databaseDetail);
                               }
                             })
                           );
   }
 
-  private getAllDatabasePathsApiCall(): Observable<SqlDatabaseDetailPath[] | undefined> {
+  private getAllDatabaseDetailPathsApiCall(): Observable<SqlDatabaseDetailPath[] | undefined> {
     return this.httpClient.get<SqlDatabaseDetailPath[]>(this.getApiUrlWithAddition("path"))
                           .pipe(
-                            map((getAllDatabasePathsResult: SqlDatabaseDetailPath[]) => {
-                              let databasePaths: SqlDatabaseDetailPath[] = [];
-                              getAllDatabasePathsResult.forEach((databasePathResult: SqlDatabaseDetailPath) => {
-                                let databasePath = new SqlDatabaseDetailPath().deserialize(
-                                  databasePathResult
-                                );
-                                databasePaths.push(databasePath);
+                            map((getAllDatabaseDetailPathsResult: SqlDatabaseDetailPath[]) => {
+                              let databaseDetailPaths: SqlDatabaseDetailPath[] = [];
+                              getAllDatabaseDetailPathsResult.forEach((databaseDetailPathResult: SqlDatabaseDetailPath) => {
+                                let databaseDetailPath = new SqlDatabaseDetailPath().deserialize(databaseDetailPathResult);
+                                databaseDetailPaths.push(databaseDetailPath);
                               });
-                              return databasePaths;
+                              return databaseDetailPaths;
                             }),
                             catchError((error) => {
                               console.error("Failed to get all SQL Database Detail Paths due to [" + error + "]", error);
@@ -200,25 +198,25 @@ export class SqlModelDetailService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((databasePaths: SqlDatabaseDetailPath[] | undefined) => {
-                              if (databasePaths) {
-                                databasePaths.forEach((databasePath: SqlDatabaseDetailPath) => {
-                                  this.addAvailableDatabasePath(databasePath);
+                            tap((databaseDetailPaths: SqlDatabaseDetailPath[] | undefined) => {
+                              if (databaseDetailPaths) {
+                                databaseDetailPaths.forEach((databaseDetailPath: SqlDatabaseDetailPath) => {
+                                  this.addDatabaseDetailPath(databaseDetailPath);
                                 });
                               }
                             })
                           );
   }
 
-  private updateColumnApiCall(columnForUpdate: SqlColumnDetail): Observable<SqlColumnDetail | undefined> {
-    return this.httpClient.post<SqlColumnDetail>(this.getApiUrlWithAddition("column"), columnForUpdate)
+  private updateColumnDetailApiCall(columnDetailForUpdate: SqlColumnDetail): Observable<SqlColumnDetail | undefined> {
+    return this.httpClient.post<SqlColumnDetail>(this.getApiUrlWithAddition("column"), columnDetailForUpdate)
                           .pipe(
-                            map((updatedColumnResult: SqlColumnDetail) => {
-                              if (!updatedColumnResult) {
+                            map((updatedColumnDetailResult: SqlColumnDetail) => {
+                              if (!updatedColumnDetailResult) {
                                 throw new Error("Attempted to update SQL Column Detail, but received an undefined/null SQL Column Detail back from the API");
                               }
-                              this.databases$.next([]);
-                              return new SqlColumnDetail().deserialize(updatedColumnResult);
+                              // this.databaseDetails$.next([]);
+                              return new SqlColumnDetail().deserialize(updatedColumnDetailResult);
                             }),
                             catchError((error) => {
                               console.error("Failed to update SQL Column Detail due to [" + error + "]", error);
@@ -226,9 +224,9 @@ export class SqlModelDetailService extends BaseApiService {
                             })
                           )
                           .pipe(
-                            tap((column: SqlColumnDetail | undefined) => {
-                              if (column) {
-                                // Update Database Model
+                            tap((columnDetail: SqlColumnDetail | undefined) => {
+                              if (columnDetail) {
+                                // Update Database Details to include new Column created
                               }
                             })
                           );

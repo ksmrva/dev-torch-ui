@@ -1,0 +1,8 @@
+<div class="h-100" id="codeModelExplorer">
+  <code-model-explorer-header (sourceOptionsToggleEvent)="handleSourceOptionsToggle($event)" (projectSelectedEvent)="loadProjectForPreview($event)" id="codeModelExplorer_Header"></code-model-explorer-header>
+  <div class="h-100" id="codeModelExplorer_Content">
+    <div *ngIf="showSourceProjectPreview" class="menu-preview-panel h-100" id="codeModelExplorer_Content_ProjectPreviewPanel">
+      <code-model-source-project-preview [projectForPreviewObservable]="projectForPreview$.asObservable()" id="codeModelExplorer_Content_ProjectPreviewPanel_ProjectPreview"></code-model-source-project-preview>
+    </div>
+  </div>
+</div>

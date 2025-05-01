@@ -61,19 +61,19 @@
       </ul>
     </div>
     <div class="d-flex justify-content-between explorer-navbar-item ps-3 pe-3" id="canvasToolExplorerHeader_Navbar_CanvasZoom" >
-      <label class="form-label m-0" for="canvasToolExplorerHeader_Navbar_CanvasZoom_Input" id="canvasToolExplorerHeader_Navbar_CanvasZoom_Label" >canvas zoom</label >
-      <span class="pe-1" id="canvasToolExplorerHeader_Navbar_CanvasZoom_LabelInputSeparator" >:</span >
-      <input class="form-range" id="canvasToolExplorerHeader_Navbar_CanvasZoom_Input"
+      <label class="explorer-header-label-text m-0" for="canvasToolExplorerHeader_Navbar_CanvasZoom_Input" id="canvasToolExplorerHeader_Navbar_CanvasZoom_Label" >canvas zoom</label >
+      <span class="explorer-header-label-text pe-1" id="canvasToolExplorerHeader_Navbar_CanvasZoom_LabelInputSeparator" >:</span >
+      <input class="form-range canvas-zoom-input" id="canvasToolExplorerHeader_Navbar_CanvasZoom_Input"
              [(ngModel)]="zoomSetting" (ngModelChange)="updateCanvasZoom()"
              type="range" step="1" min="1" max="{{ zoomSettingMaxValue }}" value="{{ zoomSettingInitialValue }}" />
     </div>
     <div class="p-2" id="canvasToolExplorerHeader_Navbar_SaveAllChanges">
-      <button class="btn btn-sm main-action-button" (click)="saveAllChanges()" type="button" id="canvasToolExplorerHeader_Navbar_SaveAllChanges_Button" >
+      <button class="btn btn-sm save-button" (click)="saveAllChanges()" type="button" id="canvasToolExplorerHeader_Navbar_SaveAllChanges_Button" >
         save all changes
       </button>
     </div>
     <div class="p-2" id="canvasToolExplorerHeader_Navbar_UndoAllChanges">
-      <button class="btn btn-sm main-cancel-button" (click)="undoAllChanges()" type="button" id="canvasToolExplorerHeader_Navbar_UndoAllChanges_Button" >
+      <button class="btn btn-sm cancel-button" (click)="undoAllChanges()" type="button" id="canvasToolExplorerHeader_Navbar_UndoAllChanges_Button" >
         undo all changes
       </button>
     </div>

@@ -1,5 +1,5 @@
-import { ComparableEntity } from "../../../../../comparable-entity";
-import { DeserializableEntity } from "../../../../../deserializable-entity";
+import { ComparableEntity } from "../../../../../shared/comparable-entity";
+import { DeserializableEntity } from "../../../../../shared/deserializable-entity";
 
 // This class purposefully does not extend ApiEntity since it is not a true entity as it doesn"t have an ID or Audit Field values
 export class SqlDatabaseDetailPath implements DeserializableEntity<SqlDatabaseDetailPath>, ComparableEntity<SqlDatabaseDetailPath> {

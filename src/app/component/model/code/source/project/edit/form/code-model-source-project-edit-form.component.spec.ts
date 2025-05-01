@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CodeModelSourceProjectEditFormComponent } from './code-model-source-project-edit-form.component';
 
-describe('CodeProjectEditFormComponent', () => {
+describe('CodeModelSourceProjectEditFormComponent', () => {
   let component: CodeModelSourceProjectEditFormComponent;
   let fixture: ComponentFixture<CodeModelSourceProjectEditFormComponent>;
 

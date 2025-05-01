@@ -1,0 +1,6 @@
+<nav-option-group [baseHtmlId]="baseHtmlId" [groupTitle]="groupTitle" id="{{ baseHtmlId }}"
+                  [closeAllOptionsObservable]="closeAllOptionsObservable"
+                  (toggleOptionsEvent)="handleToggleOptionsEvent($event)">
+  <sql-database-detail-nav-option-item (optionItemOpenEvent)="handleSqlDatabaseOptionOpen($event)" (keySelectedEvent)="sqlDatabaseSelected($event)" id="{{ baseHtmlId }}_SqlOptionItem"
+                                             (addNewEvent)="handleNewSqlDatabaseAddEvent($event)"></sql-database-detail-nav-option-item>
+</nav-option-group>

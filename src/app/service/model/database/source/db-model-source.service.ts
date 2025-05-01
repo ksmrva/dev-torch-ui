@@ -3,13 +3,13 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of, map, catchError, tap } from "rxjs";
 import { DbModelSourceConfig } from "../../../../entity/model/database/source/config/db-model-source-config";
 import { DbModelSourceUrl } from "../../../../entity/model/database/source/url/db-model-source-url";
-import { BaseApiService } from "../../../base.api.service";
+import { BaseApiService } from "../../../shared/base.api.service";
 import { DbModelSourcePreset } from "../../../../entity/model/database/source/preset/db-model-source-preset";
 import { DbModelSourceSupportedDriver } from "../../../../entity/model/database/source/config/driver/db-model-source-supported-driver";
 import { DbModelSourceUrlSupportedProvider } from "../../../../entity/model/database/source/url/provider/db-model-source-url-supported-provider";
 import { DbModelSourceUrlSupportedScheme } from "../../../../entity/model/database/source/url/scheme/db-model-source-url-supported-scheme";
 import { DbModelSourceDataType } from "../../../../entity/model/database/source/type/db-model-source-data-type";
-import { StringUtil } from "../../../../entity/misc/string/util/string-util";
+import { StringUtil } from "../../../../entity/shared/string/util/string-util";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,7 @@ export class DatabaseModelSourceService extends BaseApiService {
     private httpClient: HttpClient
   ) {
     super();
+
     this.dataTypes$ = new BehaviorSubject<DbModelSourceDataType[]>([]);
     this.urls$ = new BehaviorSubject<DbModelSourceUrl[]>([]);
     this.configs$ = new BehaviorSubject<DbModelSourceConfig[]>([]);

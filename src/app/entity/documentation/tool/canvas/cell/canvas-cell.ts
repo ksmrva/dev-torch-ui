@@ -1,6 +1,6 @@
 import { dia } from "@joint/core";
-import { ApiEntity } from "../../../../api-entity";
-import { JointValueAccessor } from "../../../../misc/joint/value/joint-value-accessor";
+import { ApiEntity } from "../../../../shared/api-entity";
+import { JointValueAccessor } from "../../../../shared/joint/value/joint-value-accessor";
 
 export const CELL_ID_JOINT_KEY: string = "canvasCellId";
 export const CELL_GLOBAL_NAME_JOINT_KEY: string = "canvasCellGlobalName";

@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../api-entity";
+import { ApiEntity } from "../../../../shared/api-entity";
 import { CodeModelSourceFileTreeNode } from "../file/tree/node/code-model-source-file-tree-node";
 
 export class CodeModelSourceProject extends ApiEntity {

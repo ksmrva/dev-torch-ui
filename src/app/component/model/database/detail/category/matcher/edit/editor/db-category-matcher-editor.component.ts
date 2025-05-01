@@ -1,16 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit, Input } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ContainsRegexCreator } from "../../../../../../../../entity/misc/regex/creator/simple/contains/contains-regex-creator";
-import { EndsWithRegexCreator } from "../../../../../../../../entity/misc/regex/creator/simple/ends-with/ends-with-regex-creator";
-import { EqualsRegexCreator } from "../../../../../../../../entity/misc/regex/creator/simple/equals/equals-regex-creator";
-import { SimpleRegexCreator } from "../../../../../../../../entity/misc/regex/creator/simple/simple-regex-creator";
-import { StartsWithRegexCreator } from "../../../../../../../../entity/misc/regex/creator/simple/starts-with/starts-with-regex-creator";
-import { RegexMatcher } from "../../../../../../../../entity/misc/regex/matcher/regex-matcher";
+import { ContainsRegexCreator } from "../../../../../../../../entity/shared/regex/creator/simple/contains/contains-regex-creator";
+import { EndsWithRegexCreator } from "../../../../../../../../entity/shared/regex/creator/simple/ends-with/ends-with-regex-creator";
+import { EqualsRegexCreator } from "../../../../../../../../entity/shared/regex/creator/simple/equals/equals-regex-creator";
+import { SimpleRegexCreator } from "../../../../../../../../entity/shared/regex/creator/simple/simple-regex-creator";
+import { StartsWithRegexCreator } from "../../../../../../../../entity/shared/regex/creator/simple/starts-with/starts-with-regex-creator";
+import { RegexMatcher } from "../../../../../../../../entity/shared/regex/matcher/regex-matcher";
 import { DbFieldCategory } from "../../../../../../../../entity/model/database/detail/category/field/db-field-category";
 import { DbCollectionCategory } from "../../../../../../../../entity/model/database/detail/category/collection/db-collection-category";
-import { BaseComponent } from "../../../../../../../base.component";
-import { RegexCreatorInputGroupComponent } from "../../../../../../../edit/form/input-group/regex/regex-creator-input-group.component";
+import { BaseComponent } from "../../../../../../../shared/base/base.component";
+import { RegexCreatorInputGroupComponent } from "../../../../../../../shared/edit/form/input-group/regex/regex-creator-input-group.component";
 
 @Component({
   selector: "db-category-matcher-editor",

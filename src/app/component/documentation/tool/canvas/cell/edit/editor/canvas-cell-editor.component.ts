@@ -5,18 +5,18 @@ import { Canvas } from "../../../../../../../entity/documentation/tool/canvas/ca
 import { CanvasCell } from "../../../../../../../entity/documentation/tool/canvas/cell/canvas-cell";
 import { CanvasCustomCell } from "../../../../../../../entity/documentation/tool/canvas/cell/custom/canvas-custom-cell";
 import { CanvasLinkCell } from "../../../../../../../entity/documentation/tool/canvas/cell/link/canvas-link-cell";
-import { StringUtil } from "../../../../../../../entity/misc/string/util/string-util";
-import { BaseComponent } from "../../../../../../base.component";
-import { SimpleMenuSelectComponent } from "../../../../../../edit/menu/select/simple/simple-menu-select.component";
+import { StringUtil } from "../../../../../../../entity/shared/string/util/string-util";
+import { BaseComponent } from "../../../../../../shared/base/base.component";
 import { CanvasCustomCellEditFormComponent } from "../../custom/edit/form/canvas-custom-cell-edit-form.component";
 import { CanvasLinkCellEditFormComponent } from "../../link/edit/form/canvas-link-cell-edit-form.component";
+import { SimpleEditSelectComponent } from "../../../../../../shared/edit/select/simple/simple-edit-select.component";
 
 @Component({
   selector: "canvas-cell-editor",
   standalone: true,
   imports: [
     CommonModule,
-    SimpleMenuSelectComponent,
+    SimpleEditSelectComponent,
     CanvasCustomCellEditFormComponent,
     CanvasLinkCellEditFormComponent
 ],

@@ -1,0 +1,6 @@
+<nav-option-group [baseHtmlId]="baseHtmlId" [groupTitle]="groupTitle" id="{{ baseHtmlId }}"
+                  [closeAllOptionsObservable]="closeAllOptionsObservable"
+                  (toggleOptionsEvent)="handleToggleOptionsEvent($event)">
+  <code-model-source-project-nav-option-item (optionItemOpenEvent)="handleProjectOptionOpen($event)" (keySelectedEvent)="projectSelected($event)" id="{{ baseHtmlId }}_ProjectOptionItem"
+                                            (addNewEvent)="handleNewProjectAddEvent($event)"></code-model-source-project-nav-option-item>
+</nav-option-group>

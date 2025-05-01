@@ -1,0 +1,13 @@
+<div class="explorer-header ps-3 pe-2" id="codeModelExplorerHeader">
+  <nav class="navbar navbar-expand-lg p-0" id="codeModelExplorerHeader_Navbar" >
+    <div class="pe-3" id="codeModelExplorerHeader_Navbar_Title" >
+      <span class="explorer-title-name" id="codeModelExplorerHeader_Navbar_Title_Name" >
+        code model
+      </span>
+    </div>
+    <code-model-source-nav-option-group [closeAllOptionsObservable]="closeSourceOptions$.asObservable()" id="codeModelExplorerHeader_SourceNavOptionGroup"
+                                        (toggleOptionsEvent)="handleSourceOptionsToggle($event)" (projectSelectedEvent)="projectSelected($event)"></code-model-source-nav-option-group>
+    <code-model-detail-nav-option-group [closeAllOptionsObservable]="closeDetailOptions$.asObservable()" id="codeModelExplorerHeader_DetailNavOptionGroup"
+                                        (toggleOptionsEvent)="handleDetailOptionsToggle($event)"></code-model-detail-nav-option-group>
+  </nav>
+</div>

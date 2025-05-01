@@ -1,0 +1,22 @@
+<div class="row h-100 m-0" id="documentationMenu">
+  <div class="border-start border-end border-bottom border-1 menu-sidebar h-100 p-0 collapse show" id="documentationMenu_Sidebar" >
+    <div class="d-flex justify-content-center menu-sidebar-title" id="documentationMenu_Sidebar_Title">
+      <span class="menu-sidebar-title-name" id="documentationMenu_Sidebar_Title_Name">tools</span>
+    </div>
+    <div id="documentationMenu_Sidebar_Options">
+      <div class="menu-sidebar-option-container" id="documentationMenu_Sidebar_Options_CanvasTool">
+        <button [ngClass]="additionalCanvasExplorerButtonClasses" class="btn menu-sidebar-option-toggle-button h-100 w-100 p-0" (click)="toggleCanvasExplorer()" id="documentationMenu_Sidebar_Options_CanvasTool_ToggleButton">
+          <div class="menu-sidebar-option-label pt-2 pb-2" id="documentationMenu_Sidebar_Options_CanvasTool_ToggleButton_Label">
+            <i class="bi bi-palette2 h4 m-0" id="documentationMenu_Sidebar_Options_CanvasTool_ToggleButton_Label_Icon"></i>
+            <span style="font-weight:lighter" id="documentationMenu_Sidebar_Options_CanvasTool_ToggleButton_Label_Name">canvas</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div [ngClass]="documentationContentClass" class="border-start border-end border-bottom menu-content h-100 p-0" id="documentationMenu_Content" >
+    <div *ngIf="!canvasExplorerIsClosed" class="h-100" id="documentationMenu_Content_CanvasExplorerHolder">
+      <canvas-tool-explorer class="h-100" id="documentationMenu_Content_CanvasExplorer"></canvas-tool-explorer>
+    </div>
+  </div>
+</div>

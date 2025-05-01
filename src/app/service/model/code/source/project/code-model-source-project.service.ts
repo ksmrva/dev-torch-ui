@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
-import { BaseApiService } from '../../../../base.api.service';
+import { BaseApiService } from '../../../../shared/base.api.service';
 import { HttpClient } from '@angular/common/http';
-import { StringUtil } from '../../../../../entity/misc/string/util/string-util';
+import { StringUtil } from '../../../../../entity/shared/string/util/string-util';
 import { CodeModelSourceProject } from '../../../../../entity/model/code/source/project/code-model-source-project';
 import { CodeModelSourceProjectCreateArgs } from '../../../../../entity/model/code/source/project/create/code-model-source-project-create-args';
 

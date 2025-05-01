@@ -1,0 +1,30 @@
+.modal-background {
+  /* modals are hidden by default */
+  // display: none;
+  z-index: 98;
+
+  /* modal container fixed across whole screen */
+  position: fixed;
+  inset: 0;
+
+  /* semi-transparent black background exposed by padding */
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(1px);
+
+  /* enables scrolling for tall modals */
+  overflow: auto;
+}
+
+.modal-body {
+  position: absolute;
+  background-color: rgba(#2b3035, 1);
+}
+
+.modal-content {
+  padding: 10px;
+}
+
+.modal-title-name {
+  border-bottom: 1px solid;
+  color: var(--edit-form-menu-title-secondary-color) !important;
+}

@@ -1,0 +1,8 @@
+<div [ngClass]="additionalOptionItemClasses" class="d-flex align-items-center border-end pb-1" id="{{ this.baseHtmlId }}">
+  <button [ngClass]="additionalSelectToggleClasses" class="btn nav-option-item-button" (click)="toggleSelect()" type="button" id="{{ this.baseHtmlId }}_SelectToggleButton" >
+    {{ selectButtonTitle }}
+  </button>
+  <edit-select *ngIf="showSelect" [parentHtmlId]="selectBaseHtmlId" [availableKeys]="availableKeys" id="{{ selectBaseHtmlId }}"
+                  (keyWasSelected)="keySelected($event)" (addNewButtonClicked)="addNewButtonClicked()" (editButtonClicked)="editButtonClicked()">
+  </edit-select>
+</div>

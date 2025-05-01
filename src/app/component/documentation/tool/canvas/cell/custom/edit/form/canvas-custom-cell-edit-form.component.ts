@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl }
 import { Observable, of } from "rxjs";
 import { CanvasCustomCell } from "../../../../../../../../entity/documentation/tool/canvas/cell/custom/canvas-custom-cell";
 import { CanvasService } from "../../../../../../../../service/documentation/tool/canvas/canvas.service";
-import { BaseComponent } from "../../../../../../../base.component";
+import { BaseComponent } from "../../../../../../../shared/base/base.component";
 
 @Component({
   selector: "canvas-custom-cell-edit-form",
@@ -30,7 +30,7 @@ export class CanvasCustomCellEditFormComponent extends BaseComponent implements 
   customCellToEdit: CanvasCustomCell | undefined;
 
   constructor(
-    formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private canvasService: CanvasService,
   ) {
     super();
@@ -38,7 +38,7 @@ export class CanvasCustomCellEditFormComponent extends BaseComponent implements 
     this.customCellWasUpdated = new EventEmitter<boolean>();
     this.resetEditButtonClicked = new EventEmitter<boolean>();
 
-    this.customCellEditForm = formBuilder.group({
+    this.customCellEditForm = this.formBuilder.group({
       name: new FormControl(""),
       html: new FormControl(""),
       height: new FormControl(0),
@@ -51,21 +51,20 @@ export class CanvasCustomCellEditFormComponent extends BaseComponent implements 
   }
 
   ngOnInit(): void {
-    let customCellToToEditSubscription =
-      this.customCellToEditObservable.subscribe({
-                                          next: (canvasCustomCell: CanvasCustomCell | undefined) => {
-                                            if (canvasCustomCell) {
-                                              this.setCustomCellForEdit(canvasCustomCell);
-                                            }
-                                          },
-                                          error: (err: any) => {
-                                            throw new Error( "Failed to load the Canvas Custom Cell for editing due to [" + err + "]" );
-                                          },
-                                          complete: () => {
-                                            console.log( "Finished loading the Canvas Custom Cell for editing" );
-                                          }
-                                        });
-    this.addLongLivingSubscription(customCellToToEditSubscription);
+    let customCellToEditSubscription = this.customCellToEditObservable.subscribe({
+                                                                            next: (canvasCustomCell: CanvasCustomCell | undefined) => {
+                                                                              if (canvasCustomCell) {
+                                                                                this.setCustomCellForEdit(canvasCustomCell);
+                                                                              }
+                                                                            },
+                                                                            error: (err: any) => {
+                                                                              throw new Error( "Failed to load the Canvas Custom Cell for editing due to [" + err + "]" );
+                                                                            },
+                                                                            complete: () => {
+                                                                              console.log( "Finished loading the Canvas Custom Cell for editing" );
+                                                                            }
+                                                                          });
+    this.addLongLivingSubscription(customCellToEditSubscription);
   }
 
   extractHtmlFromCanvasCellToEdit(): string {

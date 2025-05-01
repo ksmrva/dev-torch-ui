@@ -1,0 +1,5 @@
+<modal [baseHtmlId]="baseHtmlId" [modalTitle]="modalTitle" id="{{ baseHtmlId }}_Modal">
+  <database-model-source-url-edit-form [urlForEditObservable]="urlForEditObservable" id="{{ baseHtmlId }}_Modal_EditForm"
+                                       (urlWasSavedEvent)="closeModal()" (cancelButtonClickedEvent)="closeModal()">
+  </database-model-source-url-edit-form>
+</modal>

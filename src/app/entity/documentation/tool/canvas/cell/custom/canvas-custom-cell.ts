@@ -1,6 +1,6 @@
 import { dia, shapes } from "@joint/core";
 import { CanvasCell } from "../canvas-cell";
-import { JointValueAccessor } from "../../../../../misc/joint/value/joint-value-accessor";
+import { JointValueAccessor } from "../../../../../shared/joint/value/joint-value-accessor";
 
 export const CANVAS_CUSTOM_CELL_JOINT_TYPE_NAME: string = "torch.jointjs.element.custom.TableForeignObject";
 

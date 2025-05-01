@@ -1,0 +1,62 @@
+<form class="m-2" [formGroup]="urlEditForm" (ngSubmit)="saveUrl()" id="dbModelSourceUrlEditForm_Form" >
+  <div class="mb-3" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix">
+    <div class="input-group input-group-sm form-label" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label" >
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label_Scheme">scheme</span>
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label_Separator"></span>
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Label_Provider">provider</span>
+    </div>
+    <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input" >
+      <select class="form-control form-control-sm form-select form-select-sm" formControlName="scheme" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Scheme_Select" >
+        <option *ngFor="let availableUrlSupportedScheme of availableUrlSupportedSchemes" [value]="availableUrlSupportedScheme.scheme" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Scheme_Select_Option_{{ availableUrlSupportedScheme.scheme }}" >
+          {{ availableUrlSupportedScheme.scheme }}
+        </option>
+      </select>
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Separator">:</span>
+      <select class="form-control form-control-sm form-select form-select-sm" formControlName="provider" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Provider_Select" >
+        <option *ngFor="let availableUrlSupportedProvider of availableUrlSupportedProviders" [value]="availableUrlSupportedProvider.provider" id="dbModelSourceUrlEditForm_Form_FormSection_Prefix_Input_Provider_Select_Option_{{ availableUrlSupportedProvider.provider }}" >
+          {{ availableUrlSupportedProvider.provider }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="mb-3" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix">
+    <div class="input-group input-group-sm form-label" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label" >
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label_Hostname">hostname</span>
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label_Separator"></span>
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Label_Port">port</span>
+    </div>
+    <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input" >
+      <input class="form-control form-control-sm" formControlName="hostname" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input_Hostname" />
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input_Separator">:</span>
+      <input class="form-control form-control-sm" formControlName="port" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_Postfix_Input_Port" />
+    </div>
+  </div>
+  <div class="mb-4" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName" >
+    <div class="input-group input-group-sm form-label" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName_Label" >
+      <span class="input-group-text form-label-span" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName_Input_Label" >admin db name</span>
+    </div>
+    <div class="input-group input-group-sm" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName_Input" >
+      <input class="form-control form-control-sm" formControlName="adminDatabaseName" type="text" id="dbModelSourceUrlEditForm_Form_FormSection_AdminDatabaseName_Input_AdminDatabaseName" />
+    </div>
+  </div>
+  <div id="dbModelSourceUrlEditForm_Form_PreviewUrl">
+    <div id="dbModelSourceUrlEditForm_Form_PreviewUrl_Title" >
+      <h5 class="edit-form-menu-form-title text-center h5" id="dbModelSourceUrlEditForm_Form_PreviewUrl_Title_Name" >
+        preview url
+      </h5>
+    </div>
+    <div class="input-group input-group-sm mb-3" id="dbModelSourceUrlEditForm_Form_PreviewUrl_InputGroup" >
+      <span class="input-group-text" id="dbModelSourceUrlEditForm_Form_PreviewUrl_InputGroup_Scheme">
+        {{ getSchemeTextPreview() }} : {{ getProviderTextPreview() }} :// {{ getHostnameTextPreview() }} : {{ getPortTextPreview() }} / {{ getAdminDatabaseNameTextPreview() }}
+      </span>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end ps-1 pe-1 pt-3 pb-1" id="dbModelSourceUrlEditForm_FormControls" >
+    <button class="btn btn-sm save-button m-2" type="submit" id="dbModelSourceUrlEditForm_FormControls_SaveButton" >
+      save
+    </button>
+    <button class="btn btn-sm cancel-button m-2" type="button" (click)="cancelButtonClicked()" id="dbModelSourceUrlEditForm_FormControls_CancelButton" >
+      cancel
+    </button>
+  </div>
+</form>

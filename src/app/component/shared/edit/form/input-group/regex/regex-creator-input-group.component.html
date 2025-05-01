@@ -1,0 +1,25 @@
+<div class="input-group input-group-sm mb-3" id="{{ htmlBaseId }}">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="{{ htmlBaseId }}_RegexType"
+          data-bs-toggle="dropdown">
+    {{ selectedRegexCreator ? selectedRegexCreator.name : "Regex Type" }}
+  </button>
+  <ul class="dropdown-menu" id="{{ htmlBaseId }}_List">
+    <li *ngFor="let simpleRegexCreator of simpleRegexCreators" id="{{ htmlBaseId }}_ListItem_{{ simpleRegexCreator.name }}">
+      <a class="dropdown-item" (click)="setRegexCreatorForEdit(simpleRegexCreator)" id="{{ htmlBaseId }}_ListItem_{{ simpleRegexCreator.name }}_Link">
+        {{ simpleRegexCreator.name }}
+      </a>
+    </li>
+  </ul>
+  <span *ngIf="selectedRegexCreator && selectedRegexCreator.getPrefix()" class="input-group-text" id="{{ htmlBaseId }}_RegexPrefix">
+    {{ selectedRegexCreator.getPrefix() }}
+  </span>
+  <input class="form-control form-control-sm" type="text" id="{{ htmlBaseId }}_Input"
+         [(ngModel)]="wordToMatch" [disabled]="!this.selectedRegexCreator"/>
+  <span *ngIf="selectedRegexCreator && selectedRegexCreator.getPostfix()" class="input-group-text" id="{{ htmlBaseId }}_RegexPostfix">
+    {{ selectedRegexCreator.getPostfix() }}
+  </span>
+  <button class="btn add-new-button" type="button" id="{{ htmlBaseId }}_AddNew_Button"
+  [disabled]="!this.selectedRegexCreator" (click)="addNameRegexToMatcher()">
+    <span id="{{ htmlBaseId }}_AddNew_Button_Label">add</span>
+  </button>
+</div>

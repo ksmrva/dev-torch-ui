@@ -1,10 +1,10 @@
-import { ApiEntity } from "../../../../api-entity";
+import { ApiEntity } from "../../../../shared/api-entity";
 import { SqlDatabaseDetailPath } from "./path/sql-database-path";
 import { SqlTableDetail } from "./table/sql-table-detail";
 
 export class SqlDatabaseDetail extends ApiEntity {
 
-  name: SqlDatabaseDetailPath;
+  path: SqlDatabaseDetailPath;
 
   description: string;
 
@@ -13,12 +13,12 @@ export class SqlDatabaseDetail extends ApiEntity {
   constructor() {
     super();
 
-    this.name = new SqlDatabaseDetailPath();
+    this.path = new SqlDatabaseDetailPath();
     this.description = "";
     this.tables = [];
   }
 
-  createHtmlTableIdForDatabaseTable(table: SqlTableDetail): string {
+  createHtmlIdForDatabaseTable(table: SqlTableDetail): string {
     let htmlId = this.createHtmlIdForCanvasElement();
 
     let htmlIdForTable = table.getHtmlIdForElement();
@@ -36,13 +36,13 @@ export class SqlDatabaseDetail extends ApiEntity {
   }
 
   createHtmlIdForCanvasElement(): string {
-    return "SqlDatabaseDetail." + this.name.getFullPath();
+    return "SqlDatabaseDetail." + this.path.getFullPath();
   }
 
   override deserialize(json: any): SqlDatabaseDetail {
     super.deserialize(json);
     if (json) {
-      this.name = new SqlDatabaseDetailPath().deserialize(json.name);
+      this.path = new SqlDatabaseDetailPath().deserialize(json.path);
       this.description = json.description;
 
       this.tables = [];
@@ -65,7 +65,7 @@ export class SqlDatabaseDetail extends ApiEntity {
     let isEqualTo = super.isEqualTo(otherEntity);
     if (isEqualTo) {
       if(
-        this.name.isEqualTo(otherEntity.name)
+        this.path.isEqualTo(otherEntity.path)
         && this.description === otherEntity.description
         && this.tables.length === otherEntity.tables.length) {
         let allTablesHaveMatch = true;

@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../api-entity";
+import { ApiEntity } from "../../../../shared/api-entity";
 
 const UNDEFINED_DATA_TYPE_VALUE: string = "OTHER";
 

@@ -1,0 +1,9 @@
+<div class="d-flex align-items-center nav-option-group border-end ps-2 pe-2" id="{{ baseHtmlId }}_NavOptionGroupContainer">
+  <button [ngClass]="additionalOptionsToggleClasses" class="btn nav-option-group-toggle p-2" (click)="toggleOptions()" type="button" id="{{ baseHtmlId }}_NavOptionGroupContainer_ToggleButton" >
+    {{ groupTitle }}
+    <i [ngClass]="additionalOptionsToggleIconClasses" class="bi small-icon ps-2" id="{{ baseHtmlId }}_NavOptionGroupContainer_ToggleButton_Icon"></i>
+  </button>
+  <div *ngIf="showOptions" class="d-flex align-items-center border-end nav-option-item-button-container" id="{{ baseHtmlId }}_NavOptionGroupContainer_Options" >
+    <ng-content id="{{ this.baseHtmlId }}_NavOptionGroupContainer_Options_Content"></ng-content>
+  </div>
+</div>

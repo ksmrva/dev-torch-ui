@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BaseComponent } from '../../../../../../base.component';
+import { BaseComponent } from '../../../../../../shared/base/base.component';
 import { CodeModelSourceProject } from '../../../../../../../entity/model/code/source/project/code-model-source-project';
 import { CodeModelSourceProjectCreateArgs } from '../../../../../../../entity/model/code/source/project/create/code-model-source-project-create-args';
 import { FormGroup, FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CodeModelSourceProjectService } from '../../../../../../../service/model/code/source/project/code-model-source-project.service';
 import { CommonModule } from '@angular/common';
 
@@ -22,32 +22,28 @@ export class CodeModelSourceProjectEditFormComponent extends BaseComponent imple
 
   @Input() projectForEditObservable: Observable<CodeModelSourceProject | undefined>;
 
-  @Output() projectWasUpdated: EventEmitter<boolean>;
+  @Output() projectWasSavedEvent: EventEmitter<boolean>;
 
-  @Output() resetEditButtonClicked: EventEmitter<boolean>;
-
-  projectEditForm: FormGroup;
+  @Output() cancelButtonClickedEvent: EventEmitter<boolean>;
 
   projectForEdit: CodeModelSourceProject | undefined;
 
-  projectForEdit$: BehaviorSubject<CodeModelSourceProject | undefined>;
+  projectEditForm: FormGroup;
 
   constructor(
-    private codeModelSourceProjectService: CodeModelSourceProjectService,
-    formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private codeModelSourceProjectService: CodeModelSourceProjectService
   ) {
     super();
     this.projectForEditObservable = of(undefined);
-    this.projectWasUpdated = new EventEmitter<boolean>();
-    this.resetEditButtonClicked = new EventEmitter<boolean>();
+    this.projectWasSavedEvent = new EventEmitter<boolean>();
+    this.cancelButtonClickedEvent = new EventEmitter<boolean>();
 
-    this.projectEditForm = formBuilder.group({
+    this.projectForEdit = undefined;
+    this.projectEditForm = this.formBuilder.group({
       name: new FormControl("", Validators.required),
       path: new FormControl("", Validators.required)
     });
-
-    this.projectForEdit = undefined;
-    this.projectForEdit$ = new BehaviorSubject<CodeModelSourceProject | undefined>( undefined );
   }
 
   ngOnInit(): void {
@@ -71,52 +67,51 @@ export class CodeModelSourceProjectEditFormComponent extends BaseComponent imple
       || !this.projectEditForm.value
       || !this.projectEditForm.valid
     ) {
-      // TODO: handle error
+      throw new Error("Code Model Source Project Edit Form was invalid, unable to save");
     }
-    if (this.projectForEdit) {
-      if (
-        this.projectForEdit.id !== null
-        && this.projectForEdit.id !== undefined
-        && this.projectForEdit.id >= 0
-      ) {
-        let projectForUpdate = new CodeModelSourceProject();
 
-        // this.codeModelProjectService.updateProject(projectForUpdate).subscribe({
-        //                                                           next: (updatedProject: CodeProject | undefined) => {
-        //                                                             if (!updatedProject) {
-        //                                                               throw new Error("Failed to update the Code Project");
-        //                                                             }
-        //                                                             this.resetProjectAfterSave();
-        //                                                           },
-        //                                                           error: (err: any) => {
-        //                                                             throw new Error("Failed to update the Code Project due to [" + err + "]");
-        //                                                           },
-        //                                                           complete: () => {
-        //                                                             console.log("Finished updating the Code Project");
-        //                                                           }
-        //                                                         });
+    if (!this.projectForEdit) {
+      throw new Error("Code Model Source Project was undefined, unable to save");
+    }
 
-      } else {
-        let projectCreateArgs = new CodeModelSourceProjectCreateArgs();
-        projectCreateArgs.name = this.projectEditForm.value.name;
-        projectCreateArgs.path = this.projectEditForm.value.path;
+    if (this.isProjectNew(this.projectForEdit)) {
+      let projectCreateArgs = new CodeModelSourceProjectCreateArgs();
+      projectCreateArgs.name = this.projectEditForm.value.name;
+      projectCreateArgs.path = this.projectEditForm.value.path;
 
-        this.codeModelSourceProjectService.createProject(projectCreateArgs).subscribe({
-                                                                              next: (createdProject: CodeModelSourceProject | undefined) => {
-                                                                                if (createdProject) {
-                                                                                  this.resetProjectAfterSave();
-                                                                                } else {
-                                                                                  throw new Error("Failed to create the Code Model Source Project with name [" + projectCreateArgs.name + "] and path [" + projectCreateArgs.path + "]");
-                                                                                }
-                                                                              },
-                                                                              error: (err: any) => {
-                                                                                throw new Error( "Failed to create the Code Model Source Project with name [" + projectCreateArgs.name + "] and path [" + projectCreateArgs.path + "] due to [" + err + "]" );
-                                                                              },
-                                                                              complete: () => {
-                                                                                console.log("Finished create the Code Model Source Project with name [" + projectCreateArgs.name + "] and path [" + projectCreateArgs.path + "]");
+      this.codeModelSourceProjectService.createProject(projectCreateArgs).subscribe({
+                                                                            next: (createdProject: CodeModelSourceProject | undefined) => {
+                                                                              if (!createdProject) {
+                                                                                throw new Error("Failed to create the Code Model Source Project with name [" + projectCreateArgs.name + "] and path [" + projectCreateArgs.path + "]");
                                                                               }
-                                                                            });
-      }
+
+                                                                              this.handleSuccessfulSave();
+                                                                            },
+                                                                            error: (err: any) => {
+                                                                              throw new Error( "Failed to create the Code Model Source Project with name [" + projectCreateArgs.name + "] and path [" + projectCreateArgs.path + "] due to [" + err + "]" );
+                                                                            },
+                                                                            complete: () => {
+                                                                              console.log("Finished create the Code Model Source Project with name [" + projectCreateArgs.name + "] and path [" + projectCreateArgs.path + "]");
+                                                                            }
+                                                                          });
+
+    } else {
+      let projectForUpdate = new CodeModelSourceProject();
+
+      // this.codeModelProjectService.updateProject(projectForUpdate).subscribe({
+      //                                                           next: (updatedProject: CodeProject | undefined) => {
+      //                                                             if (!updatedProject) {
+      //                                                               throw new Error("Failed to update the Code Project");
+      //                                                             }
+      //                                                             this.handleSuccessfulSave();
+      //                                                           },
+      //                                                           error: (err: any) => {
+      //                                                             throw new Error("Failed to update the Code Project due to [" + err + "]");
+      //                                                           },
+      //                                                           complete: () => {
+      //                                                             console.log("Finished updating the Code Project");
+      //                                                           }
+      //                                                         });
     }
   }
 
@@ -128,31 +123,36 @@ export class CodeModelSourceProjectEditFormComponent extends BaseComponent imple
     return isProjectNew;
   }
 
-  resetProjectAfterSave(): void {
-    this.resetEditForms();
-
-    this.projectWasUpdated.emit(true);
-  }
-
-  resetEdit(): void {
-    this.resetEditForms();
-
-    this.resetEditButtonClicked.emit(true);
-  }
-
   resetEditForms(): void {
     this.projectEditForm.reset();
     this.projectForEdit = undefined;
   }
 
-  private setProjectForEdit(projectForEdit: CodeModelSourceProject | undefined): void {
-    if (projectForEdit) {
-      this.projectEditForm.setValue({
-        name: projectForEdit.name,
-        path: ""
-      });
-      this.projectForEdit = projectForEdit;
+  handleSuccessfulSave(): void {
+    this.resetEditForms();
+
+    this.projectWasSavedEvent.emit(true);
+  }
+
+  cancelButtonClicked(): void {
+    this.resetEditForms();
+
+    this.cancelButtonClickedEvent.emit(true);
+  }
+
+  private setProjectForEdit(nextProjectForEdit: CodeModelSourceProject | undefined): void {
+    if (nextProjectForEdit) {
+      this.projectForEdit = nextProjectForEdit;
+
+      this.setFormValues(nextProjectForEdit);
     }
   }
+
+  private setFormValues(nextProjectForEdit: CodeModelSourceProject): void {
+    this.projectEditForm.setValue({
+      name: nextProjectForEdit.name,
+      path: ""
+    });
+    }
 
 }

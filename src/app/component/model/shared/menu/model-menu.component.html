@@ -1,0 +1,44 @@
+<div class="row h-100 m-0" id="modelMenu">
+  <div class="border-start border-end border-bottom border-1 menu-sidebar h-100 p-0 collapse show" id="modelMenu_Sidebar" >
+    <div class="d-flex justify-content-center menu-sidebar-title" id="modelMenu_Sidebar_Title">
+      <span class="menu-sidebar-title-name" id="modelMenu_Sidebar_Title_Name">models</span>
+    </div>
+    <div id="modelMenu_Sidebar_Options">
+      <div class="menu-sidebar-option-container" id="modelMenu_Sidebar_Options_CodeModel">
+        <button [ngClass]="additionalCodeExplorerButtonClasses" class="btn h-100 w-100 p-0" (click)="toggleCodeExplorer()" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton">
+          <div class="menu-sidebar-option-label pt-2 pb-2" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton_Label">
+            <i class="bi bi-code-slash h4 m-0" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton_Label_Icon"></i>
+            <span style="font-weight:lighter" id="modelMenu_Sidebar_Options_CodeModel_ToggleButton_Label_Name">code</span>
+          </div>
+        </button>
+      </div>
+      <div class="menu-sidebar-option-container" id="modelMenu_Sidebar_Options_DatabaseModel">
+        <button [ngClass]="additionalDatabaseExplorerButtonClasses" class="btn h-100 w-100 p-0" (click)="toggleDatabaseExplorer()" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton">
+          <div class="menu-sidebar-option-label pt-2 pb-2" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton_Label">
+            <i class="bi bi-database-fill h4 m-0" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton_Label_Icon"></i>
+            <span style="font-weight:lighter" id="modelMenu_Sidebar_Options_DatabaseModel_ToggleButton_Label_Name">database</span>
+          </div>
+        </button>
+      </div>
+      <div class="menu-sidebar-option-container" id="modelMenu_Sidebar_Options_DomainModel">
+        <button [ngClass]="additionalDomainExplorerButtonClasses" class="btn h-100 w-100 p-0" (click)="toggleDomainExplorer()" id="modelMenu_Sidebar_Options_DomainModel_ToggleButton">
+          <div class="menu-sidebar-option-label pt-2 pb-2" id="modelMenu_Sidebar_Options_DomainModel_ToggleButton_Label">
+            <i class="bi bi-braces h4 m-0" id="modelMenu_Sidebar_Options_DomainModel_ToggleButton_Label_Icon"></i>
+            <span style="font-weight:lighter" id="modelMenu_Sidebar_Options_DomainModel_ToggleButton_Label_Name">domain</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div [ngClass]="additionalContentClasses" class="border-start border-end border-bottom menu-content h-100 p-0" id="modelMenu_Content" >
+    <div *ngIf="!codeExplorerIsClosed" class="h-100" id="modelMenu_Content_CodeModelExplorerHolder">
+      <code-model-explorer id="modelMenu_Content_CodeModelExplorer"></code-model-explorer>
+    </div>
+    <div *ngIf="!databaseExplorerIsClosed" class="h-100" id="modelMenu_Content_DatabaseModelExplorerHolder">
+      <database-model-explorer id="modelMenu_Content_DatabaseModelExplorer"></database-model-explorer>
+    </div>
+    <div *ngIf="!domainExplorerIsClosed" class="h-100" id="modelMenu_Content_DomainModelExplorerHolder">
+      <domain-model-explorer></domain-model-explorer>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,5 @@
-<modal [baseHtmlId]="baseHtmlId" [modalTitle]="modalTitle">
-  <code-model-source-project-editor></code-model-source-project-editor>
+<modal [baseHtmlId]="baseHtmlId" [modalTitle]="modalTitle" id="{{ baseHtmlId }}_Modal">
+  <code-model-source-project-edit-form [projectForEditObservable]="projectForEditObservable" id="{{ baseHtmlId }}_Modal_EditForm"
+                                       (projectWasSavedEvent)="closeModal()" (cancelButtonClickedEvent)="closeModal()">
+  </code-model-source-project-edit-form>
 </modal>

@@ -1,0 +1,5 @@
+<nav-option-item [availableKeys]="getAvailableFullDetailPaths()" [selectButtonTitle]="selectButtonTitle" id="{{ navOptionBaseHtmlId }}"
+                 [parentHtmlId]="navOptionBaseHtmlId" [closeOptionItem]="closeOptionItem"
+                 (optionItemOpenEvent)="handleOptionItemOpenEvent($event)" (keySelectedEvent)="detailSelected($event)"
+                 (addNewButtonClickedEvent)="loadNewDetailForEdit()" (editButtonClickedEvent)="loadSelectedDetailForEdit()" ></nav-option-item>
+<sql-database-detail-edit-modal [baseHtmlId]="editModalBaseHtmlId" [detailForEditObservable]="detailForEdit$.asObservable()" id="{{ editModalBaseHtmlId }}"></sql-database-detail-edit-modal>

@@ -3,8 +3,8 @@ import { CommonModule } from "@angular/common";
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { SqlDatabaseDetailPath } from "../../../../../../entity/model/database/detail/sql/path/sql-database-path";
-import { ModalService } from "../../../../../../service/modal/modal.service";
-import { BaseComponent } from "../../../../../base.component";
+import { ModalService } from "../../../../../../service/shared/modal/modal.service";
+import { BaseComponent } from "../../../../../shared/base/base.component";
 import { CanvasEditModalComponent } from "../../edit/modal/canvas-edit-modal.component";
 
 @Component({

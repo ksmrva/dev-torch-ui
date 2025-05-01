@@ -1,5 +1,5 @@
-import { ApiEntity } from "../../../../../api-entity";
-import { CodeModelLanguage } from "../../../language/code-model-language";
+import { ApiEntity } from "../../../../../shared/api-entity";
+import { CodeModelLanguage } from "../../language/code-model-language";
 
 export class CodeModelSourceFileCodeExtension extends ApiEntity {
 

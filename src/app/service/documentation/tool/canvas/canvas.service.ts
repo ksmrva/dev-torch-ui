@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of, map, catchError, tap } from "rxjs";
 import { Canvas } from "../../../../entity/documentation/tool/canvas/canvas";
 import { CanvasCustomCell } from "../../../../entity/documentation/tool/canvas/cell/custom/canvas-custom-cell";
 import { CanvasLinkCell } from "../../../../entity/documentation/tool/canvas/cell/link/canvas-link-cell";
-import { BaseApiService } from "../../../base.api.service";
+import { BaseApiService } from "../../../shared/base.api.service";
 
 @Injectable({
   providedIn: "root"

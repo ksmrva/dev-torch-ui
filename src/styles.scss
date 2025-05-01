@@ -1,61 +1,48 @@
 [data-bs-theme="dark"] {
-  // --app-title-name-start-color: #75705c;
-
-  // --app-main-color: #f7fa99;
   --app-main-color: #f7fa99;
-  --app-secondary-color: #75705c;
-  --app-tertiary-color: #f9fadd;
-  // --app-tertiary-color: #fbfdbd;
-  --app-extra-light-color: #f1ebdb;
-
-  --app-title-name-start-color: var(--app-secondary-color);
-  --app-title-name-separator-color: var(--app-extra-light-color);
-  // --app-title-name-separator-color: #9a957a;
-  // --app-title-name-end-color: #fae39f;
-  --app-title-name-end-color: var(--app-main-color);
-
-  --app-title-nav-toggle-color: var(--app-tertiary-color);
+  --app-accent-color-dark: #75705c;
+  --app-accent-color-light: #f9fadd;
+  --app-accent-color-extra-light: #f1ebdb;
 
   --header-primary-bg-color: var(--bs-tertiary-bg);
   --header-border-color: var(--bs-tertiary-color);
   --header-font-color: var(--bs-light-text-emphasis);
 
-  // --sidebar-menu-title-primary-color: #f1ebdb;
-  --sidebar-menu-title-primary-color: var(--app-tertiary-color);
-  --sidebar-menu-title-secondary-color: #728695;
-  --sidebar-menu-title-tertiary-color: #4a5257;
+  // --edit-form-menu-title-primary-color: #f1ebdb;
+  --edit-form-menu-title-primary-color: var(--app-accent-color-light);
+  --edit-form-menu-title-secondary-color: #728695;
+  --edit-form-menu-title-tertiary-color: #4a5257;
+  --edit-form-menu-title-secondary-color-highlight: #9ab3c7;
+  --edit-form-menu-label-primary-color: #728695;
+  --edit-form-menu-label-secondary-color: #d4f5f9;
 
-  --sidebar-menu-label-primary-color: #728695;
-  --sidebar-menu-label-secondary-color: #d4f5f9;
+  --save-button-color: #728695;
+  --save-button-button-border-color: #728695;
+  // --save-button-button-hover-color: #f1ebdb;
+  --save-button-button-hover-color: var(--app-accent-color-light);
+  --save-button-button-hover-bg-color: #728695;
 
-  --main-action-button-color: #728695;
-  --main-action-button-border-color: #728695;
+  --cancel-button-color: #884b42;
+  --cancel-button-border-color: #884b42;
+  // --cancel-button-hover-color: #f1ebdb;
+  --cancel-button-hover-color: var(--app-accent-color-light);
+  --cancel-button-hover-bg-color: #884b42;
 
-  // --main-action-button-hover-color: #f1ebdb;
-  --main-action-button-hover-color: var(--app-tertiary-color);
+  --add-new-button: #5f9261;
+  --add-new-button-border-color: #5f9261;
+  // --add-new-button-hover-color: #f1ebdb;
+  --add-new-button-hover-color: var(--app-accent-color-light);
+  --add-new-button-hover-bg-color: #5f9261;
 
-  --main-action-button-hover-bg-color: #728695;
+  --edit-button: #5f7c92;
+  --edit-button-border-color: #5f7c92;
+  // --edit-button-hover-color: #f1ebdb;
+  --edit-button-hover-color: var(--app-accent-color-light);
+  --edit-button-hover-bg-color: #5f7c92;
 
-  --main-add-new-button: #5f9261;
-  --main-add-new-button-border-color: #5f9261;
-
-  // --main-add-new-button-hover-color: #f1ebdb;
-  --main-add-new-button-hover-color: var(--app-tertiary-color);
-
-  --main-add-new-button-hover-bg-color: #5f9261;
-
-  --main-cancel-button-color: #884b42;
-  --main-cancel-button-border-color: #884b42;
-
-  // --main-cancel-button-hover-color: #f1ebdb;
-  --main-cancel-button-hover-color: var(--app-tertiary-color);
-
-  --main-cancel-button-hover-bg-color: #884b42;
-
-  // --canvas-explorer-control-label-color: #f1ebdb;
-  --canvas-explorer-control-label-color: var(--app-tertiary-color);
-
-  --canvas-explorer-control-item-label-color: #8ca5b8;
+  // --explorer-control-label-color: #f1ebdb;
+  --explorer-control-label-color: var(--app-accent-color-light);
+  --explorer-control-item-label-color: #8ca5b8;
 }
 
 [data-bs-theme="light"] {
@@ -63,23 +50,27 @@
   --header-border-color: #325155;
   --header-font-color: var(--bs-light-text-emphasis);
 
-  --sidebar-menu-title-primary-color: #325155;
-  --sidebar-menu-title-secondary-color: #325155;
-  --sidebar-menu-label-primary-color: #325155;
-  --sidebar-menu-label-secondary-color: #325155;
+  --edit-form-menu-title-primary-color: #325155;
+  --edit-form-menu-title-secondary-color: #325155;
+  --edit-form-menu-label-primary-color: #325155;
+  --edit-form-menu-label-secondary-color: #325155;
 
-  --main-action-button-color: #325155;
-  --main-action-button-border-color: #325155;
-  --main-action-button-hover-color: #325155;
-  --main-action-button-hover-bg-color: #325155;
+  --save-button-color: #325155;
+  --save-button-border-color: #325155;
+  --save-button-hover-color: #325155;
+  --save-button-hover-bg-color: #325155;
 
-  --main-add-new-button: #728695;
-  --main-add-new-button-border-color: #728695;
-  --main-add-new-button-hover-color: #f1ebdb;
-  --main-add-new-button-hover-bg-color: #728695;
+  --add-new-button: #728695;
+  --add-new-button-border-color: #728695;
+  --add-new-button-hover-color: #f1ebdb;
+  --add-new-button-hover-bg-color: #728695;
 
-  --canvas-explorer-control-label-color: #8ca5b8;
-  --canvas-explorer-control-item-label-color: #8ca5b8;
+  --explorer-control-label-color: #8ca5b8;
+  --explorer-control-item-label-color: #8ca5b8;
+}
+
+input[type="range"] {
+  appearance: auto;
 }
 
 header {
@@ -95,52 +86,64 @@ footer {
   position: sticky;
   text-align: center;
   width: 100%;
-  color: var(--app-tertiary-color) !important;
+  color: var(--app-accent-color-light) !important;
   background-color: var(--bs-tertiary-bg) !important;
 }
 
-.modal-open {
-  /* Hide the main scrollbar when a Modal is open */
-  overflow: hidden;
+.small-icon {
+  font-size: .75rem;
 }
 
-.main-action-button {
+.save-button {
   font-weight: bold;
-  color: var(--main-action-button-color) !important;
+  color: var(--save-button-color) !important;
   border: var(--bs-btn-border-width) solid
-    var(--main-action-button-border-color) !important;
+          var(--save-button-border-color) !important;
 }
 
-.main-action-button:hover {
+.save-button:hover {
   font-weight: bolder;
-  color: var(--main-action-button-hover-color) !important;
-  background-color: var(--main-action-button-hover-bg-color) !important;
+  color: var(--save-button-hover-color) !important;
+  background-color: var(--save-button-hover-bg-color) !important;
 }
 
-.main-add-new-button {
+.cancel-button {
   font-weight: bold;
-  color: var(--main-add-new-button-color) !important;
+  color: var(--cancel-button-color) !important;
   border: var(--bs-btn-border-width) solid
-    var(--main-add-new-button-border-color) !important;
+          var(--cancel-button-border-color) !important;
 }
 
-.main-add-new-button:hover {
+.cancel-button:hover {
   font-weight: bolder;
-  color: var(--main-add-new-button-hover-color) !important;
-  background-color: var(--main-add-new-button-hover-bg-color) !important;
+  color: var(--cancel-button-hover-color) !important;
+  background-color: var(--cancel-button-hover-bg-color) !important;
 }
 
-.main-cancel-button {
+.add-new-button {
   font-weight: bold;
-  color: var(--main-cancel-button-color) !important;
+  color: var(--add-new-button-color) !important;
   border: var(--bs-btn-border-width) solid
-    var(--main-cancel-button-border-color) !important;
+          var(--add-new-button-border-color) !important;
 }
 
-.main-cancel-button:hover {
+.add-new-button:hover {
   font-weight: bolder;
-  color: var(--main-cancel-button-hover-color) !important;
-  background-color: var(--main-cancel-button-hover-bg-color) !important;
+  color: var(--add-new-button-hover-color) !important;
+  background-color: var(--add-new-button-hover-bg-color) !important;
+}
+
+.edit-button {
+  font-weight: bold;
+  color: var(--edit-button-color) !important;
+  border: var(--bs-btn-border-width) solid
+          var(--edit-button-border-color) !important;
+}
+
+.edit-button:hover {
+  font-weight: bolder;
+  color: var(--edit-button-hover-color) !important;
+  background-color: var(--edit-button-hover-bg-color) !important;
 }
 
 .menu-title {
@@ -149,7 +152,7 @@ footer {
 }
 
 .menu-title-shadow {
- box-shadow: 0 7px 10px -3px black;
+  box-shadow: 0 7px 10px -3px black;
 }
 
 .menu-tab {
@@ -157,14 +160,14 @@ footer {
   border-top-right-radius: unset !important;
   border-top: none !important;
   border-left: none !important;
-  color: var(--sidebar-menu-label-primary-color) !important;
+  color: var(--edit-form-menu-label-primary-color) !important;
 }
 
 .menu-tab.active {
   color: var(--app-main-color) !important;
   box-shadow: inset 0 -8px 10px -10px black;
   border-bottom: thin double var(--app-main-color) !important;
-  background-color: var(--sidebar-menu-title-tertiary-color) !important;
+  background-color: var(--edit-form-menu-title-tertiary-color) !important;
 }
 
 .menu-tab-end {
@@ -173,48 +176,213 @@ footer {
 
 .menu-tab-group-shadow {
   box-shadow: inset 0 -8px 10px -8px black;
-  // background-color: #212529 !important;
 }
 
-.sidebar-menu-input-group-addon {
-  color: var(--sidebar-menu-label-primary-color) !important;
+.menu-preview-panel {
+  background-color: var(--edit-form-menu-title-tertiary-color) !important;
 }
 
-.sidebar-menu-form-title {
-  color: var(--sidebar-menu-title-secondary-color) !important;
+.menu-content {
+  width: 95% !important;
+  position: relative;
+  overflow: scroll;
 }
 
-.sidebar-menu-form {
-  background-color: var(--sidebar-menu-title-tertiary-color) !important;
+.menu-sidebar {
+  position: relative;
+  width: 5% !important;
+  // background-color: var(--header-primary-bg-color) !important;
+  // background-color: #2b3035 !important;
+  background-color: #25282a !important;
 }
 
-.sidebar-menu-content {
+.menu-sidebar-title {
+  height: 1.75rem;
+  overflow: hidden;
+  // background-color: var(--edit-form-menu-title-tertiary-color) !important;
+  background-color: #585e63 !important;
+}
+
+.menu-sidebar-title-name {
+  font-weight: bolder;
+  color: var(--app-main-color) !important;
+  // color: var(--explorer-control-label-color) !important;
+}
+
+.menu-sidebar-option-container {
+  height: 75px;
+  overflow: hidden;
+}
+
+.menu-sidebar-option-label {
+  display: grid;
+}
+
+.menu-sidebar-button-selected {
+  border-color: var(--app-main-color) !important;
+}
+
+.edit-form-input-group-addon {
+  color: var(--edit-form-menu-label-primary-color) !important;
+}
+
+.edit-form-menu-form-title {
+  color: var(--edit-form-menu-title-secondary-color) !important;
+}
+
+.edit-form-menu-form {
+  background-color: var(--edit-form-menu-title-tertiary-color) !important;
+}
+
+.edit-form-menu-content {
   background-color: var(--bs-light-bg-subtle) !important;
 }
 
-.sidebar-menu-title-primary {
+.edit-form-menu-title-primary {
   font-weight: bold;
-  color: var(--sidebar-menu-title-primary-color) !important;
+  color: var(--edit-form-menu-title-primary-color) !important;
 }
 
-.sidebar-menu-title-secondary {
+.edit-form-menu-title-secondary {
   font-size: large;
   font-weight: bold;
-  color: var(--sidebar-menu-title-secondary-color) !important;
+  color: var(--edit-form-menu-title-secondary-color) !important;
 }
 
-.sidebar-menu-label-primary {
-  color: var(--sidebar-menu-label-primary-color) !important;
+.edit-form-menu-label-primary {
+  background-color: var(--header-primary-bg-color) !important;
+  color: var(--edit-form-menu-label-primary-color) !important;
 }
 
-.sidebar-menu-label-activated-primary {
+.edit-form-menu-label-activated-primary {
   color: var(--app-main-color) !important;
+}
+
+.form-label {
+  background-color: var(--header-primary-bg-color) !important;
+}
+
+.form-label-span {
+  display: inline-block;
+  border: none !important;
+  color: var(--edit-form-menu-label-primary-color) !important;
+}
+
+.edit-select-title-name {
+  color: var(--edit-form-menu-title-secondary-color) !important;
+  font-size: small;
+}
+
+.edit-select-option {
+  color: var(--explorer-control-label-color) !important;
+  background-color: var(--header-primary-bg-color) !important;
+}
+
+.simple-edit-select-label {
+  color: var(--edit-form-menu-label-primary-color) !important;
+}
+
+.editor-title {
+  z-index: 65;
+  position: relative;
+  box-shadow: 0 7px 10px -3px black;
+}
+
+.editor-header-title {
+  // color: var(--app-main-color) !important;
+  color: var(--explorer-control-label-color) !important;
+  // background-color: var(--edit-form-menu-title-tertiary-color) !important;
+}
+
+.editor-sub-header {
+  // height: 8%;
+  font-size: smaller;
+  background-color: var(--header-primary-bg-color);
+}
+
+.explorer-header {
+  border-bottom: 1.5px var(--bs-border-style) #5e676f !important;
+}
+
+.explorer-title-name {
+  color: var(--app-main-color) !important;
+  // color: var(--explorer-control-label-color) !important;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.explorer-header-button {
+  font-size: small;
+  color: var(--app-main-color) !important;
+  // color: var(--explorer-control-label-color) !important;
+}
+
+.explorer-dropdown:hover > .explorer-dropdown-list {
+  display: block;
+}
+
+.explorer-dropdown-toggle {
+  font-size: small;
+  color: var(--edit-form-menu-title-secondary-color) !important;
+}
+
+.explorer-header-form-select {
+  // color: var(--explorer-control-label-color) !important;
+  background-color: var(--header-primary-bg-color) !important;
+}
+
+.explorer-header-label-text {
+  display: inline-block;
+  border: none !important;
+  color: var(--edit-form-menu-label-primary-color) !important;
+}
+
+.nav-option-group-toggle {
+  font-size: small;
+  color: var(--edit-form-menu-title-secondary-color) !important;
+}
+
+.nav-option-group-toggle.toggle-activated {
+  color: var(--edit-form-menu-title-secondary-color-highlight) !important;
+}
+
+.nav-option-item-button {
+  font-size: small;
+  color: var(--explorer-control-label-color) !important;
+}
+
+.nav-option-item-button.selected {
+  color: var(--app-main-color) !important;
+}
+
+.nav-option-item-button-container {
+  box-shadow:
+    inset 3px 0px 10px -4px var(--edit-form-menu-title-secondary-color),
+    inset -3px 0px 5px -4px var(--edit-form-menu-title-secondary-color);
+  background-color: var(--header-primary-bg-color) !important;
+  margin-right: -8px;
+}
+
+.file-list-panel {
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--header-primary-bg-color);
+}
+
+.file-list-panel:hover {
+  overflow: scroll;
+}
+
+.modal-open {
+  /* Hide the main scrollbar when a Modal is open */
+  overflow: hidden;
 }
 
 /***************************************************************************************************************************************/
 /* Defining these here because for some reason the scss for the component containing these is not honored within the JointJS framework */
 /* TODO: Figure out how to get the scss file to be recognized                                                                          */
 /***************************************************************************************************************************************/
+
 .table-jointjs-cell {
   margin: 0px;
 }

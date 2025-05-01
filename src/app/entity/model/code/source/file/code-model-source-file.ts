@@ -1,10 +1,8 @@
-import { ApiEntity } from "../../../../api-entity";
+import { ApiEntity } from "../../../../shared/api-entity";
 import { CodeModelSourceFileData } from './data/code-model-source-file-data';
 import { CodeModelSourceFileTreeNode } from "./tree/node/code-model-source-file-tree-node";
 
 export class CodeModelSourceFile extends ApiEntity {
-
-  treeNode: CodeModelSourceFileTreeNode;
 
   name: string;
 
@@ -14,14 +12,16 @@ export class CodeModelSourceFile extends ApiEntity {
 
   children: CodeModelSourceFile[];
 
+  treeNode: CodeModelSourceFileTreeNode;
+
   constructor() {
     super();
 
-    this.treeNode = new CodeModelSourceFileTreeNode();
     this.name = "";
     this.isDirectory = false;
     this.data = undefined;
     this.children = [];
+    this.treeNode = new CodeModelSourceFileTreeNode();
   }
 
   override deserialize(json: any): CodeModelSourceFile {

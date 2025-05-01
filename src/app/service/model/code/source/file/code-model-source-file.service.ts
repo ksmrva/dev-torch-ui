@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of, map, catchError, tap } from "rxjs";
-import { StringUtil } from "../../../../../entity/misc/string/util/string-util";
+import { StringUtil } from "../../../../../entity/shared/string/util/string-util";
 import { CodeModelSourceFile } from "../../../../../entity/model/code/source/file/code-model-source-file";
-import { BaseApiService } from "../../../../base.api.service";
+import { BaseApiService } from "../../../../shared/base.api.service";
 import { CodeModelSourceFileTreeNode } from "../../../../../entity/model/code/source/file/tree/node/code-model-source-file-tree-node";
 import { CodeModelSourceFileCodeExtension } from "../../../../../entity/model/code/source/file/extension/code-model-source-file-code-extension";
 

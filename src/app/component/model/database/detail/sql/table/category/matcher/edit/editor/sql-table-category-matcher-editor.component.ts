@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit, Input } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { RegexMatcher } from "../../../../../../../../../../entity/misc/regex/matcher/regex-matcher";
+import { RegexMatcher } from "../../../../../../../../../../entity/shared/regex/matcher/regex-matcher";
 import { DbCollectionCategory } from "../../../../../../../../../../entity/model/database/detail/category/collection/db-collection-category";
 import { DatabaseModelDetailService } from "../../../../../../../../../../service/model/database/detail/db-model-detail.service";
-import { BaseComponent } from "../../../../../../../../../base.component";
+import { BaseComponent } from "../../../../../../../../../shared/base/base.component";
 import { DbCategoryMatcherEditorComponent } from "../../../../../../category/matcher/edit/editor/db-category-matcher-editor.component";
 
 @Component({

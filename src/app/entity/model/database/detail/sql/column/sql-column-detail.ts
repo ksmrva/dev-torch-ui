@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../../api-entity";
+import { ApiEntity } from "../../../../../shared/api-entity";
 import { DbModelSourceDataType } from "../../../source/type/db-model-source-data-type";
 import { DbFieldCategory } from "../../category/field/db-field-category";
 

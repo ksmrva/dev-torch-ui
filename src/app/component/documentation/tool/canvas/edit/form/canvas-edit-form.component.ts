@@ -7,7 +7,7 @@ import { CanvasCell } from "../../../../../../entity/documentation/tool/canvas/c
 import { CanvasCustomCell } from "../../../../../../entity/documentation/tool/canvas/cell/custom/canvas-custom-cell";
 import { CanvasLinkCell } from "../../../../../../entity/documentation/tool/canvas/cell/link/canvas-link-cell";
 import { CanvasService } from "../../../../../../service/documentation/tool/canvas/canvas.service";
-import { BaseComponent } from "../../../../../base.component";
+import { BaseComponent } from "../../../../../shared/base/base.component";
 import { CanvasCellEditorComponent } from "../../cell/edit/editor/canvas-cell-editor.component";
 
 @Component({
@@ -46,14 +46,14 @@ export class CanvasEditFormComponent extends BaseComponent implements OnInit {
 
   constructor(
     private canvasService: CanvasService,
-    formBuilder: FormBuilder
+    private formBuilder: FormBuilder
   ) {
     super();
     this.canvasForEditObservable = of(undefined);
     this.canvasWasUpdated = new EventEmitter<boolean>();
     this.resetEditButtonClicked = new EventEmitter<boolean>();
 
-    this.canvasEditForm = formBuilder.group({
+    this.canvasEditForm = this.formBuilder.group({
       name: new FormControl("", Validators.required),
       height: new FormControl(0, Validators.required),
       width: new FormControl(0, Validators.required),

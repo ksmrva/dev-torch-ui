@@ -1,0 +1,5 @@
+<nav-option-item [availableKeys]="getAvailableConfigIds()" [selectButtonTitle]="selectButtonTitle" id="{{ navOptionBaseHtmlId }}"
+                 [parentHtmlId]="navOptionBaseHtmlId" [closeOptionItem]="closeOptionItem"
+                 (optionItemOpenEvent)="handleOptionItemOpenEvent($event)" (keySelectedEvent)="configSelected($event)"
+                 (addNewButtonClickedEvent)="loadNewConfigForEdit()" (editButtonClickedEvent)="loadSelectedConfigForEdit()" ></nav-option-item>
+<database-model-source-config-edit-modal [baseHtmlId]="editModalBaseHtmlId" [configForEditObservable]="configForEdit$.asObservable()" id="{{ editModalBaseHtmlId }}"></database-model-source-config-edit-modal>

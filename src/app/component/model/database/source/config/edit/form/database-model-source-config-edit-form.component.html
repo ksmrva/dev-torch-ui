@@ -1,0 +1,39 @@
+<div id="dbModelSourceConfigEditForm_Title">
+  <h5 class="edit-form-menu-form-title h5" id="dbModelSourceConfigEditForm_Title_Name" >
+    {{ isConfigNew(configForEdit) ? "add new" : "edit" }}
+  </h5>
+</div>
+<form class="m-2" [formGroup]="configEditForm" (ngSubmit)="saveConfig()" id="dbModelSourceConfigEditForm_Form" >
+  <div class="mb-3" id="dbModelSourceConfigEditForm_Form_FormSection_UrlId">
+    <label class="form-label siedit-formdebar-menu-label-primary" for="dbModelSourceConfigEditForm_Form_FormSection_UrlId_Select" id="dbModelSourceConfigEditForm_Form_FormSection_UrlId_Select_Label" >url id</label >
+    <select class="form-control form-select form-select-sm" formControlName="urlId" id="dbModelSourceConfigEditForm_Form_FormSection_UrlId_Select" >
+      <option *ngFor="let availableUrl of availableUrls" [value]="availableUrl.id" id="dbModelSourceConfigEditForm_Form_FormSection_SourceUrlId_Select_Option_{{ availableUrl.id }}" >
+        {{ availableUrl.toString() }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3" id="dbModelSourceConfigEditForm_Form_FormSection_DriverName">
+    <label class="form-label edit-form-menu-label-primary" for="dbModelSourceConfigEditForm_Form_FormSection_DriverName_Select" id="dbModelSourceConfigEditForm_Form_FormSection_DriverName_Select_Label" >driver name</label >
+    <select class="form-control form-select form-select-sm" formControlName="driverName" id="dbModelSourceConfigEditForm_Form_FormSection_DriverName_Select" >
+      <option *ngFor="let availableSupportedDriver  of availableSupportedDrivers" [value]="availableSupportedDriver.name" id="dbModelSourceConfigEditForm_Form_FormSection_DriverName_Select_Option_{{ availableSupportedDriver.name }}" >
+        {{ availableSupportedDriver.name }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3" id="dbModelSourceConfigEditForm_Form_FormSection_Username">
+    <label class="form-label edit-form-menu-label-primary" for="dbModelSourceConfigEditForm_Form_Username_Input" id="dbModelSourceConfigEditForm_Form_Username_Input_Label" >username</label>
+    <input class="form-control" formControlName="username" type="text" id="dbModelSourceConfigEditForm_Form_Username_Input" />
+  </div>
+  <div class="mb-3" id="dbModelSourceConfigEditForm_Form_FormSection_Password">
+    <label class="form-label edit-form-menu-label-primary" for="dbModelSourceConfigEditForm_Form_FormSection_PasswordInput" id="dbModelSourceConfigEditForm_Form_FormSection_PasswordInput_Label" >password</label>
+    <input class="form-control" formControlName="password" type="text" id="dbModelSourceConfigEditForm_Form_FormSection_PasswordInput" />
+  </div>
+  <div class="d-flex justify-content-end ps-1 pe-1 pt-3 pb-1" id="dbModelSourceConfigEditForm_Form_FormSection_Controls" >
+    <button class="btn btn-sm save-button m-2" type="submit" id="dbModelSourceConfigEditForm_Form_FormSection_Controls_SaveButton" >
+      save
+    </button>
+    <button class="btn btn-sm cancel-button m-2" type="button" (click)="cancelButtonClicked()" id="dbModelSourceConfigEditForm_Form_FormSection_Controls_CancelButton" >
+      cancel
+    </button>
+  </div>
+</form>

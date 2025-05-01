@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CodeModelSourceFileService } from '../code-model-source-file.service';
+import { ExplorerPanelListIconProvider } from '../../../../../shared/explorer/panel/list/icon/provider/explorer-panel-list-icon-provider';
+import { ExplorerPanelListEntry } from '../../../../../../entity/shared/explorer/panel/list/entry/explorer-panel-list-entry';
+import { CodeModelSourceFileTreeNode } from '../../../../../../entity/model/code/source/file/tree/node/code-model-source-file-tree-node';
 
 export const ICON_PATH_BASE: string = "assets/images/icons/atom";
 
@@ -164,11 +167,19 @@ export const INTELLIJ_FILE_EXTENSION: string = "iml";
 @Injectable({
   providedIn: 'root'
 })
-export class CodeModelSourceFileIconService {
+export class CodeModelSourceFileIconService implements ExplorerPanelListIconProvider {
 
   constructor(
     private codeModelSourceFileService: CodeModelSourceFileService
   ) { }
+
+  getEntryTypeKey(): string {
+    return "code_model_source_file";
+  }
+
+  getIconPathForEntry(entry: ExplorerPanelListEntry): string {
+    return this.getIconPathFromFileName(entry.name, entry.hasSubEntries);
+  }
 
   getIconPathFromFileName(fileName: string, isDirectory: boolean): string {
     let iconPath = GENERIC_FILE_ICON_PATH;

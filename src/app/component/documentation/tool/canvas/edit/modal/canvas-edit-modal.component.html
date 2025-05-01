@@ -1,7 +1,7 @@
 <modal [baseHtmlId]="baseHtmlId" [modalTitle]="modalTitle">
-  <menu-select *ngIf="showSelect" [baseHtmlId]="menuSelectBaseHtmlId" [availableKeys]="availableCanvasNames" id="{{ baseHtmlId }}_MenuSelect"
+  <edit-select *ngIf="showSelect" [parentHtmlId]="menuSelectBaseHtmlId" [availableKeys]="availableCanvasNames" id="{{ baseHtmlId }}_MenuSelect"
             (keyWasSelected)="loadCanvasForEdit($event)" (addNewButtonClicked)="loadNewCanvasForEdit()">
-  </menu-select>
+  </edit-select>
   <canvas-edit-form *ngIf="!showSelect" [canvasForEditObservable]="canvasForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
                         (canvasWasUpdated)="resetEdit()" (resetEditButtonClicked)="resetEdit()">
   </canvas-edit-form>

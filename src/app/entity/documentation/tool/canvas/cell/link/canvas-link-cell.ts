@@ -1,6 +1,6 @@
 import { dia } from "@joint/core";
 import { CanvasCell } from "../canvas-cell";
-import { JointValueAccessor } from "../../../../../misc/joint/value/joint-value-accessor";
+import { JointValueAccessor } from "../../../../../shared/joint/value/joint-value-accessor";
 
 export const CANVAS_LINK_CELL_NAME_COMMON_TAG: string = "cell-link";
 

@@ -1,8 +1,0 @@
-<div class="sidebar-menu-form ps-2 pe-2 pb-4" id="{{ this.baseHtmlId }}_Container">
-  <menu-select *ngIf="showSelect" [baseHtmlId]="menuSelectBaseHtmlId" [availableKeys]="availableCanvasNames" id="{{ baseHtmlId }}_MenuSelect"
-                (keyWasSelected)="loadCanvasForEdit($event)" (addNewButtonClicked)="loadNewCanvasForEdit()">
-  </menu-select>
-  <canvas-edit-form *ngIf="!showSelect" [canvasForEditObservable]="canvasForEdit$.asObservable()" id="{{ baseHtmlId }}_EditForm"
-                        (canvasWasUpdated)="resetEdit()" (resetEditButtonClicked)="resetEdit()">
-  </canvas-edit-form>
-</div>

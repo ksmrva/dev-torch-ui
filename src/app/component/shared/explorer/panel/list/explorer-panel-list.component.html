@@ -1,0 +1,27 @@
+<button class="navbar-toggler p-1 w-100" type="button" (click)="handleClick()" id="{{baseHtmlId}}_SelectorButton">
+  <div class="d-flex" id="{{baseHtmlId}}_SelectorButton_Display">
+    <span *ngIf="isNotRootEntry()" class="explorer-entry-list-spacing" id="{{baseHtmlId}}_SelectorButton_Display_EntrySpacing">
+      {{ entryListSpacing }}
+    </span>
+    <div *ngIf="doesEntryHaveSubEntries()" id="{{baseHtmlId}}_SelectorButton_Display_ToggleIconContainer">
+      <i [ngClass]="additionalIconClasses" class="bi ps-2 pe-2" id="{{baseHtmlId}}_SelectorButton_Display_ToggleIcon"></i>
+    </div>
+    <div *ngIf="!doesEntryHaveSubEntries()" id="{{baseHtmlId}}_SelectorButton_Display_ExtraEntrySpacingContainer">
+      <span class="explorer-entry-list-spacing" id="{{baseHtmlId}}_SelectorButton_Display_ExtraEntrySpacing">
+        {{ subEntryExtraSpacing }}
+      </span>
+    </div>
+    <div id="{{baseHtmlId}}_SelectorButton_Display_FileIconContainer">
+      <img class="pe-2" src="{{getIconPath()}}" id="{{baseHtmlId}}_SelectorButton_Display_FileIcon"/>
+    </div>
+    <span id="{{baseHtmlId}}_SelectorButton_Display_EntryName">
+      {{ entry.name }}
+    </span>
+  </div>
+</button>
+<div *ngIf="showSubEntries && subEntries" id="{{baseHtmlId}}_SubEntryListContainer">
+  <div *ngFor="let subEntry of subEntries" id="{{baseHtmlId}}_SubEntryList">
+    <explorer-panel-list [entry]="subEntry" [listLevel]="(listLevel + 1)" id="{{baseHtmlId}}_SubEntryList_Entry_{{subEntry.id}}"
+                          (entryClicked)="subEntryClicked($event)"></explorer-panel-list>
+  </div>
+</div>

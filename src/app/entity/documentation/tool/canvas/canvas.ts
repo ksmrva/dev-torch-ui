@@ -1,6 +1,6 @@
 import { dia } from "@joint/core";
-import { ApiEntity } from "../../../api-entity";
-import { JointValueAccessor } from "../../../misc/joint/value/joint-value-accessor";
+import { ApiEntity } from "../../../shared/api-entity";
+import { JointValueAccessor } from "../../../shared/joint/value/joint-value-accessor";
 import { CanvasCustomCell } from "./cell/custom/canvas-custom-cell";
 import { CanvasCell } from "./cell/canvas-cell";
 import { CanvasCellFactory } from "./cell/factory/canvas-cell-factory";

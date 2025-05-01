@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../../api-entity";
+import { ApiEntity } from "../../../../../shared/api-entity";
 import { DbCollectionCategory } from "../../category/collection/db-collection-category";
 import { SqlColumnDetail } from "../column/sql-column-detail";
 import { SqlForeignKeyDetail } from "../constraint/key/foreign/sql-foreign-key-detail";

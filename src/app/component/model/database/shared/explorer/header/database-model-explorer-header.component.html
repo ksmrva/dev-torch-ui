@@ -1,0 +1,14 @@
+<div class="explorer-header ps-3 pe-2" id="databaseModelExplorerHeader">
+  <nav class="navbar navbar-expand-lg p-0" id="databaseModelExplorerHeader_Navbar" >
+    <div class="pe-3" id="databaseModelExplorerHeader_Navbar_Title" >
+      <span class="explorer-title-name" id="databaseModelExplorerHeader_Navbar_Title_Name" >
+        database model
+      </span >
+    </div>
+    <database-model-source-nav-option-group [closeAllOptionsObservable]="closeSourceOptions$.asObservable()" id="databaseModelExplorerHeader_SourceNavOptionGroup"
+                                            (toggleOptionsEvent)="handleSourceOptionsToggle($event)" (configSelectedEvent)="configSelected($event)"></database-model-source-nav-option-group>
+
+    <database-model-detail-nav-option-group [closeAllOptionsObservable]="closeDetailOptions$.asObservable()" id="databaseModelExplorerHeader_DetailNavOptionGroup"
+                                            (toggleOptionsEvent)="handleDetailOptionsToggle($event)"></database-model-detail-nav-option-group>
+  </nav>
+</div>

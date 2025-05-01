@@ -1,0 +1,9 @@
+<div class="row h-100 m-0" id="codeModelSourceProjectPreview">
+  <div *ngIf="projectForPreview" class="col-lg-2 border-end file-list-panel pt-3 ps-0 pe-0" id="codeModelSourceProjectPreview_FileListPanelContainer">
+    <explorer-panel-list [entry]="projectForPreview.rootTreeNode.explorerPanelListEntry" [listLevel]="0" [baseHtmlId]="projectFileListBaseHtmlId" id="codeModelSourceProjectPreview_FileListPanel_FileList_Entry_{{projectForPreview.rootTreeNode.id}}"
+                          (entryClicked)="handleClickedEntry($event)"></explorer-panel-list>
+  </div>
+  <div *ngIf="selectedFileTextContents" class="col-lg-10 ps-0 pe-0" id="codeModelSourceProjectPreview_CodeEditorPanel">
+    <ngx-monaco-editor class="h-100" [options]="codeEditorOptions" [(ngModel)]="selectedFileTextContents" id="codeModelSourceProjectPreview_CodeEditorPanel_CodeEditor"></ngx-monaco-editor>
+  </div>
+</div>

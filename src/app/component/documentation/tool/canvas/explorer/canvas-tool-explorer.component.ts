@@ -10,14 +10,14 @@ import { CanvasCustomCell } from "../../../../../entity/documentation/tool/canva
 import { CanvasCellFactory } from "../../../../../entity/documentation/tool/canvas/cell/factory/canvas-cell-factory";
 import { CanvasLinkCell } from "../../../../../entity/documentation/tool/canvas/cell/link/canvas-link-cell";
 import { CanvasFactory } from "../../../../../entity/documentation/tool/canvas/factory/canvas-factory";
-import { ObjectGrid } from "../../../../../entity/misc/grid/object-grid";
-import { JointCellFactory } from "../../../../../entity/misc/joint/cell/factory/joint-cell-factory";
+import { ObjectGrid } from "../../../../../entity/shared/grid/object-grid";
+import { JointCellFactory } from "../../../../../entity/shared/joint/cell/factory/joint-cell-factory";
 import { SqlDatabaseDetail } from "../../../../../entity/model/database/detail/sql/sql-database-detail";
 import { SqlDatabaseDetailPath } from "../../../../../entity/model/database/detail/sql/path/sql-database-path";
 import { CanvasService } from "../../../../../service/documentation/tool/canvas/canvas.service";
-import { ModalService } from "../../../../../service/modal/modal.service";
+import { ModalService } from "../../../../../service/shared/modal/modal.service";
 import { DatabaseModelDetailService } from "../../../../../service/model/database/detail/db-model-detail.service";
-import { BaseComponent } from "../../../../base.component";
+import { BaseComponent } from "../../../../shared/base/base.component";
 import { CanvasToolExplorerHeaderComponent } from "./header/canvas-tool-explorer-header.component";
 import { SqlColumnDetail } from "../../../../../entity/model/database/detail/sql/column/sql-column-detail";
 import { SqlTableDetail } from "../../../../../entity/model/database/detail/sql/table/sql-table-detail";
@@ -111,7 +111,7 @@ export class CanvasToolExplorerComponent extends BaseComponent implements OnInit
                                                                                           });
     this.addLongLivingSubscription(availableCanvasNamesSubscription);
 
-    let availableDatabasePathsSubscription = this.sqlModelComponentService.getAvailableDatabasePaths().subscribe({
+    let availableDatabasePathsSubscription = this.sqlModelComponentService.getAvailableDatabaseDetailPaths().subscribe({
                                                                                                           next: (databasePaths: SqlDatabaseDetailPath[] | undefined) => {
                                                                                                             if (!databasePaths) {
                                                                                                               throw new Error( "Failed to load the available Database Paths" );
@@ -305,7 +305,7 @@ export class CanvasToolExplorerComponent extends BaseComponent implements OnInit
 
   addCellsFromDatabase(databasePath: SqlDatabaseDetailPath): void {
     if (this.currentJointJsGraph) {
-      this.sqlModelComponentService.getDatabase(databasePath).subscribe({
+      this.sqlModelComponentService.getDatabaseDetail(databasePath).subscribe({
                                                                       next: (database: SqlDatabaseDetail | undefined) => {
                                                                         if (!database) {
                                                                           throw new Error( "Failed to get the Database Component using Name [" + databasePath.getFullPath() + "]" );
@@ -511,7 +511,7 @@ export class CanvasToolExplorerComponent extends BaseComponent implements OnInit
 
         let columnName = clickedElementId.slice( indexOfTableColumnNameStart, indexOfTableColumnNameEnd );
 
-        this.sqlModelComponentService.getDatabase(databasePath).subscribe({
+        this.sqlModelComponentService.getDatabaseDetail(databasePath).subscribe({
                                                                   next: (database: SqlDatabaseDetail | undefined) => {
                                                                     if (!database) {
                                                                       throw new Error("Failed to get the SQL Database Detail using Path [" + databasePath.getFullPath() + "]");

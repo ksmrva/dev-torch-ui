@@ -5,7 +5,7 @@ import { Observable, of } from "rxjs";
 import { CanvasCell } from "../../../../../../../../entity/documentation/tool/canvas/cell/canvas-cell";
 import { CanvasCustomCell } from "../../../../../../../../entity/documentation/tool/canvas/cell/custom/canvas-custom-cell";
 import { CanvasLinkCell } from "../../../../../../../../entity/documentation/tool/canvas/cell/link/canvas-link-cell";
-import { BaseComponent } from "../../../../../../../base.component";
+import { BaseComponent } from "../../../../../../../shared/base/base.component";
 
 @Component({
   selector: "canvas-link-cell-edit-form",
@@ -35,7 +35,7 @@ export class CanvasLinkCellEditFormComponent extends BaseComponent implements On
   allCustomCells: CanvasCell[];
 
   constructor(
-    formBuilder: FormBuilder
+    private formBuilder: FormBuilder
   ) {
     super();
     this.linkCellToEditObservable = of(undefined);
@@ -43,7 +43,7 @@ export class CanvasLinkCellEditFormComponent extends BaseComponent implements On
     this.linkCellWasUpdated = new EventEmitter<boolean>();
     this.resetEditButtonClicked = new EventEmitter<boolean>();
 
-    this.linkCellEditForm = formBuilder.group({
+    this.linkCellEditForm = this.formBuilder.group({
       name: new FormControl(""),
       sourceCellName: new FormControl(""),
       targetCellName: new FormControl(""),

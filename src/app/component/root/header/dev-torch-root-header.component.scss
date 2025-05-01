@@ -1,0 +1,29 @@
+.root-header-title-logo {
+  height: 46px;
+  width: 19px;
+}
+
+.root-header-title-name-start {
+  color: var(--app-accent-color-dark);
+}
+
+.root-header-title-name-end {
+  color: var(--app-main-color);
+}
+
+.dark-mode-icon {
+  color: var(--app-main-color);
+}
+
+.nav-link {
+  color: var(--app-accent-color-extra-light) !important;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--app-main-color) !important;
+}
+
+.active {
+  color: var(--app-main-color) !important;
+}

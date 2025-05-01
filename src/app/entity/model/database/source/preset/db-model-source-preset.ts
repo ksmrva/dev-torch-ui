@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../api-entity";
+import { ApiEntity } from "../../../../shared/api-entity";
 
 export class DbModelSourcePreset extends ApiEntity {
 

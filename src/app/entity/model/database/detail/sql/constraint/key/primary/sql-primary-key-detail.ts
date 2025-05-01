@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../../../../api-entity";
+import { ApiEntity } from "../../../../../../../shared/api-entity";
 import { SqlPrimaryKeyColumnDetail } from "../../../../../detail/sql/constraint/key/primary/column/sql-primary-key-column-detail";
 
 export class SqlPrimaryKeyDetail extends ApiEntity {

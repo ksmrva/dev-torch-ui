@@ -1,4 +1,4 @@
-import { ApiEntity } from "../../../../../api-entity";
+import { ApiEntity } from "../../../../../shared/api-entity";
 
 const UNDEFINED_COLUMN_CATEGORY_VALUE: string = "Undefined";
 

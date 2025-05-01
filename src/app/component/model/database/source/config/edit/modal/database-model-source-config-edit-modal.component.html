@@ -1,0 +1,5 @@
+<modal [baseHtmlId]="baseHtmlId" [modalTitle]="modalTitle" id="{{ baseHtmlId }}_Modal">
+  <database-model-source-config-edit-form [configForEditObservable]="configForEditObservable" id="{{ baseHtmlId }}_Modal_EditForm"
+                                          (configWasSavedEvent)="closeModal()" (cancelButtonClickedEvent)="closeModal()">
+  </database-model-source-config-edit-form>
+</modal>

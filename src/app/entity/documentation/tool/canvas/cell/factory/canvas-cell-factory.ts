@@ -1,7 +1,7 @@
 import { dia, shapes } from "@joint/core";
 import { PRIMARY_KEY_ICON_PATH, FOREIGN_KEY_ICON_PATH, CANVAS_DATABASE_TABLE_DEFAULT_HEADER_HEIGHT, CANVAS_DATABASE_TABLE_DEFAULT_HEADER_BORDER_HEIGHT, CANVAS_DATABASE_TABLE_DEFAULT_COLUMN_HEIGHT } from "../../../../../../app.constants";
-import { ObjectGrid } from "../../../../../misc/grid/object-grid";
-import { StringUtil } from "../../../../../misc/string/util/string-util";
+import { ObjectGrid } from "../../../../../shared/grid/object-grid";
+import { StringUtil } from "../../../../../shared/string/util/string-util";
 import { SqlColumnDetail } from "../../../../../model/database/detail/sql/column/sql-column-detail";
 import { SqlForeignKeyDetail } from "../../../../../model/database/detail/sql/constraint/key/foreign/sql-foreign-key-detail";
 import { SqlPrimaryKeyColumnDetail } from "../../../../../model/database/detail/sql/constraint/key/primary/column/sql-primary-key-column-detail";
@@ -387,7 +387,7 @@ export class CanvasCellFactory {
   static createDatabaseTableForeignKeyLocalName(database: SqlDatabaseDetail, table: SqlTableDetail, column: SqlColumnDetail, referencedTableModel: SqlTableDetail, referencedColumnModel: SqlColumnDetail): string {
     return (
       "FK-" +
-      database.name.getFullPath() +
+      database.path.getFullPath() +
       "." +
       table.name +
       "." +
@@ -400,11 +400,11 @@ export class CanvasCellFactory {
   }
 
   static createDatabaseTableLocalName(database: SqlDatabaseDetail, tableModel: SqlTableDetail): string {
-    return "Table-" + database.name.getFullPath() + "." + tableModel.name;
+    return "Table-" + database.path.getFullPath() + "." + tableModel.name;
   }
 
   static createDatabaseLocalName(database: SqlDatabaseDetail): string {
-    return "DB-" + database.name.getFullPath();
+    return "DB-" + database.path.getFullPath();
   }
 
   private static createCustomCellForDatabaseTable(canvas: Canvas, database: SqlDatabaseDetail, table: SqlTableDetail, canvasPositionX: number, canvasPositionY: number): CanvasCustomCell {
@@ -431,7 +431,7 @@ export class CanvasCellFactory {
   private static createHtmlForDatabaseTable(customCellName: string, table: SqlTableDetail, canvas: Canvas, database: SqlDatabaseDetail): string {
     let tableName = table.name;
 
-    let databaseTableComponentForHtmlId =database.createHtmlTableIdForDatabaseTable(table);
+    let databaseTableComponentForHtmlId =database.createHtmlIdForDatabaseTable(table);
     let canvasCustomCellHtmlId = canvas.createHtmlIdForCanvasCustomCell(customCellName);
     canvasCustomCellHtmlId = canvasCustomCellHtmlId + HTML_ID_COMPONENT_DELIMITER + databaseTableComponentForHtmlId;
 
