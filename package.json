@@ -24,10 +24,12 @@
     "@types/jquery": "^3.5.31",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "bootstrap-table": "^1.24.1",
     "jquery": "^3.7.1",
     "monaco-editor": "^0.50.0",
     "ngx-monaco-editor-v2": "^18.1.0",
     "rxjs": "~7.8.0",
+    "split-grid": "^1.0.11",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

@@ -11,9 +11,9 @@ import { ModalService } from "../../../../../../service/shared/modal/modal.servi
 import { CodeModelSourceFileService } from "../../../../../../service/model/code/source/file/code-model-source-file.service";
 import { CodeModelSourceFileIconService } from "../../../../../../service/model/code/source/file/icon/code-model-source-file-icon.service";
 import { BaseComponent } from "../../../../../shared/base/base.component";
-import { CodeModelSourceProjectEditModalComponent } from "../edit/modal/code-model-source-project-edit-modal.component";
 import { ExplorerPanelListEntry } from "../../../../../../entity/shared/explorer/panel/list/entry/explorer-panel-list-entry";
 import { ExplorerPanelListComponent } from "../../../../../shared/explorer/panel/list/explorer-panel-list.component";
+import Split from 'split-grid';
 
 @Component({
   selector: 'code-model-source-project-preview',
@@ -22,7 +22,6 @@ import { ExplorerPanelListComponent } from "../../../../../shared/explorer/panel
     CommonModule,
     FormsModule,
     MonacoEditorModule,
-    CodeModelSourceProjectEditModalComponent,
     ExplorerPanelListComponent,
 ],
   templateUrl: './code-model-source-project-preview.component.html',
@@ -58,7 +57,8 @@ export class CodeModelSourceProjectPreviewComponent extends BaseComponent implem
     this.selectedFileTextContents = "";
 
     this.codeEditorOptions = {
-      theme: "vs-dark"
+      theme: "vs-dark",
+      automaticLayout: true
     };
     this.allCodeExtensions = [];
     this.projectEditModalBaseHtmlId = "codeModelSourceProject_Explorer_ProjectEditModal";
@@ -66,6 +66,13 @@ export class CodeModelSourceProjectPreviewComponent extends BaseComponent implem
   }
 
   ngOnInit(): void {
+    Split({
+      columnGutters: [{
+          track: 1,
+          element: document.querySelector('.code-project-preview-gutter-col-1')!,
+      }],
+    })
+
     let projectForPreviewSubscription = this.projectForPreviewObservable.subscribe({
                                                                               next: (nextProjectForPreview: CodeModelSourceProject | undefined) => {
                                                                                 this.projectForPreview = nextProjectForPreview;
